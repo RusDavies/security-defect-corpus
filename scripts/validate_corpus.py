@@ -14,7 +14,7 @@ def main() -> int:
     data = json.loads((ROOT / 'ground_truth' / 'cases.json').read_text())
     assert data['schema_version'] == '1.0'
     cases = data['cases']
-    assert len(cases) >= 23, 'expected broad baseline multi-language cases'
+    assert len(cases) >= 30, 'expected broad baseline plus invisible-character cases'
     ids = set()
     ecosystems = set()
     for case in cases:

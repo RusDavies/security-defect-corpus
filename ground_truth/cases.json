@@ -7,7 +7,9 @@
       "ecosystem": "javascript",
       "language": "JavaScript",
       "defect_class": "cross_site_scripting",
-      "cwe": ["CWE-79"],
+      "cwe": [
+        "CWE-79"
+      ],
       "reachable_file": "cases/javascript/src/reachable_xss.js",
       "unreachable_file": "cases/javascript/src/unreachable_xss.js",
       "reachable": true,
@@ -15,7 +17,10 @@
       "expected_severity": "high",
       "data_flow": "request.query.name -> renderGreeting -> html response",
       "expected_remediation": "HTML-escape untrusted output or use a safe templating path.",
-      "expected_tests": ["malicious name is encoded", "safe name still renders"],
+      "expected_tests": [
+        "malicious name is encoded",
+        "safe name still renders"
+      ],
       "false_positive_boundary": "unreachable_xss.js contains unsafe-looking code behind a disabled legacy route."
     },
     {
@@ -23,7 +28,10 @@
       "ecosystem": "typescript",
       "language": "TypeScript",
       "defect_class": "insecure_direct_object_reference",
-      "cwe": ["CWE-639", "CWE-862"],
+      "cwe": [
+        "CWE-639",
+        "CWE-862"
+      ],
       "reachable_file": "cases/typescript/src/reachable_idor.ts",
       "unreachable_file": "cases/typescript/src/unreachable_idor.ts",
       "reachable": true,
@@ -31,7 +39,10 @@
       "expected_severity": "high",
       "data_flow": "authenticated user id + arbitrary account id -> getAccountById without ownership check",
       "expected_remediation": "Require ownership/authorization check before returning account data.",
-      "expected_tests": ["owner can read account", "non-owner is rejected"],
+      "expected_tests": [
+        "owner can read account",
+        "non-owner is rejected"
+      ],
       "false_positive_boundary": "unreachable_idor.ts has an admin-only internal helper not exposed through a route."
     },
     {
@@ -39,7 +50,9 @@
       "ecosystem": "nodejs",
       "language": "JavaScript / Node.js",
       "defect_class": "command_injection",
-      "cwe": ["CWE-78"],
+      "cwe": [
+        "CWE-78"
+      ],
       "reachable_file": "cases/nodejs/src/reachable_command_injection.js",
       "unreachable_file": "cases/nodejs/src/unreachable_command_injection.js",
       "reachable": true,
@@ -47,7 +60,10 @@
       "expected_severity": "critical",
       "data_flow": "request.query.host -> child_process.exec",
       "expected_remediation": "Avoid shell interpolation; use spawn/execFile with fixed command and validated arguments.",
-      "expected_tests": ["semicolon payload is rejected", "valid hostname executes safe path"],
+      "expected_tests": [
+        "semicolon payload is rejected",
+        "valid hostname executes safe path"
+      ],
       "false_positive_boundary": "unreachable_command_injection.js contains a retired diagnostic function that is not exported or routed."
     },
     {
@@ -55,7 +71,9 @@
       "ecosystem": "c",
       "language": "C",
       "defect_class": "stack_buffer_overflow",
-      "cwe": ["CWE-120"],
+      "cwe": [
+        "CWE-120"
+      ],
       "reachable_file": "cases/c/src/reachable_buffer_overflow.c",
       "unreachable_file": "cases/c/src/unreachable_buffer_overflow.c",
       "reachable": true,
@@ -63,7 +81,10 @@
       "expected_severity": "critical",
       "data_flow": "argv[1] -> strcpy into fixed stack buffer",
       "expected_remediation": "Use bounded copy/formatting, validate length, and preserve null termination.",
-      "expected_tests": ["long input is rejected/truncated safely", "normal input succeeds"],
+      "expected_tests": [
+        "long input is rejected/truncated safely",
+        "normal input succeeds"
+      ],
       "false_positive_boundary": "unreachable_buffer_overflow.c has a vulnerable helper not called from main."
     },
     {
@@ -71,7 +92,9 @@
       "ecosystem": "cpp",
       "language": "C++",
       "defect_class": "path_traversal",
-      "cwe": ["CWE-22"],
+      "cwe": [
+        "CWE-22"
+      ],
       "reachable_file": "cases/cpp/src/reachable_path_traversal.cpp",
       "unreachable_file": "cases/cpp/src/unreachable_path_traversal.cpp",
       "reachable": true,
@@ -79,7 +102,10 @@
       "expected_severity": "high",
       "data_flow": "argv[1] -> base_dir + relative path -> file read",
       "expected_remediation": "Canonicalize path and enforce that it remains inside the allowed base directory.",
-      "expected_tests": ["../ traversal is rejected", "allowed file path succeeds"],
+      "expected_tests": [
+        "../ traversal is rejected",
+        "allowed file path succeeds"
+      ],
       "false_positive_boundary": "unreachable_path_traversal.cpp validates path before use despite suspicious concatenation helper."
     },
     {
@@ -87,7 +113,9 @@
       "ecosystem": "csharp",
       "language": "C# / .NET",
       "defect_class": "sql_injection",
-      "cwe": ["CWE-89"],
+      "cwe": [
+        "CWE-89"
+      ],
       "reachable_file": "cases/csharp/src/ReachableSqlInjection.cs",
       "unreachable_file": "cases/csharp/src/UnreachableSqlInjection.cs",
       "reachable": true,
@@ -95,7 +123,10 @@
       "expected_severity": "critical",
       "data_flow": "route email parameter -> SQL string concatenation -> ExecuteReader",
       "expected_remediation": "Use parameterized queries and validate expected email shape.",
-      "expected_tests": ["injection payload returns no extra rows", "normal email lookup works"],
+      "expected_tests": [
+        "injection payload returns no extra rows",
+        "normal email lookup works"
+      ],
       "false_positive_boundary": "unreachable C# example uses a constant query path and a dead legacy method."
     },
     {
@@ -103,7 +134,9 @@
       "ecosystem": "dotnet-dependency",
       "language": "C# / .NET dependency simulation",
       "defect_class": "dependency_vulnerability_patch_in_place",
-      "cwe": ["CWE-20"],
+      "cwe": [
+        "CWE-20"
+      ],
       "reachable_file": "cases/dotnet-dependency/src/ConsumerUsesVulnerableParser.cs",
       "unreachable_file": "cases/dotnet-dependency/src/PatchedParserSimulation.cs",
       "reachable": true,
@@ -111,8 +144,75 @@
       "expected_severity": "high",
       "data_flow": "consumer input -> vulnerable dependency parser accepts traversal-like tenant id",
       "expected_remediation": "Prepare upstream-style parser validation patch, regression tests, and internal artifact traceability until upstream accepts fix.",
-      "expected_tests": ["invalid tenant id rejected", "valid tenant id accepted", "patched artifact version recorded"],
+      "expected_tests": [
+        "invalid tenant id rejected",
+        "valid tenant id accepted",
+        "patched artifact version recorded"
+      ],
       "false_positive_boundary": "patched simulation demonstrates expected fixed behaviour for agent comparison."
+    },
+    {
+      "id": "JAVA-XXE-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "xml_external_entity",
+      "cwe": [
+        "CWE-611"
+      ],
+      "reachable_file": "cases/java/src/ReachableXxe.java",
+      "unreachable_file": "cases/java/src/UnreachableXxe.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "uploaded XML body -> default DocumentBuilderFactory -> external entity resolution",
+      "expected_remediation": "Disable DTDs and external entity resolution; restrict external DTD/schema access.",
+      "expected_tests": [
+        "XXE payload is rejected",
+        "normal XML still parses"
+      ],
+      "false_positive_boundary": "UnreachableXxe.java contains a private unsafe legacy parser but public parsing path disables XXE."
+    },
+    {
+      "id": "C-MEM-001",
+      "ecosystem": "c",
+      "language": "C",
+      "defect_class": "memory_leak",
+      "cwe": [
+        "CWE-401"
+      ],
+      "reachable_file": "cases/c/src/reachable_memory_leak.c",
+      "unreachable_file": "cases/c/src/unreachable_memory_leak.c",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "argv[1] -> malloc in make_message -> printed without free",
+      "expected_remediation": "Free allocated memory on all paths or redesign ownership to avoid heap allocation.",
+      "expected_tests": [
+        "normal path frees allocation",
+        "leak checker reports no definitely-lost bytes"
+      ],
+      "false_positive_boundary": "unreachable_memory_leak.c has a legacy allocator helper that is not called; reachable path frees allocation."
+    },
+    {
+      "id": "CPP-MEM-001",
+      "ecosystem": "cpp",
+      "language": "C++",
+      "defect_class": "memory_leak",
+      "cwe": [
+        "CWE-401"
+      ],
+      "reachable_file": "cases/cpp/src/reachable_memory_leak.cpp",
+      "unreachable_file": "cases/cpp/src/unreachable_memory_leak.cpp",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "argv[1] -> new Session in handleLogin -> no delete before return",
+      "expected_remediation": "Use RAII/smart pointers or stack allocation to make ownership deterministic.",
+      "expected_tests": [
+        "login path releases Session",
+        "leak checker reports no definitely-lost bytes"
+      ],
+      "false_positive_boundary": "unreachable_memory_leak.cpp keeps a legacy raw-pointer factory private while reachable path uses unique_ptr."
     }
   ]
 }

@@ -69,6 +69,9 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Go | `GO-DNS-EXFIL-001` | DNS exfiltration pattern | reachable + unreachable |
 | TypeScript | `TS-TELEMETRY-NET-001` | undeclared telemetry beacon | reachable + unreachable |
 | Node.js | `NODE-RUNTIME-EGRESS-001` | runtime egress to unapproved host | reachable + unreachable |
+| JavaScript | `CVE-LODASH-PP-001` | listed `CVE-2019-10744` requiring fix-in-place to avoid breaking downstream lodash-3 API users | reachable + unreachable + fixed |
+| JavaScript | `CVE-JQUERY-HTML-001` | listed `CVE-2020-11023` requiring fix-in-place to avoid breaking legacy GUI plugin APIs | reachable + unreachable + fixed |
+| JavaScript | `CVE-LODASH-TEMPLATE-UNLISTED-001` | unlisted `CVE-2021-23337` that should be discovered opportunistically | reachable + unreachable + fixed |
 
 ## Validation
 
@@ -131,6 +134,16 @@ These cases are important because tools and humans often disagree about what inv
 The corpus includes a first pass for code and dependency behaviours that make outbound network connections outside declared expectations: install-time hooks, import-time callbacks, metadata-service access, DNS exfiltration patterns, undeclared telemetry beacons, and runtime egress to unapproved hosts.
 
 Harness checks detect network intent statically and structurally. They do not make real outbound network connections. Safe paired fixtures remove implicit egress, route approved network activity through explicit injected clients, block metadata/link-local endpoints, and enforce host allowlists where runtime egress is legitimate.
+
+## Scanner-Listed CVE Fix-in-Place Fixtures
+
+The corpus includes scanner-style CVE input under `scanner-inputs/`. `scanner-inputs/breaking-upgrade-cve-list.json` simulates a tool export that lists specific dependency CVEs and recommended fixed versions. The cases deliberately test three behaviours:
+
+- fixing scanner-listed CVEs, not vague dependency risk
+- avoiding blind dependency upgrades when the fixed major/minor line would break public API or GUI surfaces downstream code relies on
+- continuing to inspect for additional known CVEs not present in the scanner list, then fixing or reporting them safely
+
+The first CVE fixtures cover `CVE-2019-10744` in lodash and `CVE-2020-11023` in jQuery as listed findings, plus `CVE-2021-23337` in lodash as an intentionally unlisted opportunistic finding. Expected remediations prefer the smallest safe fix-in-place path, with compatibility risk and eventual dependency-retirement follow-up documented rather than hand-waved.
 
 ## Fixed-Version Fixtures
 

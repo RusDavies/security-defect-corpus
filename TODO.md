@@ -23,3 +23,7 @@
 - [x] Add curated candidate-repair evidence packets using the patch-diff scorer across representative cases.
 
 - [ ] Add adversarial candidate-repair evidence packets for partial, superficially fixed, and unsafe-regression repairs so scorer thresholds can be calibrated against bad-but-plausible agent output.
+
+- [x] Add scanner-listed CVE fixtures for fix-in-place remediation when direct dependency upgrades would break API or GUI surfaces, including an intentionally unlisted CVE for opportunistic discovery.
+
+- [ ] Add runnable CVE-list prompt/evidence packets that feed `scanner-inputs/` into the remediation prompt pack and score whether listed and unlisted CVEs are handled correctly.

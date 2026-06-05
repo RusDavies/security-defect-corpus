@@ -28,4 +28,6 @@
 
 - [x] Add runnable CVE-list prompt/evidence packets that feed `scanner-inputs/` into the remediation prompt pack and score whether listed and unlisted CVEs are handled correctly.
 
-- [ ] Add failing/adversarial CVE-list evidence packets that demonstrate missed listed CVEs, unsafe blind upgrades, and missed unlisted CVEs.
+- [x] Add failing/adversarial CVE-list evidence packets that demonstrate missed listed CVEs, unsafe blind upgrades, and missed unlisted CVEs.
+
+- [ ] Add machine-readable expected-failure manifests for all adversarial packet suites so future suites can be extended without editing Python constants.

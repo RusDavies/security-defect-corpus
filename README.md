@@ -147,9 +147,9 @@ The first CVE fixtures cover `CVE-2019-10744` in lodash and `CVE-2020-11023` in 
 
 ## CVE Evidence Packet Evaluation
 
-Use `scripts/evaluate_cve_list_packet.py` to score prompt/agent evidence for scanner-listed CVE remediation runs. The evaluator verifies that listed CVEs are handled, fix-in-place is chosen when compatibility-sensitive surfaces would break under direct upgrade, intentionally unlisted CVEs are discovered/reported, and tests/residual risks/approval gates are present. Use `scripts/run_cve_packet_suite.py` to run the committed positive and adversarial packet suite.
+Use `scripts/evaluate_cve_list_packet.py` to score prompt/agent evidence for scanner-listed CVE remediation runs. The evaluator verifies that listed CVEs are handled, fix-in-place is chosen when compatibility-sensitive surfaces would break under direct upgrade, intentionally unlisted CVEs are discovered/reported, and tests/residual risks/approval gates are present.
 
-Example:
+Example single-packet evaluation:
 
 ```bash
 python3 scripts/evaluate_cve_list_packet.py \
@@ -158,7 +158,9 @@ python3 scripts/evaluate_cve_list_packet.py \
   --output evidence-packets/cve-list-fix-in-place-smoke/score-results.json
 ```
 
-Adversarial packets under `evidence-packets/cve-list-adversarial-*` intentionally demonstrate missed listed CVEs, unsafe blind upgrades, and missed unlisted CVEs. The suite expects those packets to fail for specific checks.
+Use `scripts/run_cve_packet_suite.py` to run the committed packet suite. The suite contains one positive-control packet that should pass and negative-control packets that should fail for documented reasons. A suite pass means the evaluator accepted the good packet and rejected the bad packets for the expected checks.
+
+Each packet directory has an `expected-result.json` manifest declaring its role, intent, expected evaluator status, and expected failed checks. This keeps the negative-control intent close to the packet instead of hiding it in Python constants.
 
 ```bash
 python3 scripts/run_cve_packet_suite.py

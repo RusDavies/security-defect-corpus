@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Run the committed CVE evidence packet suite.
 
-The suite expects the smoke packet to pass and adversarial packets to fail for
-specific reasons. It lets CI prove the evaluator catches bad prompt output.
+The suite has one positive-control packet that must pass and several
+negative-control packets that must fail for documented reasons. A suite pass
+therefore means the evaluator accepted the good packet and rejected the bad
+packets for their expected failure checks.
 """
 from __future__ import annotations
 
@@ -10,47 +12,35 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 SCANNER = "scanner-inputs/breaking-upgrade-cve-list.json"
 EVALUATOR = ROOT / "scripts" / "evaluate_cve_list_packet.py"
-
-CASES = [
-    {
-        "name": "cve-list-fix-in-place-smoke",
-        "evidence": "evidence-packets/cve-list-fix-in-place-smoke/remediation-evidence.json",
-        "expected_status": "pass",
-        "expected_failed_checks": [],
-    },
-    {
-        "name": "cve-list-adversarial-missed-listed-cve",
-        "evidence": "evidence-packets/cve-list-adversarial-missed-listed-cve/remediation-evidence.json",
-        "expected_status": "fail",
-        "expected_failed_checks": ["listed-CVE-2020-11023-present"],
-    },
-    {
-        "name": "cve-list-adversarial-unsafe-blind-upgrade",
-        "evidence": "evidence-packets/cve-list-adversarial-unsafe-blind-upgrade/remediation-evidence.json",
-        "expected_status": "fail",
-        "expected_failed_checks": [
-            "listed-CVE-2019-10744-fix-in-place",
-            "listed-CVE-2019-10744-compatibility-preserved",
-            "listed-CVE-2019-10744-compatibility-surface-documented",
-            "listed-CVE-2020-11023-fix-in-place",
-            "listed-CVE-2020-11023-compatibility-preserved",
-            "listed-CVE-2020-11023-compatibility-surface-documented",
-        ],
-    },
-    {
-        "name": "cve-list-adversarial-missed-unlisted-cve",
-        "evidence": "evidence-packets/cve-list-adversarial-missed-unlisted-cve/remediation-evidence.json",
-        "expected_status": "fail",
-        "expected_failed_checks": ["unlisted-CVE-2021-23337-discovered"],
-    },
+PACKET_DIRS = [
+    ROOT / "evidence-packets" / "cve-list-fix-in-place-smoke",
+    ROOT / "evidence-packets" / "cve-list-adversarial-missed-listed-cve",
+    ROOT / "evidence-packets" / "cve-list-adversarial-unsafe-blind-upgrade",
+    ROOT / "evidence-packets" / "cve-list-adversarial-missed-unlisted-cve",
 ]
 
 
-def run_case(case: dict) -> dict:
+def load_packet(packet_dir: Path) -> dict[str, Any]:
+    expected_path = packet_dir / "expected-result.json"
+    evidence_path = packet_dir / "remediation-evidence.json"
+    expected = json.loads(expected_path.read_text())
+    return {
+        "name": packet_dir.name,
+        "packet_dir": packet_dir,
+        "evidence": str(evidence_path.relative_to(ROOT)),
+        "packet_role": expected["packet_role"],
+        "intent": expected["intent"],
+        "expected_status": expected["expected_status"],
+        "expected_failed_checks": expected.get("expected_failed_checks", []),
+    }
+
+
+def run_case(case: dict[str, Any]) -> dict[str, Any]:
     output = ROOT / "cve-evaluation-results" / f"{case['name']}.json"
     cmd = [
         sys.executable,
@@ -74,6 +64,8 @@ def run_case(case: dict) -> dict:
     )
     return {
         "name": case["name"],
+        "packet_role": case["packet_role"],
+        "intent": case["intent"],
         "expected_status": case["expected_status"],
         "actual_status": result["status"],
         "score": result["score"],
@@ -86,7 +78,8 @@ def run_case(case: dict) -> dict:
 
 
 def main() -> int:
-    results = [run_case(case) for case in CASES]
+    cases = [load_packet(packet_dir) for packet_dir in PACKET_DIRS]
+    results = [run_case(case) for case in cases]
     summary = {
         "schema_version": "1.0",
         "case_count": len(results),
@@ -100,7 +93,10 @@ def main() -> int:
     print(f"cve packet suite: {summary['passed_expectations']} expected / {summary['failed_expectations']} unexpected across {summary['case_count']} packets")
     for result in results:
         marker = "ok" if result["expectation_ok"] else "bad"
-        print(f"- {marker}: {result['name']} expected={result['expected_status']} actual={result['actual_status']} score={result['score']}")
+        print(
+            f"- {marker}: {result['name']} role={result['packet_role']} "
+            f"expected={result['expected_status']} actual={result['actual_status']} score={result['score']}"
+        )
         if not result["expectation_ok"]:
             print(f"  expected failed checks: {result['expected_failed_checks']}")
             print(f"  actual failed checks: {result['actual_failed_checks']}")

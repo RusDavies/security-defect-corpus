@@ -292,6 +292,60 @@ def _(case):
     ]
 
 
+@check_case("NODE-INSTALL-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-postinstall-https-request", "https.request" in reach and "postinstall" in reach),
+        result(case["id"], "safe-pair-local-install-only", "https" not in safe and "writeFileSync" in safe),
+    ]
+
+
+@check_case("PY-IMPORT-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-top-level-urlopen", "urllib.request.urlopen" in reach and "# Importing this module unexpectedly calls out" in reach),
+        result(case["id"], "safe-pair-explicit-injected-client", "urllib" not in safe and "fetch_declared_update(urlopen, url)" in safe),
+    ]
+
+
+@check_case("JAVA-METADATA-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-metadata-service-url", "169.254.169.254" in reach and "HttpClient.newHttpClient" in reach),
+        result(case["id"], "safe-pair-blocks-metadata-service", "169.254.169.254" in safe and "metadata-service endpoint blocked" in safe),
+    ]
+
+
+@check_case("GO-DNS-EXFIL-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-dns-lookup-from-env", "net.LookupHost" in reach and "os.Getenv" in reach),
+        result(case["id"], "safe-pair-no-net-import", "net.LookupHost" not in safe and '"net"' not in safe),
+    ]
+
+
+@check_case("TS-TELEMETRY-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-fetch-telemetry", "fetch('https://telemetry.example.invalid/usage'" in reach),
+        result(case["id"], "safe-pair-no-fetch", "fetch(" not in safe and "approved explicit telemetry client" in safe),
+    ]
+
+
+@check_case("NODE-RUNTIME-EGRESS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-unapproved-https-get", "https.get('https://unknown-third-party.example.invalid" in reach),
+        result(case["id"], "safe-pair-egress-allowlist", "APPROVED_EGRESS_HOSTS" in safe and "approvedClient.post" in safe),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

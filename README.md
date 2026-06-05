@@ -63,6 +63,12 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Java | `JAVA-BIDI-001` | Unicode bidi filename deception | reachable + unreachable |
 | JavaScript | `JS-UWS-001` | Unicode whitespace token parsing confusion | reachable + unreachable |
 | C++ | `CPP-ENC-PATH-001` | encoded path traversal normalization bypass | reachable + unreachable |
+| Node.js | `NODE-INSTALL-NET-001` | install-time unexpected network call | reachable + unreachable |
+| Python | `PY-IMPORT-NET-001` | import-time unexpected network callback | reachable + unreachable |
+| Java | `JAVA-METADATA-NET-001` | unexpected metadata-service access | reachable + unreachable |
+| Go | `GO-DNS-EXFIL-001` | DNS exfiltration pattern | reachable + unreachable |
+| TypeScript | `TS-TELEMETRY-NET-001` | undeclared telemetry beacon | reachable + unreachable |
+| Node.js | `NODE-RUNTIME-EGRESS-001` | runtime egress to unapproved host | reachable + unreachable |
 
 ## Validation
 
@@ -119,3 +125,9 @@ Harness output is written to `harness-results/latest.json`, which is ignored by 
 The corpus includes a dedicated first pass for non-printing and invisible-character payload families: CRLF/header injection, log-control injection, zero-width identifier confusion, null-byte/control-character path validation bypass, Unicode bidi filename deception, Unicode whitespace token parsing confusion, and encoded path traversal normalization bypass.
 
 These cases are important because tools and humans often disagree about what invisible input means. The expected safe behaviour is to normalize, canonicalize, reject dangerous controls, and log escaped representations before making authorization, path, parser, header, or audit decisions.
+
+### Unexpected Network Connections
+
+The corpus includes a first pass for code and dependency behaviours that make outbound network connections outside declared expectations: install-time hooks, import-time callbacks, metadata-service access, DNS exfiltration patterns, undeclared telemetry beacons, and runtime egress to unapproved hosts.
+
+Harness checks detect network intent statically and structurally. They do not make real outbound network connections. Safe paired fixtures remove implicit egress, route approved network activity through explicit injected clients, block metadata/link-local endpoints, and enforce host allowlists where runtime egress is legitimate.

@@ -40,6 +40,9 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | C++ | `CPP-PATH-001` | path traversal | reachable + unreachable |
 | C#/.NET | `CS-SQLI-001` | SQL injection | reachable + unreachable |
 | Dependency | `DEP-UPSTREAM-001` | vulnerable dependency requiring upstream-style patch | reachable + patched simulation |
+| Java | `JAVA-XXE-001` | XML external entity / XXE | reachable + unreachable |
+| C | `C-MEM-001` | heap memory leak | reachable + unreachable |
+| C++ | `CPP-MEM-001` | owning-pointer memory leak | reachable + unreachable |
 
 ## Validation
 
@@ -54,3 +57,22 @@ The validator checks that every ground-truth case has source files, expected rem
 ## Relationship to Management Practices
 
 This corpus supports the security-defect remediation prompt pack in `docs-management-practices` by providing controlled fixtures with known truth, false-positive boundaries, reachability/exposure context, dependency cases, and expected evidence.
+
+## Defect Class Expansion Roadmap
+
+The baseline corpus is intentionally small. It should expand across both language families and defect classes.
+
+Priority defect classes to add:
+
+- injection: SQL, command, LDAP, template, expression-language, NoSQL
+- access control: IDOR, missing authorization, privilege escalation, confused deputy
+- memory safety: buffer overflow, use-after-free, double free, memory leak, integer overflow, format string
+- unsafe parsing: XXE, path traversal, unsafe archive extraction, deserialization
+- web/session: XSS, CSRF, SSRF, open redirect, insecure cookies, CORS mistakes
+- crypto/secrets: hardcoded secrets, weak randomness, broken crypto, key/secret exposure
+- dependency/supply chain: vulnerable dependency, malicious package simulation, patch-in-place, upstream fix workflow
+- cloud/configuration: public bucket, overbroad IAM, exposed admin interface, unsafe defaults
+- concurrency/state: race conditions, TOCTOU, lock misuse, stale authorization decisions
+- logging/privacy: sensitive data in logs, over-retention, telemetry leakage
+
+Memory leaks in C and C++ should remain first-class cases because they are common, detectable, and operationally/security relevant when repeated allocations can produce denial of service or long-running process degradation. Tiny allocations leaking once are less interesting than reachable repeated leaks with realistic ownership mistakes.

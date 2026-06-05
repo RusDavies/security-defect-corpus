@@ -482,6 +482,164 @@
         "password/token absent from logs"
       ],
       "false_positive_boundary": "Safe pair redacts sensitive fields."
+    },
+    {
+      "id": "NODE-CRLF-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "crlf_header_injection",
+      "cwe": [
+        "CWE-93",
+        "CWE-113"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_crlf_header_injection.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_crlf_header_injection.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "request.query.next containing CRLF -> Location response header",
+      "expected_remediation": "Reject CR/LF/NUL/control characters before setting headers.",
+      "expected_tests": [
+        "CRLF payload rejected",
+        "normal redirect accepted"
+      ],
+      "false_positive_boundary": "Safe pair rejects CR, LF, NUL, C0 controls, and DEL.",
+      "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "NODE-LOGCTRL-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "log_control_character_injection",
+      "cwe": [
+        "CWE-117"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_log_control_chars.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_log_control_chars.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "request body user containing newline/control chars -> audit log",
+      "expected_remediation": "Escape control characters before logging user input.",
+      "expected_tests": [
+        "newline payload escaped",
+        "normal username readable"
+      ],
+      "false_positive_boundary": "Safe pair emits escaped unicode sequences for controls.",
+      "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "TS-ZWSP-001",
+      "ecosystem": "typescript",
+      "language": "TypeScript",
+      "defect_class": "zero_width_identifier_confusion",
+      "cwe": [
+        "CWE-180",
+        "CWE-178"
+      ],
+      "reachable_file": "cases/typescript/src/reachable_zero_width_username.ts",
+      "unreachable_file": "cases/typescript/src/unreachable_zero_width_username.ts",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "username with zero-width characters -> uniqueness/auth confusion",
+      "expected_remediation": "Normalize identifiers and reject/remove zero-width characters before comparison.",
+      "expected_tests": [
+        "admin+ZWSP treated as duplicate",
+        "normal name accepted"
+      ],
+      "false_positive_boundary": "Safe pair normalizes and strips zero-width characters.",
+      "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "JAVA-NULPATH-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "null_byte_path_validation_bypass",
+      "cwe": [
+        "CWE-158",
+        "CWE-22"
+      ],
+      "reachable_file": "cases/java/src/ReachableNullBytePath.java",
+      "unreachable_file": "cases/java/src/UnreachableNullBytePath.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "filename with NUL/control characters -> suffix validation confusion",
+      "expected_remediation": "Reject NUL/control characters and canonicalize before extension checks.",
+      "expected_tests": [
+        "evil.php\\0.png rejected",
+        "image.png accepted"
+      ],
+      "false_positive_boundary": "Safe pair rejects NUL/control characters before suffix checks.",
+      "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "JAVA-BIDI-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "unicode_bidi_filename_deception",
+      "cwe": [
+        "CWE-451"
+      ],
+      "reachable_file": "cases/java/src/ReachableBidiFilename.java",
+      "unreachable_file": "cases/java/src/UnreachableBidiFilename.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "filename with bidi controls -> display/source/log deception",
+      "expected_remediation": "Reject bidi control characters in display/security-sensitive identifiers.",
+      "expected_tests": [
+        "bidi filename rejected",
+        "normal filename accepted"
+      ],
+      "false_positive_boundary": "Safe pair rejects U+202A-U+202E and isolate controls.",
+      "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "JS-UWS-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "unicode_whitespace_token_parsing",
+      "cwe": [
+        "CWE-180"
+      ],
+      "reachable_file": "cases/javascript/src/reachable_unicode_whitespace_token.js",
+      "unreachable_file": "cases/javascript/src/unreachable_unicode_whitespace_token.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "role header with NBSP/line separator -> parser sees different token boundary",
+      "expected_remediation": "Normalize and split on full expected whitespace classes.",
+      "expected_tests": [
+        "NBSP-separated roles split correctly",
+        "ASCII roles still split"
+      ],
+      "false_positive_boundary": "Safe pair normalizes and splits on Unicode whitespace classes.",
+      "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "CPP-ENC-PATH-001",
+      "ecosystem": "cpp",
+      "language": "C++",
+      "defect_class": "encoded_path_traversal_bypass",
+      "cwe": [
+        "CWE-22",
+        "CWE-180"
+      ],
+      "reachable_file": "cases/cpp/src/reachable_encoded_path_traversal.cpp",
+      "unreachable_file": "cases/cpp/src/unreachable_encoded_path_traversal.cpp",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "encoded traversal such as %2e%2e%2f bypasses pre-decode .. check",
+      "expected_remediation": "Decode/canonicalize before traversal checks and enforce path boundary after decoding.",
+      "expected_tests": [
+        "encoded traversal rejected",
+        "allowed filename accepted"
+      ],
+      "false_positive_boundary": "Safe pair performs decode/canonicalization step before traversal checks.",
+      "payload_family": "non_printing_or_invisible_characters"
     }
   ]
 }

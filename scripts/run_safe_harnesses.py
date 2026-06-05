@@ -229,6 +229,69 @@ def _(case):
     return [result(case["id"], "reachable-sensitive-log", "password: req.body.password" in reach and "mfaToken" in reach), result(case["id"], "safe-pair-redacts", "[redacted]" in safe)]
 
 
+@check_case("NODE-CRLF-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-header-user-value", "res.setHeader('Location', next)" in reach and "[\\r\\n" not in reach),
+        result(case["id"], "safe-pair-rejects-controls", "\\r\\n" in safe and "\\u0000-\\u001f" in safe),
+    ]
+
+
+@check_case("NODE-LOGCTRL-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-raw-log-concat", "console.log('LOGIN user=' + user)" in reach and "escapeForLog" not in reach),
+        result(case["id"], "safe-pair-escapes-control-chars", "escapeForLog" in safe and "charCodeAt" in safe),
+    ]
+
+
+@check_case("TS-ZWSP-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-raw-username-set", "existingUsers.has(username)" in reach and "normalize" not in reach),
+        result(case["id"], "safe-pair-normalizes-zero-width", "normalize('NFC')" in safe and "\\u200B" in safe),
+    ]
+
+
+@check_case("JAVA-NULPATH-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-suffix-only", "endsWith" in reach and "indexOf('\\0')" not in reach),
+        result(case["id"], "safe-pair-rejects-nul-control", "indexOf('\\0')" in safe and "Normalizer.normalize" in safe),
+    ]
+
+
+@check_case("JAVA-BIDI-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-no-bidi-check", "isSafeDisplayName" in reach and "\\u202A" not in reach),
+        result(case["id"], "safe-pair-rejects-bidi", "\\\\u202A-\\\\u202E" in safe and "\\\\u2066-\\\\u2069" in safe),
+    ]
+
+
+@check_case("JS-UWS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-ascii-space-only", "split(' ')" in reach),
+        result(case["id"], "safe-pair-unicode-whitespace", "normalize('NFKC')" in safe and "\\u00A0" in safe),
+    ]
+
+
+@check_case("CPP-ENC-PATH-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-checks-before-decode", "requested.find(\"..\")" in reach and "percentDecodeOnce" not in reach),
+        result(case["id"], "safe-pair-decodes-before-check", "percentDecodeOnce" in safe and "decoded.find(\"..\")" in safe),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

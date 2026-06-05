@@ -56,6 +56,13 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Cloud config | `CLOUD-BUCKET-001` | public bucket policy | reachable + unreachable |
 | C++ | `CPP-TOCTOU-001` | TOCTOU race | reachable + unreachable |
 | Node.js | `NODE-LOG-001` | sensitive-data logging | reachable + unreachable |
+| Node.js | `NODE-CRLF-001` | CRLF/header injection with control characters | reachable + unreachable |
+| Node.js | `NODE-LOGCTRL-001` | log control-character injection | reachable + unreachable |
+| TypeScript | `TS-ZWSP-001` | zero-width identifier confusion | reachable + unreachable |
+| Java | `JAVA-NULPATH-001` | null byte/control-character path validation bypass | reachable + unreachable |
+| Java | `JAVA-BIDI-001` | Unicode bidi filename deception | reachable + unreachable |
+| JavaScript | `JS-UWS-001` | Unicode whitespace token parsing confusion | reachable + unreachable |
+| C++ | `CPP-ENC-PATH-001` | encoded path traversal normalization bypass | reachable + unreachable |
 
 ## Validation
 
@@ -106,3 +113,9 @@ The harness intentionally avoids executing exploit payloads. It checks that:
 - C, C++, and Java fixtures pass optional syntax checks when local compilers are available
 
 Harness output is written to `harness-results/latest.json`, which is ignored by git.
+
+### Non-Printing and Invisible-Character Abuse
+
+The corpus includes a dedicated first pass for non-printing and invisible-character payload families: CRLF/header injection, log-control injection, zero-width identifier confusion, null-byte/control-character path validation bypass, Unicode bidi filename deception, Unicode whitespace token parsing confusion, and encoded path traversal normalization bypass.
+
+These cases are important because tools and humans often disagree about what invisible input means. The expected safe behaviour is to normalize, canonicalize, reject dangerous controls, and log escaped representations before making authorization, path, parser, header, or audit decisions.

@@ -813,6 +813,96 @@
       "false_positive_boundary": "Safe pair validates approved egress hosts and uses injected client.",
       "payload_family": "unexpected_network_connections",
       "fixed_file": "fixed/NODE-RUNTIME-EGRESS-001/fixed_runtime_egress.js"
+    },
+    {
+      "id": "CVE-LODASH-PP-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "known_cve_fix_in_place_dependency",
+      "cwe": [
+        "CWE-1321"
+      ],
+      "cve": [
+        "CVE-2019-10744"
+      ],
+      "scanner_listed": true,
+      "scanner_input": "scanner-inputs/breaking-upgrade-cve-list.json",
+      "breaking_upgrade_risk": "lodash 3 to 4 removes/renames APIs relied on by downstream code, including lodash-3-style pluck behaviour exposed by this package",
+      "expected_fix_strategy": "fix-in-place",
+      "reachable_file": "cases/javascript/src/reachable_lodash_defaultsdeep_cve_2019_10744.js",
+      "unreachable_file": "cases/javascript/src/unreachable_lodash_defaultsdeep_cve_2019_10744.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "scanner CVE list -> lodash@3.10.1 defaultsDeep merge of tenant options -> prototype pollution risk",
+      "expected_remediation": "Patch reachable merge logic in place by rejecting prototype-pollution keys and preserving downstream API compatibility.",
+      "expected_tests": [
+        "__proto__/constructor/prototype keys rejected",
+        "normal nested options still merge",
+        "public getDisplayNames API preserved"
+      ],
+      "false_positive_boundary": "unreachable pair retains old defaultsDeep only in a disabled migration helper while exported merge rejects prototype keys.",
+      "fixed_file": "fixed/CVE-LODASH-PP-001/fixed_lodash_defaultsdeep_cve_2019_10744.js"
+    },
+    {
+      "id": "CVE-JQUERY-HTML-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "known_cve_fix_in_place_dependency",
+      "cwe": [
+        "CWE-79"
+      ],
+      "cve": [
+        "CVE-2020-11023"
+      ],
+      "scanner_listed": true,
+      "scanner_input": "scanner-inputs/breaking-upgrade-cve-list.json",
+      "breaking_upgrade_risk": "jQuery 1.x to 3.5+ can break legacy GUI plugins that depend on removed .size()/.andSelf() surfaces",
+      "expected_fix_strategy": "fix-in-place",
+      "reachable_file": "cases/javascript/src/reachable_jquery_htmlprefilter_cve_2020_11023.js",
+      "unreachable_file": "cases/javascript/src/unreachable_jquery_htmlprefilter_cve_2020_11023.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "scanner CVE list -> jquery@1.12.4 -> untrusted option preview passed through .html() DOM insertion",
+      "expected_remediation": "Avoid untrusted HTML-string DOM insertion for option preview rendering while preserving legacy GUI plugin API.",
+      "expected_tests": [
+        "attacker-controlled option label rendered as text",
+        "legacy wizard plugin surface preserved",
+        "no direct .html(untrustedOptionHtml) sink remains"
+      ],
+      "false_positive_boundary": "unreachable pair keeps the legacy plugin API but renders option labels via text-node construction.",
+      "fixed_file": "fixed/CVE-JQUERY-HTML-001/fixed_jquery_htmlprefilter_cve_2020_11023.js"
+    },
+    {
+      "id": "CVE-LODASH-TEMPLATE-UNLISTED-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "opportunistic_unlisted_known_cve",
+      "cwe": [
+        "CWE-94"
+      ],
+      "cve": [
+        "CVE-2021-23337"
+      ],
+      "scanner_listed": false,
+      "scanner_input": "scanner-inputs/breaking-upgrade-cve-list.json",
+      "breaking_upgrade_risk": "not listed by the scanner export; should be reported and fixed opportunistically if safe",
+      "expected_fix_strategy": "report-and-fix-if-safe",
+      "reachable_file": "cases/javascript/src/reachable_lodash_template_cve_2021_23337_unlisted.js",
+      "unreachable_file": "cases/javascript/src/unreachable_lodash_template_cve_2021_23337_unlisted.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "untrusted template source and variable name -> lodash.template compilation surface",
+      "expected_remediation": "Report the additional CVE and constrain template compilation to vetted templates with application-controlled variable names.",
+      "expected_tests": [
+        "unlisted CVE reported despite scanner omission",
+        "unknown template id rejected",
+        "compiled templates use fixed application-controlled variable name"
+      ],
+      "false_positive_boundary": "unreachable pair compiles only vetted templates with fixed variable name.",
+      "fixed_file": "fixed/CVE-LODASH-TEMPLATE-UNLISTED-001/fixed_lodash_template_cve_2021_23337.js"
     }
   ]
 }

@@ -346,6 +346,43 @@ def _(case):
     ]
 
 
+@check_case("CVE-LODASH-PP-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-listed-cve-defaultsdeep", "CVE-2019-10744" in reach and "_.defaultsDeep" in reach),
+        result(case["id"], "reachable-breaking-upgrade-surface", "_.pluck" in reach and "getDisplayNames" in reach),
+        result(case["id"], "safe-pair-blocks-prototype-keys", "prototype pollution key blocked" in safe),
+        result(case["id"], "fixed-in-place-preserves-public-api", "safeMerge" in fixed and "_.pluck" in fixed and "module.exports = { mergeTenantOptions, getDisplayNames }" in fixed),
+    ]
+
+
+@check_case("CVE-JQUERY-HTML-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-listed-cve-html-sink", "CVE-2020-11023" in reach and ".html(sanitizedOptionHtml)" in reach),
+        result(case["id"], "reachable-gui-breaking-surface", ".andSelf().size()" in reach),
+        result(case["id"], "safe-pair-text-node-render", ".text(String(optionLabel))" in safe and ".html(" not in safe),
+        result(case["id"], "fixed-in-place-preserves-gui-api", "1.12.4-patched-local" in fixed and ".andSelf().size()" in fixed and ".text(String(optionLabel))" in fixed),
+    ]
+
+
+@check_case("CVE-LODASH-TEMPLATE-UNLISTED-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    scanner = read(case["scanner_input"])
+    return [
+        result(case["id"], "reachable-unlisted-cve-template", "CVE-2021-23337" in reach and "variableName" in reach and "_.template(templateSource" in reach),
+        result(case["id"], "scanner-list-omits-cve-from-findings", "CVE-2021-23337" in scanner and '"findings"' in scanner and '"case_id": "CVE-LODASH-TEMPLATE-UNLISTED-001"' not in scanner.split('"intentionally_omitted_for_opportunistic_detection"')[0]),
+        result(case["id"], "safe-pair-vetted-template", "templates[templateId]" in safe and "variable: 'user'" in safe),
+        result(case["id"], "fixed-rejects-unknown-template", "unknown template id" in fixed and "variable: 'user'" in fixed and "templateSource" not in fixed),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

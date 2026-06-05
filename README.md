@@ -141,3 +141,29 @@ Each ground-truth case now records a `fixed_file` under `fixed/<CASE-ID>/`. Thes
 - fixed fixture: gives remediation agents a known-good target shape for generated patch comparison
 
 The validator requires every case to include a fixed file, and the safe harness verifies that fixed files exist and avoid the case-specific vulnerable pattern where applicable.
+
+## Patch-Diff Scoring
+
+Use `scripts/score_patch_diff.py` to compare generated repairs against the fixed-version fixtures without requiring exact byte-for-byte matches.
+
+Example single-case run:
+
+```bash
+python3 scripts/score_patch_diff.py   --case-id NODE-SSRF-001   --candidate-file candidate-repairs/run-001/NODE-SSRF-001/fix.js
+```
+
+Example multi-case run:
+
+```bash
+python3 scripts/score_patch_diff.py --run-dir candidate-repairs/run-001
+```
+
+The scorer checks:
+
+- similarity to the known fixed fixture
+- distance from the reachable vulnerable fixture
+- case-specific harness pass/fail signals
+- residual high-risk tokens and network/execution patterns
+- normalized exact match where applicable
+
+Scoring output is written to `scoring-results/latest.json` by default and is ignored by git. A passing score is not a production approval; it is evidence for review.

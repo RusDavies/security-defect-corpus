@@ -18,4 +18,6 @@
 
 - [ ] Add deeper unexpected-network variants: package-manager lifecycle scripts across ecosystems, WebSocket/beacon APIs, SMTP callbacks, proxy bypasses, IPv6/link-local metadata aliases, dependency update scripts, and egress-policy evidence packets.
 
-- [ ] Add semantic patch-diff scoring that compares generated repairs against `fixed/<CASE-ID>/` target fixtures while allowing equivalent safe implementations.
+- [x] Add semantic patch-diff scoring that compares generated repairs against `fixed/<CASE-ID>/` target fixtures while allowing equivalent safe implementations.
+
+- [ ] Add curated candidate-repair evidence packets using the patch-diff scorer across representative cases.

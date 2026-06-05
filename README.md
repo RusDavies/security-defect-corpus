@@ -158,6 +158,12 @@ Example multi-case run:
 python3 scripts/score_patch_diff.py --run-dir candidate-repairs/run-001
 ```
 
+Example curated subset run:
+
+```bash
+python3 scripts/score_patch_diff.py --run-dir candidate-repairs/run-001 --case-id JS-XSS-001 --case-id NODE-SSRF-001
+```
+
 The scorer checks:
 
 - similarity to the known fixed fixture

@@ -180,7 +180,11 @@ def score_case(case: dict[str, Any], candidate: Path, harness: Any) -> ScoreResu
 def main() -> int:
     parser = argparse.ArgumentParser(description="Score candidate repairs against corpus fixed fixtures")
     parser.add_argument("--run-dir", default="candidate-repairs/latest", help="candidate run directory")
-    parser.add_argument("--case-id", help="score one case only")
+    parser.add_argument(
+        "--case-id",
+        action="append",
+        help="score one case only; repeat or pass comma-separated ids to score a curated subset",
+    )
     parser.add_argument("--candidate-file", help="candidate file for single-case scoring")
     parser.add_argument("--output", default="scoring-results/latest.json", help="JSON output path")
     args = parser.parse_args()
@@ -188,9 +192,13 @@ def main() -> int:
     data = json.loads(GROUND_TRUTH.read_text())
     cases = data["cases"]
     if args.case_id:
-        cases = [case for case in cases if case["id"] == args.case_id]
-        if not cases:
-            raise SystemExit(f"unknown case id {args.case_id}")
+        requested = [case_id.strip() for arg in args.case_id for case_id in arg.split(",") if case_id.strip()]
+        known = {case["id"] for case in cases}
+        unknown = [case_id for case_id in requested if case_id not in known]
+        if unknown:
+            raise SystemExit(f"unknown case id(s): {', '.join(unknown)}")
+        requested_set = set(requested)
+        cases = [case for case in cases if case["id"] in requested_set]
 
     harness = load_harness()
     run_dir = ROOT / args.run_dir

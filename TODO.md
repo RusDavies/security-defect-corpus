@@ -20,4 +20,6 @@
 
 - [x] Add semantic patch-diff scoring that compares generated repairs against `fixed/<CASE-ID>/` target fixtures while allowing equivalent safe implementations.
 
-- [ ] Add curated candidate-repair evidence packets using the patch-diff scorer across representative cases.
+- [x] Add curated candidate-repair evidence packets using the patch-diff scorer across representative cases.
+
+- [ ] Add adversarial candidate-repair evidence packets for partial, superficially fixed, and unsafe-regression repairs so scorer thresholds can be calibrated against bad-but-plausible agent output.

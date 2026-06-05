@@ -213,6 +213,275 @@
         "leak checker reports no definitely-lost bytes"
       ],
       "false_positive_boundary": "unreachable_memory_leak.cpp keeps a legacy raw-pointer factory private while reachable path uses unique_ptr."
+    },
+    {
+      "id": "NODE-SSRF-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "server_side_request_forgery",
+      "cwe": [
+        "CWE-918"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_ssrf.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_ssrf.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "request.query.url -> http.get arbitrary URL",
+      "expected_remediation": "Validate/allowlist outbound destinations and block metadata/private networks.",
+      "expected_tests": [
+        "metadata URL blocked",
+        "allowed URL accepted"
+      ],
+      "false_positive_boundary": "Safe pair allowlists api.example.test and leaves legacy arbitrary fetch unexported."
+    },
+    {
+      "id": "JS-CSRF-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "cross_site_request_forgery",
+      "cwe": [
+        "CWE-352"
+      ],
+      "reachable_file": "cases/javascript/src/reachable_csrf.js",
+      "unreachable_file": "cases/javascript/src/unreachable_csrf.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "browser session request -> state-changing email update without CSRF token",
+      "expected_remediation": "Require CSRF token validation or equivalent browser-session protection.",
+      "expected_tests": [
+        "missing token rejected",
+        "valid token accepted"
+      ],
+      "false_positive_boundary": "Safe pair validates req.body.csrfToken against session token."
+    },
+    {
+      "id": "JAVA-DESER-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "unsafe_deserialization",
+      "cwe": [
+        "CWE-502"
+      ],
+      "reachable_file": "cases/java/src/ReachableDeserialization.java",
+      "unreachable_file": "cases/java/src/UnreachableDeserialization.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "request body bytes -> ObjectInputStream.readObject",
+      "expected_remediation": "Avoid native deserialization or enforce strict allowlist filters.",
+      "expected_tests": [
+        "gadget-like payload rejected",
+        "allowed type accepted"
+      ],
+      "false_positive_boundary": "Safe pair uses ObjectInputFilter on public path."
+    },
+    {
+      "id": "C-UAF-001",
+      "ecosystem": "c",
+      "language": "C",
+      "defect_class": "use_after_free",
+      "cwe": [
+        "CWE-416"
+      ],
+      "reachable_file": "cases/c/src/reachable_use_after_free.c",
+      "unreachable_file": "cases/c/src/unreachable_use_after_free.c",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "malloc token -> free -> printf dereference",
+      "expected_remediation": "Do not dereference freed memory; preserve ownership until final use.",
+      "expected_tests": [
+        "sanitizer detects no UAF after fix"
+      ],
+      "false_positive_boundary": "Safe pair prints before free; legacy UAF helper not called."
+    },
+    {
+      "id": "C-DFREE-001",
+      "ecosystem": "c",
+      "language": "C",
+      "defect_class": "double_free",
+      "cwe": [
+        "CWE-415"
+      ],
+      "reachable_file": "cases/c/src/reachable_double_free.c",
+      "unreachable_file": "cases/c/src/unreachable_double_free.c",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "malloc buffer -> free -> free again",
+      "expected_remediation": "Ensure each allocation is freed exactly once.",
+      "expected_tests": [
+        "sanitizer detects no double free after fix"
+      ],
+      "false_positive_boundary": "Safe pair frees once and nulls pointer."
+    },
+    {
+      "id": "C-INT-001",
+      "ecosystem": "c",
+      "language": "C",
+      "defect_class": "integer_overflow",
+      "cwe": [
+        "CWE-190"
+      ],
+      "reachable_file": "cases/c/src/reachable_integer_overflow.c",
+      "unreachable_file": "cases/c/src/unreachable_integer_overflow.c",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "count * 64 overflows before malloc",
+      "expected_remediation": "Check multiplication bounds before allocation.",
+      "expected_tests": [
+        "oversized count rejected",
+        "normal count allocates"
+      ],
+      "false_positive_boundary": "Safe pair checks SIZE_MAX / 64."
+    },
+    {
+      "id": "C-FMT-001",
+      "ecosystem": "c",
+      "language": "C",
+      "defect_class": "format_string",
+      "cwe": [
+        "CWE-134"
+      ],
+      "reachable_file": "cases/c/src/reachable_format_string.c",
+      "unreachable_file": "cases/c/src/unreachable_format_string.c",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "argv[1] -> printf format parameter",
+      "expected_remediation": "Use constant format string and pass input as data.",
+      "expected_tests": [
+        "%n/%x payload printed literally"
+      ],
+      "false_positive_boundary": "Safe pair uses printf(\"%s\", argv[1])."
+    },
+    {
+      "id": "TS-SECRET-001",
+      "ecosystem": "typescript",
+      "language": "TypeScript",
+      "defect_class": "hardcoded_secret",
+      "cwe": [
+        "CWE-798"
+      ],
+      "reachable_file": "cases/typescript/src/reachable_hardcoded_secret.ts",
+      "unreachable_file": "cases/typescript/src/unreachable_hardcoded_secret.ts",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "hardcoded payment API key in buildPaymentClient",
+      "expected_remediation": "Use secret manager/env config and rotate exposed key.",
+      "expected_tests": [
+        "secret scanner clean",
+        "missing env rejected"
+      ],
+      "false_positive_boundary": "Safe pair uses env var; placeholder is documented test key."
+    },
+    {
+      "id": "CS-RAND-001",
+      "ecosystem": "csharp",
+      "language": "C# / .NET",
+      "defect_class": "weak_randomness",
+      "cwe": [
+        "CWE-338"
+      ],
+      "reachable_file": "cases/csharp/src/ReachableWeakRandom.cs",
+      "unreachable_file": "cases/csharp/src/UnreachableWeakRandom.cs",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "System.Random -> password reset token",
+      "expected_remediation": "Use cryptographic random number generator for security tokens.",
+      "expected_tests": [
+        "token generated by CSPRNG",
+        "System.Random absent from public path"
+      ],
+      "false_positive_boundary": "Safe pair uses RandomNumberGenerator.GetBytes."
+    },
+    {
+      "id": "JAVA-ZIP-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "unsafe_archive_extraction",
+      "cwe": [
+        "CWE-22"
+      ],
+      "reachable_file": "cases/java/src/ReachableZipSlip.java",
+      "unreachable_file": "cases/java/src/UnreachableZipSlip.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "ZipEntry name -> new File output path without canonical boundary check",
+      "expected_remediation": "Canonicalize and enforce destination remains under output directory.",
+      "expected_tests": [
+        "../ entry rejected",
+        "normal entry accepted"
+      ],
+      "false_positive_boundary": "Safe pair checks canonical path starts with base."
+    },
+    {
+      "id": "CLOUD-BUCKET-001",
+      "ecosystem": "cloud",
+      "language": "Cloud configuration",
+      "defect_class": "public_bucket_policy",
+      "cwe": [
+        "CWE-732"
+      ],
+      "reachable_file": "cases/cloud/src/reachable_public_bucket.json",
+      "unreachable_file": "cases/cloud/src/unreachable_public_bucket.json",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "bucket policy Principal * grants s3:GetObject",
+      "expected_remediation": "Restrict bucket policy to approved identities and verify public access blocks.",
+      "expected_tests": [
+        "public principal absent",
+        "approved role present"
+      ],
+      "false_positive_boundary": "Safe pair restricts principal to named IAM role."
+    },
+    {
+      "id": "CPP-TOCTOU-001",
+      "ecosystem": "cpp",
+      "language": "C++",
+      "defect_class": "time_of_check_time_of_use",
+      "cwe": [
+        "CWE-367"
+      ],
+      "reachable_file": "cases/cpp/src/reachable_toctou.cpp",
+      "unreachable_file": "cases/cpp/src/unreachable_toctou.cpp",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "filesystem.exists check -> later ofstream open",
+      "expected_remediation": "Avoid check-then-act race; use atomic create/open semantics where possible.",
+      "expected_tests": [
+        "race scenario mitigated",
+        "no separate exists gate"
+      ],
+      "false_positive_boundary": "Safe pair avoids exists check before open."
+    },
+    {
+      "id": "NODE-LOG-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "sensitive_data_logging",
+      "cwe": [
+        "CWE-532"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_sensitive_logging.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_sensitive_logging.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "req.body password/token -> console.log",
+      "expected_remediation": "Redact sensitive fields before logging.",
+      "expected_tests": [
+        "password/token absent from logs"
+      ],
+      "false_positive_boundary": "Safe pair redacts sensitive fields."
     }
   ]
 }

@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "run_dir": "evidence-packets/curated-candidate-repair-smoke/candidates",
+  "case_count": 3,
+  "scored_count": 3,
+  "missing_count": 0,
+  "missing_cases": [],
+  "summary": {
+    "pass": 3,
+    "review": 0,
+    "fail": 0
+  },
+  "results": [
+    {
+      "case_id": "JS-XSS-001",
+      "candidate_file": "evidence-packets/curated-candidate-repair-smoke/candidates/JS-XSS-001/fix.js",
+      "fixed_file": "fixed/JS-XSS-001/fixed_xss.js",
+      "status": "pass",
+      "score": 100,
+      "exact_match": true,
+      "fixed_similarity": 1.0,
+      "reachable_similarity": 0.5484,
+      "token_similarity": 1.0,
+      "harness_passed": true,
+      "residual_risk_tokens": [],
+      "notes": [
+        "normalized exact match to fixed fixture"
+      ]
+    },
+    {
+      "case_id": "NODE-SSRF-001",
+      "candidate_file": "evidence-packets/curated-candidate-repair-smoke/candidates/NODE-SSRF-001/fix.js",
+      "fixed_file": "fixed/NODE-SSRF-001/fixed_ssrf.js",
+      "status": "pass",
+      "score": 100,
+      "exact_match": true,
+      "fixed_similarity": 1.0,
+      "reachable_similarity": 0.6308,
+      "token_similarity": 1.0,
+      "harness_passed": true,
+      "residual_risk_tokens": [],
+      "notes": [
+        "normalized exact match to fixed fixture"
+      ]
+    },
+    {
+      "case_id": "TS-TELEMETRY-NET-001",
+      "candidate_file": "evidence-packets/curated-candidate-repair-smoke/candidates/TS-TELEMETRY-NET-001/fix.ts",
+      "fixed_file": "fixed/TS-TELEMETRY-NET-001/fixed_telemetry_beacon.ts",
+      "status": "pass",
+      "score": 100,
+      "exact_match": true,
+      "fixed_similarity": 1.0,
+      "reachable_similarity": 0.2828,
+      "token_similarity": 1.0,
+      "harness_passed": true,
+      "residual_risk_tokens": [],
+      "notes": [
+        "normalized exact match to fixed fixture"
+      ]
+    }
+  ]
+}

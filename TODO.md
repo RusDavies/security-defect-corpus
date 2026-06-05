@@ -14,4 +14,6 @@
 
 - [x] Add non-printing/invisible-character abuse fixture family: null byte/control-character validation, CRLF/header injection, zero-width identifier confusion, bidi deception, Unicode whitespace parsing, log-control injection, and encoded path traversal normalization bypass.
 
-- [ ] Add unexpected-network-connection fixture family: code/dependencies that make outbound network calls outside declared behaviour, including install-time hooks, import-time callbacks, telemetry/beaconing, metadata-service access, DNS exfiltration patterns, and runtime egress to unapproved hosts; include safe harness checks that detect unexpected network intent without making real network connections.
+- [x] Add unexpected-network-connection fixture family: code/dependencies that make outbound network calls outside declared behaviour, including install-time hooks, import-time callbacks, telemetry/beaconing, metadata-service access, DNS exfiltration patterns, and runtime egress to unapproved hosts; include safe harness checks that detect unexpected network intent without making real network connections.
+
+- [ ] Add deeper unexpected-network variants: package-manager lifecycle scripts across ecosystems, WebSocket/beacon APIs, SMTP callbacks, proxy bypasses, IPv6/link-local metadata aliases, dependency update scripts, and egress-policy evidence packets.

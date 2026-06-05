@@ -640,6 +640,143 @@
       ],
       "false_positive_boundary": "Safe pair performs decode/canonicalization step before traversal checks.",
       "payload_family": "non_printing_or_invisible_characters"
+    },
+    {
+      "id": "NODE-INSTALL-NET-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "unexpected_install_time_network",
+      "cwe": [
+        "CWE-913",
+        "CWE-200"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_install_hook_network.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_install_hook_network.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "package postinstall -> HTTPS request containing host/user context",
+      "expected_remediation": "Remove install-time network calls and keep installation side-effect local.",
+      "expected_tests": [
+        "postinstall contains no http/https request",
+        "local metadata write allowed"
+      ],
+      "false_positive_boundary": "Safe pair uses fs.writeFileSync only, no http/https imports or requests.",
+      "payload_family": "unexpected_network_connections"
+    },
+    {
+      "id": "PY-IMPORT-NET-001",
+      "ecosystem": "python",
+      "language": "Python",
+      "defect_class": "unexpected_import_time_network",
+      "cwe": [
+        "CWE-913",
+        "CWE-668"
+      ],
+      "reachable_file": "cases/python/src/reachable_import_time_callback.py",
+      "unreachable_file": "cases/python/src/unreachable_import_time_callback.py",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "module import -> urllib.request.urlopen callback with local user context",
+      "expected_remediation": "Remove import-time network side effects; require explicit caller-injected network client.",
+      "expected_tests": [
+        "import has no urlopen",
+        "explicit fetch function requires injected client"
+      ],
+      "false_positive_boundary": "Safe pair has no top-level network call and only uses caller-supplied urlopen.",
+      "payload_family": "unexpected_network_connections"
+    },
+    {
+      "id": "JAVA-METADATA-NET-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "unexpected_metadata_service_access",
+      "cwe": [
+        "CWE-918"
+      ],
+      "reachable_file": "cases/java/src/ReachableMetadataServiceAccess.java",
+      "unreachable_file": "cases/java/src/UnreachableMetadataServiceAccess.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "runtime path -> HTTP request to 169.254.169.254 metadata service",
+      "expected_remediation": "Block metadata/link-local endpoint access unless explicitly approved.",
+      "expected_tests": [
+        "169.254.169.254 rejected",
+        "approved HTTPS endpoint accepted"
+      ],
+      "false_positive_boundary": "Safe pair rejects metadata-service host and non-HTTPS endpoints.",
+      "payload_family": "unexpected_network_connections"
+    },
+    {
+      "id": "GO-DNS-EXFIL-001",
+      "ecosystem": "go",
+      "language": "Go",
+      "defect_class": "unexpected_dns_exfiltration",
+      "cwe": [
+        "CWE-200",
+        "CWE-201"
+      ],
+      "reachable_file": "cases/go/src/reachable_dns_exfiltration.go",
+      "unreachable_file": "cases/go/src/unreachable_dns_exfiltration.go",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "local USER env var -> DNS label in net.LookupHost",
+      "expected_remediation": "Remove DNS lookups derived from local sensitive values and unexpected reporting paths.",
+      "expected_tests": [
+        "net.LookupHost absent from safe path",
+        "local metadata remains local"
+      ],
+      "false_positive_boundary": "Safe pair records local string only, no net import or DNS lookup.",
+      "payload_family": "unexpected_network_connections"
+    },
+    {
+      "id": "TS-TELEMETRY-NET-001",
+      "ecosystem": "typescript",
+      "language": "TypeScript",
+      "defect_class": "undeclared_telemetry_beacon",
+      "cwe": [
+        "CWE-359",
+        "CWE-200"
+      ],
+      "reachable_file": "cases/typescript/src/reachable_telemetry_beacon.ts",
+      "unreachable_file": "cases/typescript/src/unreachable_telemetry_beacon.ts",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "document processing -> undeclared fetch telemetry beacon with document/user-agent data",
+      "expected_remediation": "Remove undeclared telemetry or route through approved explicit telemetry client.",
+      "expected_tests": [
+        "normal processing makes no fetch",
+        "telemetry option requires approved client"
+      ],
+      "false_positive_boundary": "Safe pair has no fetch call and rejects ad hoc telemetry.",
+      "payload_family": "unexpected_network_connections"
+    },
+    {
+      "id": "NODE-RUNTIME-EGRESS-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "unexpected_runtime_egress",
+      "cwe": [
+        "CWE-918",
+        "CWE-441"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_runtime_egress.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_runtime_egress.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "customer enrichment -> HTTPS request to unknown third-party host",
+      "expected_remediation": "Allowlist runtime egress and route through approved clients.",
+      "expected_tests": [
+        "unknown host rejected",
+        "approved host accepted via injected client"
+      ],
+      "false_positive_boundary": "Safe pair validates approved egress hosts and uses injected client.",
+      "payload_family": "unexpected_network_connections"
     }
   ]
 }

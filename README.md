@@ -43,6 +43,19 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Java | `JAVA-XXE-001` | XML external entity / XXE | reachable + unreachable |
 | C | `C-MEM-001` | heap memory leak | reachable + unreachable |
 | C++ | `CPP-MEM-001` | owning-pointer memory leak | reachable + unreachable |
+| Node.js | `NODE-SSRF-001` | SSRF | reachable + unreachable |
+| JavaScript | `JS-CSRF-001` | CSRF | reachable + unreachable |
+| Java | `JAVA-DESER-001` | unsafe deserialization | reachable + unreachable |
+| C | `C-UAF-001` | use-after-free | reachable + unreachable |
+| C | `C-DFREE-001` | double free | reachable + unreachable |
+| C | `C-INT-001` | integer overflow | reachable + unreachable |
+| C | `C-FMT-001` | format string | reachable + unreachable |
+| TypeScript | `TS-SECRET-001` | hardcoded secret | reachable + unreachable |
+| C#/.NET | `CS-RAND-001` | weak randomness | reachable + unreachable |
+| Java | `JAVA-ZIP-001` | unsafe archive extraction / Zip Slip | reachable + unreachable |
+| Cloud config | `CLOUD-BUCKET-001` | public bucket policy | reachable + unreachable |
+| C++ | `CPP-TOCTOU-001` | TOCTOU race | reachable + unreachable |
+| Node.js | `NODE-LOG-001` | sensitive-data logging | reachable + unreachable |
 
 ## Validation
 
@@ -60,7 +73,7 @@ This corpus supports the security-defect remediation prompt pack in `docs-manage
 
 ## Defect Class Expansion Roadmap
 
-The baseline corpus is intentionally small. It should expand across both language families and defect classes.
+The baseline corpus now includes a broader first pass across language families and defect classes, but should continue expanding toward deeper variants and framework-specific cases.
 
 Priority defect classes to add:
 

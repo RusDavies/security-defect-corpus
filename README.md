@@ -131,3 +131,13 @@ These cases are important because tools and humans often disagree about what inv
 The corpus includes a first pass for code and dependency behaviours that make outbound network connections outside declared expectations: install-time hooks, import-time callbacks, metadata-service access, DNS exfiltration patterns, undeclared telemetry beacons, and runtime egress to unapproved hosts.
 
 Harness checks detect network intent statically and structurally. They do not make real outbound network connections. Safe paired fixtures remove implicit egress, route approved network activity through explicit injected clients, block metadata/link-local endpoints, and enforce host allowlists where runtime egress is legitimate.
+
+## Fixed-Version Fixtures
+
+Each ground-truth case now records a `fixed_file` under `fixed/<CASE-ID>/`. These fixtures provide a known-good repair target for patch-diff evaluation. They are intentionally separate from the vulnerable and unreachable/safe paired fixtures:
+
+- reachable fixture: demonstrates the defect pattern
+- unreachable/safe fixture: defines the false-positive or safe-boundary comparison
+- fixed fixture: gives remediation agents a known-good target shape for generated patch comparison
+
+The validator requires every case to include a fixed file, and the safe harness verifies that fixed files exist and avoid the case-specific vulnerable pattern where applicable.

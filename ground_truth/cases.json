@@ -21,7 +21,8 @@
         "malicious name is encoded",
         "safe name still renders"
       ],
-      "false_positive_boundary": "unreachable_xss.js contains unsafe-looking code behind a disabled legacy route."
+      "false_positive_boundary": "unreachable_xss.js contains unsafe-looking code behind a disabled legacy route.",
+      "fixed_file": "fixed/JS-XSS-001/fixed_xss.js"
     },
     {
       "id": "TS-IDOR-001",
@@ -43,7 +44,8 @@
         "owner can read account",
         "non-owner is rejected"
       ],
-      "false_positive_boundary": "unreachable_idor.ts has an admin-only internal helper not exposed through a route."
+      "false_positive_boundary": "unreachable_idor.ts has an admin-only internal helper not exposed through a route.",
+      "fixed_file": "fixed/TS-IDOR-001/fixed_idor.ts"
     },
     {
       "id": "NODE-CMD-001",
@@ -64,7 +66,8 @@
         "semicolon payload is rejected",
         "valid hostname executes safe path"
       ],
-      "false_positive_boundary": "unreachable_command_injection.js contains a retired diagnostic function that is not exported or routed."
+      "false_positive_boundary": "unreachable_command_injection.js contains a retired diagnostic function that is not exported or routed.",
+      "fixed_file": "fixed/NODE-CMD-001/fixed_command_injection.js"
     },
     {
       "id": "C-BOF-001",
@@ -85,7 +88,8 @@
         "long input is rejected/truncated safely",
         "normal input succeeds"
       ],
-      "false_positive_boundary": "unreachable_buffer_overflow.c has a vulnerable helper not called from main."
+      "false_positive_boundary": "unreachable_buffer_overflow.c has a vulnerable helper not called from main.",
+      "fixed_file": "fixed/C-BOF-001/fixed_buffer_overflow.c"
     },
     {
       "id": "CPP-PATH-001",
@@ -106,7 +110,8 @@
         "../ traversal is rejected",
         "allowed file path succeeds"
       ],
-      "false_positive_boundary": "unreachable_path_traversal.cpp validates path before use despite suspicious concatenation helper."
+      "false_positive_boundary": "unreachable_path_traversal.cpp validates path before use despite suspicious concatenation helper.",
+      "fixed_file": "fixed/CPP-PATH-001/fixed_path_traversal.cpp"
     },
     {
       "id": "CS-SQLI-001",
@@ -127,7 +132,8 @@
         "injection payload returns no extra rows",
         "normal email lookup works"
       ],
-      "false_positive_boundary": "unreachable C# example uses a constant query path and a dead legacy method."
+      "false_positive_boundary": "unreachable C# example uses a constant query path and a dead legacy method.",
+      "fixed_file": "fixed/CS-SQLI-001/FixedSqlInjection.cs"
     },
     {
       "id": "DEP-UPSTREAM-001",
@@ -149,7 +155,8 @@
         "valid tenant id accepted",
         "patched artifact version recorded"
       ],
-      "false_positive_boundary": "patched simulation demonstrates expected fixed behaviour for agent comparison."
+      "false_positive_boundary": "patched simulation demonstrates expected fixed behaviour for agent comparison.",
+      "fixed_file": "fixed/DEP-UPSTREAM-001/PatchedParserSimulation.cs"
     },
     {
       "id": "JAVA-XXE-001",
@@ -170,7 +177,8 @@
         "XXE payload is rejected",
         "normal XML still parses"
       ],
-      "false_positive_boundary": "UnreachableXxe.java contains a private unsafe legacy parser but public parsing path disables XXE."
+      "false_positive_boundary": "UnreachableXxe.java contains a private unsafe legacy parser but public parsing path disables XXE.",
+      "fixed_file": "fixed/JAVA-XXE-001/FixedXxe.java"
     },
     {
       "id": "C-MEM-001",
@@ -191,7 +199,8 @@
         "normal path frees allocation",
         "leak checker reports no definitely-lost bytes"
       ],
-      "false_positive_boundary": "unreachable_memory_leak.c has a legacy allocator helper that is not called; reachable path frees allocation."
+      "false_positive_boundary": "unreachable_memory_leak.c has a legacy allocator helper that is not called; reachable path frees allocation.",
+      "fixed_file": "fixed/C-MEM-001/fixed_memory_leak.c"
     },
     {
       "id": "CPP-MEM-001",
@@ -212,7 +221,8 @@
         "login path releases Session",
         "leak checker reports no definitely-lost bytes"
       ],
-      "false_positive_boundary": "unreachable_memory_leak.cpp keeps a legacy raw-pointer factory private while reachable path uses unique_ptr."
+      "false_positive_boundary": "unreachable_memory_leak.cpp keeps a legacy raw-pointer factory private while reachable path uses unique_ptr.",
+      "fixed_file": "fixed/CPP-MEM-001/fixed_memory_leak.cpp"
     },
     {
       "id": "NODE-SSRF-001",
@@ -233,7 +243,8 @@
         "metadata URL blocked",
         "allowed URL accepted"
       ],
-      "false_positive_boundary": "Safe pair allowlists api.example.test and leaves legacy arbitrary fetch unexported."
+      "false_positive_boundary": "Safe pair allowlists api.example.test and leaves legacy arbitrary fetch unexported.",
+      "fixed_file": "fixed/NODE-SSRF-001/fixed_ssrf.js"
     },
     {
       "id": "JS-CSRF-001",
@@ -254,7 +265,8 @@
         "missing token rejected",
         "valid token accepted"
       ],
-      "false_positive_boundary": "Safe pair validates req.body.csrfToken against session token."
+      "false_positive_boundary": "Safe pair validates req.body.csrfToken against session token.",
+      "fixed_file": "fixed/JS-CSRF-001/fixed_csrf.js"
     },
     {
       "id": "JAVA-DESER-001",
@@ -275,7 +287,8 @@
         "gadget-like payload rejected",
         "allowed type accepted"
       ],
-      "false_positive_boundary": "Safe pair uses ObjectInputFilter on public path."
+      "false_positive_boundary": "Safe pair uses ObjectInputFilter on public path.",
+      "fixed_file": "fixed/JAVA-DESER-001/FixedDeserialization.java"
     },
     {
       "id": "C-UAF-001",
@@ -295,7 +308,8 @@
       "expected_tests": [
         "sanitizer detects no UAF after fix"
       ],
-      "false_positive_boundary": "Safe pair prints before free; legacy UAF helper not called."
+      "false_positive_boundary": "Safe pair prints before free; legacy UAF helper not called.",
+      "fixed_file": "fixed/C-UAF-001/fixed_use_after_free.c"
     },
     {
       "id": "C-DFREE-001",
@@ -315,7 +329,8 @@
       "expected_tests": [
         "sanitizer detects no double free after fix"
       ],
-      "false_positive_boundary": "Safe pair frees once and nulls pointer."
+      "false_positive_boundary": "Safe pair frees once and nulls pointer.",
+      "fixed_file": "fixed/C-DFREE-001/fixed_double_free.c"
     },
     {
       "id": "C-INT-001",
@@ -336,7 +351,8 @@
         "oversized count rejected",
         "normal count allocates"
       ],
-      "false_positive_boundary": "Safe pair checks SIZE_MAX / 64."
+      "false_positive_boundary": "Safe pair checks SIZE_MAX / 64.",
+      "fixed_file": "fixed/C-INT-001/fixed_integer_overflow.c"
     },
     {
       "id": "C-FMT-001",
@@ -356,7 +372,8 @@
       "expected_tests": [
         "%n/%x payload printed literally"
       ],
-      "false_positive_boundary": "Safe pair uses printf(\"%s\", argv[1])."
+      "false_positive_boundary": "Safe pair uses printf(\"%s\", argv[1]).",
+      "fixed_file": "fixed/C-FMT-001/fixed_format_string.c"
     },
     {
       "id": "TS-SECRET-001",
@@ -377,7 +394,8 @@
         "secret scanner clean",
         "missing env rejected"
       ],
-      "false_positive_boundary": "Safe pair uses env var; placeholder is documented test key."
+      "false_positive_boundary": "Safe pair uses env var; placeholder is documented test key.",
+      "fixed_file": "fixed/TS-SECRET-001/fixed_hardcoded_secret.ts"
     },
     {
       "id": "CS-RAND-001",
@@ -398,7 +416,8 @@
         "token generated by CSPRNG",
         "System.Random absent from public path"
       ],
-      "false_positive_boundary": "Safe pair uses RandomNumberGenerator.GetBytes."
+      "false_positive_boundary": "Safe pair uses RandomNumberGenerator.GetBytes.",
+      "fixed_file": "fixed/CS-RAND-001/FixedWeakRandom.cs"
     },
     {
       "id": "JAVA-ZIP-001",
@@ -419,7 +438,8 @@
         "../ entry rejected",
         "normal entry accepted"
       ],
-      "false_positive_boundary": "Safe pair checks canonical path starts with base."
+      "false_positive_boundary": "Safe pair checks canonical path starts with base.",
+      "fixed_file": "fixed/JAVA-ZIP-001/FixedZipSlip.java"
     },
     {
       "id": "CLOUD-BUCKET-001",
@@ -440,7 +460,8 @@
         "public principal absent",
         "approved role present"
       ],
-      "false_positive_boundary": "Safe pair restricts principal to named IAM role."
+      "false_positive_boundary": "Safe pair restricts principal to named IAM role.",
+      "fixed_file": "fixed/CLOUD-BUCKET-001/fixed_public_bucket.json"
     },
     {
       "id": "CPP-TOCTOU-001",
@@ -461,7 +482,8 @@
         "race scenario mitigated",
         "no separate exists gate"
       ],
-      "false_positive_boundary": "Safe pair avoids exists check before open."
+      "false_positive_boundary": "Safe pair avoids exists check before open.",
+      "fixed_file": "fixed/CPP-TOCTOU-001/fixed_toctou.cpp"
     },
     {
       "id": "NODE-LOG-001",
@@ -481,7 +503,8 @@
       "expected_tests": [
         "password/token absent from logs"
       ],
-      "false_positive_boundary": "Safe pair redacts sensitive fields."
+      "false_positive_boundary": "Safe pair redacts sensitive fields.",
+      "fixed_file": "fixed/NODE-LOG-001/fixed_sensitive_logging.js"
     },
     {
       "id": "NODE-CRLF-001",
@@ -504,7 +527,8 @@
         "normal redirect accepted"
       ],
       "false_positive_boundary": "Safe pair rejects CR, LF, NUL, C0 controls, and DEL.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/NODE-CRLF-001/fixed_crlf_header_injection.js"
     },
     {
       "id": "NODE-LOGCTRL-001",
@@ -526,7 +550,8 @@
         "normal username readable"
       ],
       "false_positive_boundary": "Safe pair emits escaped unicode sequences for controls.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/NODE-LOGCTRL-001/fixed_log_control_chars.js"
     },
     {
       "id": "TS-ZWSP-001",
@@ -549,7 +574,8 @@
         "normal name accepted"
       ],
       "false_positive_boundary": "Safe pair normalizes and strips zero-width characters.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/TS-ZWSP-001/fixed_zero_width_username.ts"
     },
     {
       "id": "JAVA-NULPATH-001",
@@ -572,7 +598,8 @@
         "image.png accepted"
       ],
       "false_positive_boundary": "Safe pair rejects NUL/control characters before suffix checks.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/JAVA-NULPATH-001/FixedNullBytePath.java"
     },
     {
       "id": "JAVA-BIDI-001",
@@ -594,7 +621,8 @@
         "normal filename accepted"
       ],
       "false_positive_boundary": "Safe pair rejects U+202A-U+202E and isolate controls.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/JAVA-BIDI-001/FixedBidiFilename.java"
     },
     {
       "id": "JS-UWS-001",
@@ -616,7 +644,8 @@
         "ASCII roles still split"
       ],
       "false_positive_boundary": "Safe pair normalizes and splits on Unicode whitespace classes.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/JS-UWS-001/fixed_unicode_whitespace_token.js"
     },
     {
       "id": "CPP-ENC-PATH-001",
@@ -639,7 +668,8 @@
         "allowed filename accepted"
       ],
       "false_positive_boundary": "Safe pair performs decode/canonicalization step before traversal checks.",
-      "payload_family": "non_printing_or_invisible_characters"
+      "payload_family": "non_printing_or_invisible_characters",
+      "fixed_file": "fixed/CPP-ENC-PATH-001/fixed_encoded_path_traversal.cpp"
     },
     {
       "id": "NODE-INSTALL-NET-001",
@@ -662,7 +692,8 @@
         "local metadata write allowed"
       ],
       "false_positive_boundary": "Safe pair uses fs.writeFileSync only, no http/https imports or requests.",
-      "payload_family": "unexpected_network_connections"
+      "payload_family": "unexpected_network_connections",
+      "fixed_file": "fixed/NODE-INSTALL-NET-001/fixed_install_hook_network.js"
     },
     {
       "id": "PY-IMPORT-NET-001",
@@ -685,7 +716,8 @@
         "explicit fetch function requires injected client"
       ],
       "false_positive_boundary": "Safe pair has no top-level network call and only uses caller-supplied urlopen.",
-      "payload_family": "unexpected_network_connections"
+      "payload_family": "unexpected_network_connections",
+      "fixed_file": "fixed/PY-IMPORT-NET-001/fixed_import_time_callback.py"
     },
     {
       "id": "JAVA-METADATA-NET-001",
@@ -707,7 +739,8 @@
         "approved HTTPS endpoint accepted"
       ],
       "false_positive_boundary": "Safe pair rejects metadata-service host and non-HTTPS endpoints.",
-      "payload_family": "unexpected_network_connections"
+      "payload_family": "unexpected_network_connections",
+      "fixed_file": "fixed/JAVA-METADATA-NET-001/FixedMetadataServiceAccess.java"
     },
     {
       "id": "GO-DNS-EXFIL-001",
@@ -730,7 +763,8 @@
         "local metadata remains local"
       ],
       "false_positive_boundary": "Safe pair records local string only, no net import or DNS lookup.",
-      "payload_family": "unexpected_network_connections"
+      "payload_family": "unexpected_network_connections",
+      "fixed_file": "fixed/GO-DNS-EXFIL-001/fixed_dns_exfiltration.go"
     },
     {
       "id": "TS-TELEMETRY-NET-001",
@@ -753,7 +787,8 @@
         "telemetry option requires approved client"
       ],
       "false_positive_boundary": "Safe pair has no fetch call and rejects ad hoc telemetry.",
-      "payload_family": "unexpected_network_connections"
+      "payload_family": "unexpected_network_connections",
+      "fixed_file": "fixed/TS-TELEMETRY-NET-001/fixed_telemetry_beacon.ts"
     },
     {
       "id": "NODE-RUNTIME-EGRESS-001",
@@ -776,7 +811,8 @@
         "approved host accepted via injected client"
       ],
       "false_positive_boundary": "Safe pair validates approved egress hosts and uses injected client.",
-      "payload_family": "unexpected_network_connections"
+      "payload_family": "unexpected_network_connections",
+      "fixed_file": "fixed/NODE-RUNTIME-EGRESS-001/fixed_runtime_egress.js"
     }
   ]
 }

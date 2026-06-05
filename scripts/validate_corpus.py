@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_KEYS = {
     'id', 'ecosystem', 'language', 'defect_class', 'cwe', 'reachable_file',
     'unreachable_file', 'reachable', 'unreachable_pair', 'expected_severity',
-    'data_flow', 'expected_remediation', 'expected_tests', 'false_positive_boundary'
+    'data_flow', 'expected_remediation', 'expected_tests', 'false_positive_boundary', 'fixed_file'
 }
 
 
@@ -23,7 +23,7 @@ def main() -> int:
         assert case['id'] not in ids, f"duplicate case id {case['id']}"
         ids.add(case['id'])
         ecosystems.add(case['ecosystem'])
-        for key in ['reachable_file', 'unreachable_file']:
+        for key in ['reachable_file', 'unreachable_file', 'fixed_file']:
             path = ROOT / case[key]
             assert path.exists(), f"{case['id']} missing {key}: {path}"
         remediation = ROOT / 'expected-remediations' / f"{case['id']}.md"

@@ -3,7 +3,7 @@
 - [x] Add language-specific executable test harnesses for baseline fixtures where safe and useful.
 - [x] Add Java fixture family after the major proof targets are stable.
 - [ ] Add Python, Go, PHP, Ruby, Rust, and Kotlin fixture families after the major proof targets are stable.
-- [ ] Add intentionally fixed versions beside each vulnerable fixture for patch-diff evaluation.
+- [x] Add intentionally fixed versions beside each vulnerable fixture for patch-diff evaluation.
 - [ ] Add scoring rubric for AI-agent prompt-pack runs.
 - [ ] Add sample completed evidence packets from known-good remediation runs.
 
@@ -17,3 +17,5 @@
 - [x] Add unexpected-network-connection fixture family: code/dependencies that make outbound network calls outside declared behaviour, including install-time hooks, import-time callbacks, telemetry/beaconing, metadata-service access, DNS exfiltration patterns, and runtime egress to unapproved hosts; include safe harness checks that detect unexpected network intent without making real network connections.
 
 - [ ] Add deeper unexpected-network variants: package-manager lifecycle scripts across ecosystems, WebSocket/beacon APIs, SMTP callbacks, proxy bypasses, IPv6/link-local metadata aliases, dependency update scripts, and egress-policy evidence packets.
+
+- [ ] Add semantic patch-diff scoring that compares generated repairs against `fixed/<CASE-ID>/` target fixtures while allowing equivalent safe implementations.

@@ -1,0 +1,15 @@
+{
+  "case": "CLOUD-BUCKET-001 fixed-version fixture",
+  "resource": "aws_s3_bucket_policy",
+  "bucket": "customer-export-fixture",
+  "policy": {
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": { "AWS": "arn:aws:iam::111122223333:role/report-reader" },
+        "Action": "s3:GetObject",
+        "Resource": "arn:aws:s3:::customer-export-fixture/*"
+      }
+    ]
+  }
+}

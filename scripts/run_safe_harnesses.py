@@ -349,8 +349,10 @@ def _(case):
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []
-    for key in ["reachable_file", "unreachable_file"]:
-        checks.append(result(case_id, f"exists-{key}", (ROOT / case[key]).exists(), case[key]))
+    for key in ["reachable_file", "unreachable_file", "fixed_file"]:
+        checks.append(result(case_id, f"exists-{key}", bool(case.get(key)) and (ROOT / case[key]).exists(), str(case.get(key))))
+    if case.get("fixed_file") and (ROOT / case["fixed_file"]).exists() and (ROOT / case["reachable_file"]).exists():
+        checks.append(result(case_id, "fixed-differs-from-reachable", (ROOT / case["fixed_file"]).read_text() != (ROOT / case["reachable_file"]).read_text()))
     remediation = ROOT / "expected-remediations" / f"{case_id}.md"
     checks.append(result(case_id, "exists-remediation", remediation.exists(), str(remediation.relative_to(ROOT))))
     checks.append(result(case_id, "has-expected-tests", bool(case.get("expected_tests")), str(case.get("expected_tests"))))

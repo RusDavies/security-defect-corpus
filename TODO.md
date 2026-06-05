@@ -26,4 +26,6 @@
 
 - [x] Add scanner-listed CVE fixtures for fix-in-place remediation when direct dependency upgrades would break API or GUI surfaces, including an intentionally unlisted CVE for opportunistic discovery.
 
-- [ ] Add runnable CVE-list prompt/evidence packets that feed `scanner-inputs/` into the remediation prompt pack and score whether listed and unlisted CVEs are handled correctly.
+- [x] Add runnable CVE-list prompt/evidence packets that feed `scanner-inputs/` into the remediation prompt pack and score whether listed and unlisted CVEs are handled correctly.
+
+- [ ] Add failing/adversarial CVE-list evidence packets that demonstrate missed listed CVEs, unsafe blind upgrades, and missed unlisted CVEs.

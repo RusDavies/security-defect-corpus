@@ -145,6 +145,19 @@ The corpus includes scanner-style CVE input under `scanner-inputs/`. `scanner-in
 
 The first CVE fixtures cover `CVE-2019-10744` in lodash and `CVE-2020-11023` in jQuery as listed findings, plus `CVE-2021-23337` in lodash as an intentionally unlisted opportunistic finding. Expected remediations prefer the smallest safe fix-in-place path, with compatibility risk and eventual dependency-retirement follow-up documented rather than hand-waved.
 
+## CVE Evidence Packet Evaluation
+
+Use `scripts/evaluate_cve_list_packet.py` to score prompt/agent evidence for scanner-listed CVE remediation runs. The evaluator verifies that listed CVEs are handled, fix-in-place is chosen when compatibility-sensitive surfaces would break under direct upgrade, intentionally unlisted CVEs are discovered/reported, and tests/residual risks/approval gates are present.
+
+Example:
+
+```bash
+python3 scripts/evaluate_cve_list_packet.py \
+  --scanner-input scanner-inputs/breaking-upgrade-cve-list.json \
+  --evidence evidence-packets/cve-list-fix-in-place-smoke/remediation-evidence.json \
+  --output evidence-packets/cve-list-fix-in-place-smoke/score-results.json
+```
+
 ## Fixed-Version Fixtures
 
 Each ground-truth case now records a `fixed_file` under `fixed/<CASE-ID>/`. These fixtures provide a known-good repair target for patch-diff evaluation. They are intentionally separate from the vulnerable and unreachable/safe paired fixtures:

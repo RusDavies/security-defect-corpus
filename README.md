@@ -89,3 +89,20 @@ Priority defect classes to add:
 - logging/privacy: sensitive data in logs, over-retention, telemetry leakage
 
 Memory leaks in C and C++ should remain first-class cases because they are common, detectable, and operationally/security relevant when repeated allocations can produce denial of service or long-running process degradation. Tiny allocations leaking once are less interesting than reachable repeated leaks with realistic ownership mistakes.
+## Safe Harnesses
+
+Run the structural and safe static/pattern harnesses with:
+
+```bash
+python3 scripts/run_safe_harnesses.py
+```
+
+The harness intentionally avoids executing exploit payloads. It checks that:
+
+- every ground-truth case has reachable and unreachable/safe source files
+- every case has expected remediation guidance
+- every case has expected tests and a false-positive boundary
+- case-specific vulnerable and safe patterns are present
+- C, C++, and Java fixtures pass optional syntax checks when local compilers are available
+
+Harness output is written to `harness-results/latest.json`, which is ignored by git.

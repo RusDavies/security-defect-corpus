@@ -30,4 +30,6 @@
 
 - [x] Add failing/adversarial CVE-list evidence packets that demonstrate missed listed CVEs, unsafe blind upgrades, and missed unlisted CVEs.
 
-- [ ] Add machine-readable expected-failure manifests for all adversarial packet suites so future suites can be extended without editing Python constants.
+- [x] Add machine-readable expected-failure manifests for all adversarial packet suites so future suites can be extended without editing Python constants.
+
+- [ ] Move CVE packet suite discovery to scan packet directories dynamically once additional suites exist, instead of keeping the packet directory list in Python.

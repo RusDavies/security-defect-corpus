@@ -2,7 +2,7 @@
 
 Controlled multi-language fixture corpus for evaluating security-defect discovery, reachability analysis, exploitability classification, remediation planning, patch generation, regression/security test generation, upstream dependency fix proposals, and evidence capture prompts.
 
-This repo intentionally contains vulnerable examples. They are toy fixtures, not runnable services, and must not be deployed.
+This repo intentionally contains vulnerable examples. They are toy fixtures, not runnable services, and must not be deployed. See `SECURITY.md` and `CONTRIBUTING.md` before adding or running fixtures.
 
 ## Goals
 
@@ -28,6 +28,9 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - Do not copy vulnerable patterns into production.
 - Treat exploitability notes as defensive test metadata only.
 - Use the fixtures only for authorized security testing, prompt evaluation, training, and remediation workflow validation.
+- Do not add real secrets, customer data, production hostnames, private paths, internal account IDs, or live infrastructure details.
+- Do not add tests or fixtures that make real outbound network calls.
+- See `SECURITY.md` for responsible-use boundaries and `CONTRIBUTING.md` for fixture contribution rules.
 
 ## Baseline Case Families
 
@@ -75,7 +78,15 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 
 ## Validation
 
-Run:
+The public validation gates are also run by GitHub Actions in `.github/workflows/validate-corpus.yml`. Run them locally before committing:
+
+```bash
+python3 scripts/validate_corpus.py
+python3 scripts/run_safe_harnesses.py
+python3 scripts/run_cve_packet_suite.py
+```
+
+Structural validation only:
 
 ```bash
 python3 scripts/validate_corpus.py
@@ -207,3 +218,18 @@ The scorer checks:
 - normalized exact match where applicable
 
 Scoring output is written to `scoring-results/latest.json` by default and is ignored by git. A passing score is not a production approval; it is evidence for review.
+
+## Generated Results
+
+Generated harness, scoring, and packet-suite outputs are intentionally ignored by git. Recreate them locally with the commands above instead of committing refreshed result JSON.
+
+Ignored generated output includes:
+
+- `harness-results/*.json`
+- `scoring-results/*.json`
+- `cve-evaluation-results/*.json`
+- `evidence-packets/**/score-results.json`
+
+## License
+
+This project is released under the MIT License. See `LICENSE`.

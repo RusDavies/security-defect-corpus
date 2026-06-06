@@ -4,9 +4,11 @@ This packet is a small committed evidence sample for the semantic patch-diff sco
 
 ## Representative cases
 
-- `JS-XSS-001` — score `100`, status `pass`, harness passed `true`
-- `NODE-SSRF-001` — score `100`, status `pass`, harness passed `true`
-- `TS-TELEMETRY-NET-001` — score `100`, status `pass`, harness passed `true`
+- `JS-XSS-001`
+- `NODE-SSRF-001`
+- `TS-TELEMETRY-NET-001`
+
+Recreate scores locally with the command below. Generated `score-results.json` files are ignored by git.
 
 ## Reproduction command
 

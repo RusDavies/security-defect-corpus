@@ -1,0 +1,15 @@
+# Python/cache noise
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Generated corpus evaluation output
+harness-results/*.json
+scoring-results/*.json
+cve-evaluation-results/*.json
+evidence-packets/**/score-results.json
+
+# Local candidate repairs are scratch input unless deliberately promoted.
+candidate-repairs/*
+!candidate-repairs/.gitignore
+!candidate-repairs/README.md

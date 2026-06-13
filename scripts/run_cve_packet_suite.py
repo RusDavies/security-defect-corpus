@@ -17,12 +17,31 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SCANNER = "scanner-inputs/breaking-upgrade-cve-list.json"
 EVALUATOR = ROOT / "scripts" / "evaluate_cve_list_packet.py"
-PACKET_DIRS = [
-    ROOT / "evidence-packets" / "cve-list-fix-in-place-smoke",
-    ROOT / "evidence-packets" / "cve-list-adversarial-missed-listed-cve",
-    ROOT / "evidence-packets" / "cve-list-adversarial-unsafe-blind-upgrade",
-    ROOT / "evidence-packets" / "cve-list-adversarial-missed-unlisted-cve",
-]
+PACKET_ROOT = ROOT / "evidence-packets"
+PACKET_GLOB = "cve-list-*"
+
+
+def discover_packet_dirs() -> list[Path]:
+    packet_dirs = []
+    for packet_dir in sorted(PACKET_ROOT.glob(PACKET_GLOB)):
+        if not packet_dir.is_dir():
+            continue
+        expected_path = packet_dir / "expected-result.json"
+        evidence_path = packet_dir / "remediation-evidence.json"
+        if expected_path.exists() and evidence_path.exists():
+            packet_dirs.append(packet_dir)
+            continue
+        missing = [
+            path.name
+            for path in (expected_path, evidence_path)
+            if not path.exists()
+        ]
+        raise FileNotFoundError(
+            f"{packet_dir.relative_to(ROOT)} matches {PACKET_GLOB!r} but is missing {', '.join(missing)}"
+        )
+    if not packet_dirs:
+        raise FileNotFoundError(f"no CVE packet directories found under {PACKET_ROOT.relative_to(ROOT)}/{PACKET_GLOB}")
+    return packet_dirs
 
 
 def load_packet(packet_dir: Path) -> dict[str, Any]:
@@ -78,7 +97,7 @@ def run_case(case: dict[str, Any]) -> dict[str, Any]:
 
 
 def main() -> int:
-    cases = [load_packet(packet_dir) for packet_dir in PACKET_DIRS]
+    cases = [load_packet(packet_dir) for packet_dir in discover_packet_dirs()]
     results = [run_case(case) for case in cases]
     summary = {
         "schema_version": "1.0",

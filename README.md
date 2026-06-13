@@ -169,9 +169,9 @@ python3 scripts/evaluate_cve_list_packet.py \
   --output evidence-packets/cve-list-fix-in-place-smoke/score-results.json
 ```
 
-Use `scripts/run_cve_packet_suite.py` to run the committed packet suite. The suite contains one positive-control packet that should pass and negative-control packets that should fail for documented reasons. A suite pass means the evaluator accepted the good packet and rejected the bad packets for the expected checks.
+Use `scripts/run_cve_packet_suite.py` to run the committed packet suite. The suite dynamically discovers `evidence-packets/cve-list-*` directories with both `expected-result.json` and `remediation-evidence.json`. It contains one positive-control packet that should pass and negative-control packets that should fail for documented reasons. A suite pass means the evaluator accepted the good packet and rejected the bad packets for the expected checks.
 
-Each packet directory has an `expected-result.json` manifest declaring its role, intent, expected evaluator status, and expected failed checks. This keeps the negative-control intent close to the packet instead of hiding it in Python constants.
+Each packet directory has an `expected-result.json` manifest declaring its role, intent, expected evaluator status, and expected failed checks. This keeps the negative-control intent close to the packet and lets new CVE packet directories join the suite without editing Python.
 
 ```bash
 python3 scripts/run_cve_packet_suite.py

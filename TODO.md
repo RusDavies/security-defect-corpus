@@ -32,4 +32,4 @@
 
 - [x] Add machine-readable expected-failure manifests for all adversarial packet suites so future suites can be extended without editing Python constants.
 
-- [ ] Move CVE packet suite discovery to scan packet directories dynamically once additional suites exist, instead of keeping the packet directory list in Python.
+- [x] Move CVE packet suite discovery to scan packet directories dynamically once additional suites exist, instead of keeping the packet directory list in Python.

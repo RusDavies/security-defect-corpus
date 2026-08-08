@@ -16,6 +16,7 @@ Use `docs-management-practices/templates/ai-agent-remediation-evidence-packet.md
 Committed packet examples:
 
 - `curated-candidate-repair-smoke/` — known-good candidate repair smoke packet for patch-diff scoring.
+- `adversarial-candidate-repair-smoke/` — negative controls for partial, superficial, and unsafe-regression patch-diff scoring failures.
 - `high-risk-non-cve-remediation-smoke/` — known-good remediation evidence packet for representative high-risk source defects.
 - `adversarial-non-cve-quality-*` — negative controls for remediation-quality scoring failures.
 - `cve-list-*` — positive and negative controls for scanner-listed CVE handling.

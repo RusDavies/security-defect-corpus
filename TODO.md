@@ -6,7 +6,7 @@
 - [x] Add intentionally fixed versions beside each vulnerable fixture for patch-diff evaluation.
 - [ ] Add scoring rubric for AI-agent prompt-pack runs.
 - [ ] Add sample completed evidence packets from known-good remediation runs.
-- [ ] Expand evidence-packet coverage for non-CVE cases highlighted by `docs/coverage-matrix.md`, prioritizing high-risk web, parsing, memory-safety, and unexpected-network fixtures.
+- [x] Expand evidence-packet coverage for non-CVE cases highlighted by `docs/coverage-matrix.md`, prioritizing high-risk web, parsing, memory-safety, and unexpected-network fixtures.
 
 - [x] Add broader defect-class families: SSRF, CSRF, deserialization, use-after-free, double free, integer overflow, format string, hardcoded secrets, weak randomness, unsafe archive extraction, public bucket/IAM misconfiguration, race/TOCTOU, and sensitive-data logging.
 - [ ] Add remaining broader defect-class families and variants: open redirect, LDAP injection, template/expression-language injection, NoSQL injection, privilege escalation, confused deputy, insecure cookies, CORS mistakes, broken crypto, key exposure, overbroad IAM role policies, and framework-specific variants.
@@ -33,6 +33,8 @@
 - [ ] Add adversarial candidate-repair packets across representative classes including XSS, SQL injection, SSRF, path traversal, deserialization, and dependency CVE fix-in-place, covering partial fixes, cosmetic scanner silencing, compatibility-breaking upgrades, missing tests, and unsafe regressions.
 
 - [ ] Add remediation-quality scoring dimensions for prompt-pack and agent runs: exploit removed, false-positive boundary preserved, compatibility preserved, regression/security tests added, residual risk reported, unrelated churn avoided, and no new egress, secret, or logging defect introduced.
+
+- [ ] Add a generic evidence-packet evaluator for non-CVE remediation packets, including positive and negative controls for required sections, case coverage, false-positive boundaries, tests, approval gates, and residual-risk reporting.
 
 - [x] Add scanner-listed CVE fixtures for fix-in-place remediation when direct dependency upgrades would break API or GUI surfaces, including an intentionally unlisted CVE for opportunistic discovery.
 

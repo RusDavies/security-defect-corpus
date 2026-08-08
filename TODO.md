@@ -9,8 +9,13 @@
 
 - [x] Add broader defect-class families: SSRF, CSRF, deserialization, use-after-free, double free, integer overflow, format string, hardcoded secrets, weak randomness, unsafe archive extraction, public bucket/IAM misconfiguration, race/TOCTOU, and sensitive-data logging.
 - [ ] Add remaining broader defect-class families and variants: open redirect, LDAP injection, template/expression-language injection, NoSQL injection, privilege escalation, confused deputy, insecure cookies, CORS mistakes, broken crypto, key exposure, overbroad IAM role policies, and framework-specific variants.
+- [ ] Add first-class cases for open redirect, LDAP injection, template/expression-language injection, NoSQL injection, insecure cookies, CORS misconfiguration, broken crypto, and overbroad IAM policy.
 
 - [ ] Add deeper language-specific runnable regression tests for fixed-version fixtures once fixed versions exist.
+
+- [ ] Add a generated coverage matrix from `ground_truth/cases.json`, grouped by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
+
+- [ ] Add realistic app-slice fixture families for small Express, Flask/FastAPI, Spring, Go HTTP, Rails/Sinatra, PHP/Laravel-style, and .NET API surfaces so agents are tested against framework context, not only toy single-file snippets.
 
 - [x] Add non-printing/invisible-character abuse fixture family: null byte/control-character validation, CRLF/header injection, zero-width identifier confusion, bidi deception, Unicode whitespace parsing, log-control injection, and encoded path traversal normalization bypass.
 
@@ -23,6 +28,10 @@
 - [x] Add curated candidate-repair evidence packets using the patch-diff scorer across representative cases.
 
 - [ ] Add adversarial candidate-repair evidence packets for partial, superficially fixed, and unsafe-regression repairs so scorer thresholds can be calibrated against bad-but-plausible agent output.
+
+- [ ] Add adversarial candidate-repair packets across representative classes including XSS, SQL injection, SSRF, path traversal, deserialization, and dependency CVE fix-in-place, covering partial fixes, cosmetic scanner silencing, compatibility-breaking upgrades, missing tests, and unsafe regressions.
+
+- [ ] Add remediation-quality scoring dimensions for prompt-pack and agent runs: exploit removed, false-positive boundary preserved, compatibility preserved, regression/security tests added, residual risk reported, unrelated churn avoided, and no new egress, secret, or logging defect introduced.
 
 - [x] Add scanner-listed CVE fixtures for fix-in-place remediation when direct dependency upgrades would break API or GUI surfaces, including an intentionally unlisted CVE for opportunistic discovery.
 

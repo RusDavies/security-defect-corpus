@@ -17,10 +17,12 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 
 - `cases/<language-or-ecosystem>/src/` — source fixtures.
 - `ground_truth/cases.json` — canonical case metadata and expected findings.
+- `docs/coverage-matrix.md` — generated case coverage matrix by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
 - `expected-remediations/` — expected remediation guidance by case.
 - `evidence-packets/` — example evidence packet expectations.
 - `upstream-simulations/` — dependency/upstream contribution simulation notes.
 - `scripts/validate_corpus.py` — structural validator.
+- `scripts/generate_coverage_matrix.py` — coverage matrix generator.
 
 ## Safety Rules
 
@@ -84,6 +86,7 @@ The public validation gates are also run by GitHub Actions in `.github/workflows
 python3 scripts/validate_corpus.py
 python3 scripts/run_safe_harnesses.py
 python3 scripts/run_cve_packet_suite.py
+python3 scripts/generate_coverage_matrix.py --check
 ```
 
 Structural validation only:
@@ -93,6 +96,12 @@ python3 scripts/validate_corpus.py
 ```
 
 The validator checks that every ground-truth case has source files, expected remediation guidance, evidence expectations, a reachability status, and required metadata.
+
+Coverage matrix freshness only:
+
+```bash
+python3 scripts/generate_coverage_matrix.py --check
+```
 
 ## Relationship to Management Practices
 

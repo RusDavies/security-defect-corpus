@@ -33,15 +33,29 @@ def find_evidence_packets(case_ids: set[str]) -> dict[str, list[str]]:
     for path in sorted(root.glob("*")):
         if not path.is_dir():
             continue
-        combined = "\n".join(
-            child.read_text(errors="replace")
-            for child in sorted(path.rglob("*"))
-            if child.is_file() and child.suffix in {".md", ".json"}
-        )
-        for case_id in case_ids:
-            if case_id in combined:
+        evidence_path = path / "remediation-evidence.json"
+        if not evidence_path.exists():
+            continue
+        evidence = json.loads(evidence_path.read_text())
+        packet_case_ids = extract_case_ids(evidence)
+        for case_id in packet_case_ids:
+            if case_id in evidence_by_case:
                 evidence_by_case[case_id].add(path.name)
     return {case_id: sorted(names) for case_id, names in evidence_by_case.items()}
+
+
+def extract_case_ids(value: object) -> set[str]:
+    if isinstance(value, dict):
+        found = {value["case_id"]} if isinstance(value.get("case_id"), str) else set()
+        for child in value.values():
+            found.update(extract_case_ids(child))
+        return found
+    if isinstance(value, list):
+        found: set[str] = set()
+        for child in value:
+            found.update(extract_case_ids(child))
+        return found
+    return set()
 
 
 def yes_no(value: bool) -> str:
@@ -80,6 +94,8 @@ def render_matrix(cases: list[dict]) -> str:
         f"- Pattern-harnessed cases: {harnessed_count}/{len(cases)}",
         f"- Fixed-fixture coverage: {fixed_count}/{len(cases)}",
         f"- Evidence-packet coverage: {evidence_count}/{len(cases)}",
+        "",
+        "Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.",
         "",
         "## Ecosystem Coverage",
         "",

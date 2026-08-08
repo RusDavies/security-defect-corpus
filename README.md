@@ -86,6 +86,7 @@ The public validation gates are also run by GitHub Actions in `.github/workflows
 python3 scripts/validate_corpus.py
 python3 scripts/run_safe_harnesses.py
 python3 scripts/run_cve_packet_suite.py
+python3 scripts/run_evidence_packet_suite.py
 python3 scripts/generate_coverage_matrix.py --check
 ```
 

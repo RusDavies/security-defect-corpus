@@ -10,7 +10,9 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 - Defect classes: 37
 - Pattern-harnessed cases: 39/39
 - Fixed-fixture coverage: 39/39
-- Evidence-packet coverage: 12/39
+- Evidence-packet coverage: 9/39
+
+Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
 ## Ecosystem Coverage
 
@@ -100,16 +102,16 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 | `CVE-LODASH-TEMPLATE-UNLISTED-001` | JavaScript | `javascript` | `opportunistic_unlisted_known_cve` | `CWE-94` | yes | yes | `cve-list-adversarial-missed-listed-cve`, `cve-list-adversarial-unsafe-blind-upgrade`, `cve-list-fix-in-place-smoke` |
 | `JS-CSRF-001` | JavaScript | `javascript` | `cross_site_request_forgery` | `CWE-352` | yes | yes | - |
 | `JS-UWS-001` | JavaScript | `javascript` | `unicode_whitespace_token_parsing` | `CWE-180` | yes | yes | - |
-| `JS-XSS-001` | JavaScript | `javascript` | `cross_site_scripting` | `CWE-79` | yes | yes | `curated-candidate-repair-smoke` |
-| `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `high-risk-non-cve-remediation-smoke` |
+| `JS-XSS-001` | JavaScript | `javascript` | `cross_site_scripting` | `CWE-79` | yes | yes | - |
+| `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `adversarial-non-cve-missing-case-boundary`, `adversarial-non-cve-missing-sections`, `high-risk-non-cve-remediation-smoke` |
 | `NODE-CRLF-001` | JavaScript / Node.js | `nodejs` | `crlf_header_injection` | `CWE-93`, `CWE-113` | yes | yes | - |
 | `NODE-INSTALL-NET-001` | JavaScript / Node.js | `nodejs` | `unexpected_install_time_network` | `CWE-913`, `CWE-200` | yes | yes | - |
 | `NODE-LOG-001` | JavaScript / Node.js | `nodejs` | `sensitive_data_logging` | `CWE-532` | yes | yes | - |
 | `NODE-LOGCTRL-001` | JavaScript / Node.js | `nodejs` | `log_control_character_injection` | `CWE-117` | yes | yes | - |
 | `NODE-RUNTIME-EGRESS-001` | JavaScript / Node.js | `nodejs` | `unexpected_runtime_egress` | `CWE-918`, `CWE-441` | yes | yes | - |
-| `NODE-SSRF-001` | JavaScript / Node.js | `nodejs` | `server_side_request_forgery` | `CWE-918` | yes | yes | `curated-candidate-repair-smoke` |
+| `NODE-SSRF-001` | JavaScript / Node.js | `nodejs` | `server_side_request_forgery` | `CWE-918` | yes | yes | - |
 | `PY-IMPORT-NET-001` | Python | `python` | `unexpected_import_time_network` | `CWE-913`, `CWE-668` | yes | yes | - |
 | `TS-IDOR-001` | TypeScript | `typescript` | `insecure_direct_object_reference` | `CWE-639`, `CWE-862` | yes | yes | - |
 | `TS-SECRET-001` | TypeScript | `typescript` | `hardcoded_secret` | `CWE-798` | yes | yes | - |
-| `TS-TELEMETRY-NET-001` | TypeScript | `typescript` | `undeclared_telemetry_beacon` | `CWE-359`, `CWE-200` | yes | yes | `curated-candidate-repair-smoke` |
+| `TS-TELEMETRY-NET-001` | TypeScript | `typescript` | `undeclared_telemetry_beacon` | `CWE-359`, `CWE-200` | yes | yes | - |
 | `TS-ZWSP-001` | TypeScript | `typescript` | `zero_width_identifier_confusion` | `CWE-180`, `CWE-178` | yes | yes | - |

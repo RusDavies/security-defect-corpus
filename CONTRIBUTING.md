@@ -26,6 +26,7 @@ Ignored result locations include:
 - `harness-results/*.json`
 - `scoring-results/*.json`
 - `cve-evaluation-results/*.json`
+- `evidence-evaluation-results/*.json`
 - `evidence-packets/**/score-results.json`
 
 ## Validation before commit
@@ -36,6 +37,7 @@ Run the public validation gates before opening a change:
 python3 scripts/validate_corpus.py
 python3 scripts/run_safe_harnesses.py
 python3 scripts/run_cve_packet_suite.py
+python3 scripts/run_evidence_packet_suite.py
 ```
 
 The safe harnesses are designed to avoid executing exploit payloads or making real outbound network connections.

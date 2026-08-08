@@ -6,6 +6,7 @@
 - [x] Add intentionally fixed versions beside each vulnerable fixture for patch-diff evaluation.
 - [ ] Add scoring rubric for AI-agent prompt-pack runs.
 - [ ] Add sample completed evidence packets from known-good remediation runs.
+- [ ] Expand evidence-packet coverage for non-CVE cases highlighted by `docs/coverage-matrix.md`, prioritizing high-risk web, parsing, memory-safety, and unexpected-network fixtures.
 
 - [x] Add broader defect-class families: SSRF, CSRF, deserialization, use-after-free, double free, integer overflow, format string, hardcoded secrets, weak randomness, unsafe archive extraction, public bucket/IAM misconfiguration, race/TOCTOU, and sensitive-data logging.
 - [ ] Add remaining broader defect-class families and variants: open redirect, LDAP injection, template/expression-language injection, NoSQL injection, privilege escalation, confused deputy, insecure cookies, CORS mistakes, broken crypto, key exposure, overbroad IAM role policies, and framework-specific variants.
@@ -13,7 +14,7 @@
 
 - [ ] Add deeper language-specific runnable regression tests for fixed-version fixtures once fixed versions exist.
 
-- [ ] Add a generated coverage matrix from `ground_truth/cases.json`, grouped by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
+- [x] Add a generated coverage matrix from `ground_truth/cases.json`, grouped by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
 
 - [ ] Add realistic app-slice fixture families for small Express, Flask/FastAPI, Spring, Go HTTP, Rails/Sinatra, PHP/Laravel-style, and .NET API surfaces so agents are tested against framework context, not only toy single-file snippets.
 

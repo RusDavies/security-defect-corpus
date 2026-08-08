@@ -5,16 +5,24 @@
   "cases": [
     "JS-XSS-001",
     "NODE-SSRF-001",
-    "TS-TELEMETRY-NET-001"
+    "TS-TELEMETRY-NET-001",
+    "CS-SQLI-001",
+    "CPP-PATH-001",
+    "JAVA-DESER-001",
+    "CVE-LODASH-PP-001"
   ],
   "expected_summary": {
     "pass": 0,
     "review": 0,
-    "fail": 3
+    "fail": 7
   },
   "expected_status_by_case": {
     "JS-XSS-001": "fail",
     "NODE-SSRF-001": "fail",
-    "TS-TELEMETRY-NET-001": "fail"
+    "TS-TELEMETRY-NET-001": "fail",
+    "CS-SQLI-001": "fail",
+    "CPP-PATH-001": "fail",
+    "JAVA-DESER-001": "fail",
+    "CVE-LODASH-PP-001": "fail"
   }
 }

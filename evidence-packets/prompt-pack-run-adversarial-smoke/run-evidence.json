@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "run_id": "prompt-pack-adversarial-smoke",
+  "summary": "Bad run-level evidence with partial discovery, unsafe candidate repairs, missing approvals, missing residual risk, and incomplete coverage.",
+  "dimension_scores": {
+    "discovery_accuracy": {
+      "score": 62,
+      "evidence": [
+        "Detected the headline XSS and SSRF cases but missed the dependency CVE fix-in-place case."
+      ]
+    },
+    "reachability_and_false_positive_boundary": {
+      "score": 45,
+      "evidence": [
+        "Reachability notes did not preserve the safe-pair boundary for the XSS case."
+      ]
+    },
+    "remediation_plan_quality": {
+      "score": 50,
+      "evidence": [
+        "Plan proposed broad rewrites and a new inspection proxy instead of minimal safe fixes."
+      ]
+    },
+    "patch_diff_result": {
+      "score": 30,
+      "evidence": [
+        "Adversarial candidate repairs failed patch-diff scoring."
+      ]
+    },
+    "evidence_packet_quality": {
+      "score": 40,
+      "evidence": [
+        "Evidence sections were present, but required quality dimensions failed for boundary and new-defect cases."
+      ]
+    },
+    "regression_security_tests": {
+      "score": 35,
+      "evidence": [
+        "Tests checked one payload spelling and skipped compatibility boundaries."
+      ]
+    },
+    "approval_and_residual_risk": {
+      "score": 20,
+      "evidence": [
+        "Approval and residual-risk evidence was incomplete."
+      ]
+    },
+    "run_reproducibility": {
+      "score": 65,
+      "evidence": [
+        "Some scorer commands were recorded, but omitted packet versions and missing-case explanations."
+      ]
+    }
+  },
+  "gates": {
+    "unsafe_new_defect": true,
+    "missing_approval_gate": true,
+    "missing_residual_risk": true,
+    "incomplete_case_coverage": true
+  }
+}

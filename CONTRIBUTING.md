@@ -38,6 +38,7 @@ Run the public validation gates before opening a change:
 python3 scripts/validate_corpus.py
 python3 scripts/run_safe_harnesses.py
 python3 scripts/run_candidate_repair_suite.py
+python3 scripts/run_prompt_pack_run_suite.py
 python3 scripts/run_cve_packet_suite.py
 python3 scripts/run_evidence_packet_suite.py
 ```

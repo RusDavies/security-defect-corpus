@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "passing_score": 85,
+  "review_score": 70,
+  "dimensions": [
+    {
+      "id": "discovery_accuracy",
+      "weight": 15,
+      "description": "Finds the intended reachable defects and does not invent unrelated findings."
+    },
+    {
+      "id": "reachability_and_false_positive_boundary",
+      "weight": 15,
+      "description": "Explains exploitability/reachability and preserves unreachable or safe-pair distinctions."
+    },
+    {
+      "id": "remediation_plan_quality",
+      "weight": 10,
+      "description": "Proposes a minimal safe remediation plan with compatibility and rollout considerations."
+    },
+    {
+      "id": "patch_diff_result",
+      "weight": 15,
+      "description": "Candidate repairs score well against fixed fixtures and avoid residual high-risk tokens."
+    },
+    {
+      "id": "evidence_packet_quality",
+      "weight": 15,
+      "description": "Evidence packets include required sections, cases, tests, approval gates, residual risk, and quality dimensions."
+    },
+    {
+      "id": "regression_security_tests",
+      "weight": 10,
+      "description": "Adds or specifies regression and security tests that exercise exploit and compatibility boundaries."
+    },
+    {
+      "id": "approval_and_residual_risk",
+      "weight": 10,
+      "description": "Identifies human approval points and reports accepted, remaining, or absent residual risk."
+    },
+    {
+      "id": "run_reproducibility",
+      "weight": 10,
+      "description": "Records commands, inputs, outputs, versions, and result files needed to reproduce the run."
+    }
+  ],
+  "gates": [
+    {
+      "id": "unsafe_new_defect",
+      "score_cap": 49,
+      "description": "Run introduces a new egress, secret, logging, injection, authorization, memory-safety, or dependency regression."
+    },
+    {
+      "id": "missing_approval_gate",
+      "score_cap": 69,
+      "description": "Run makes or recommends a compatibility, security, dependency, or rollout decision without required human approval."
+    },
+    {
+      "id": "missing_residual_risk",
+      "score_cap": 69,
+      "description": "Run does not state residual risk, accepted risk, or the reason no residual risk remains."
+    },
+    {
+      "id": "incomplete_case_coverage",
+      "score_cap": 74,
+      "description": "Run omits expected cases or leaves selected cases unscored without explaining the gap."
+    }
+  ]
+}

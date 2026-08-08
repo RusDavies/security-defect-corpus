@@ -12,6 +12,10 @@ python3 scripts/score_patch_diff.py \
   --case-id JS-XSS-001 \
   --case-id NODE-SSRF-001 \
   --case-id TS-TELEMETRY-NET-001 \
+  --case-id CS-SQLI-001 \
+  --case-id CPP-PATH-001 \
+  --case-id JAVA-DESER-001 \
+  --case-id CVE-LODASH-PP-001 \
   --output evidence-packets/adversarial-candidate-repair-smoke/score-results.json
 ```
 

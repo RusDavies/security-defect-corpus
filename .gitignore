@@ -7,6 +7,7 @@ __pycache__/
 harness-results/*.json
 scoring-results/*.json
 cve-evaluation-results/*.json
+evidence-evaluation-results/*.json
 evidence-packets/**/score-results.json
 
 # Local candidate repairs are scratch input unless deliberately promoted.

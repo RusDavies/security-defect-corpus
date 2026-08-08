@@ -34,7 +34,7 @@
 
 - [ ] Add remediation-quality scoring dimensions for prompt-pack and agent runs: exploit removed, false-positive boundary preserved, compatibility preserved, regression/security tests added, residual risk reported, unrelated churn avoided, and no new egress, secret, or logging defect introduced.
 
-- [ ] Add a generic evidence-packet evaluator for non-CVE remediation packets, including positive and negative controls for required sections, case coverage, false-positive boundaries, tests, approval gates, and residual-risk reporting.
+- [x] Add a generic evidence-packet evaluator for non-CVE remediation packets, including positive and negative controls for required sections, case coverage, false-positive boundaries, tests, approval gates, and residual-risk reporting.
 
 - [x] Add scanner-listed CVE fixtures for fix-in-place remediation when direct dependency upgrades would break API or GUI surfaces, including an intentionally unlisted CVE for opportunistic discovery.
 

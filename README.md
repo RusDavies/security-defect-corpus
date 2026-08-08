@@ -18,6 +18,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `cases/<language-or-ecosystem>/src/` — source fixtures.
 - `ground_truth/cases.json` — canonical case metadata and expected findings.
 - `docs/coverage-matrix.md` — generated case coverage matrix by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
+- `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
 - `expected-remediations/` — expected remediation guidance by case.
 - `evidence-packets/` — example evidence packet expectations.
 - `upstream-simulations/` — dependency/upstream contribution simulation notes.

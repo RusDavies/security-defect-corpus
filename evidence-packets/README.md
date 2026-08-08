@@ -9,6 +9,7 @@ Each corpus case should produce evidence for:
 - generated or described tests
 - human approval gates
 - residual risk or acceptance decision
+- remediation-quality dimensions from `docs/remediation-quality-rubric.md`
 
 Use `docs-management-practices/templates/ai-agent-remediation-evidence-packet.md` as the packet shape when evaluating AI-agent runs.
 
@@ -17,3 +18,8 @@ Committed packet examples:
 - `curated-candidate-repair-smoke/` — known-good candidate repair smoke packet for patch-diff scoring.
 - `high-risk-non-cve-remediation-smoke/` — known-good remediation evidence packet for representative high-risk source defects.
 - `cve-list-*` — positive and negative controls for scanner-listed CVE handling.
+
+For prompt-pack and agent-run grading, include per-case `quality_scores` entries
+for exploit removal, false-positive boundary preservation, compatibility,
+tests, residual-risk reporting, unrelated-churn avoidance, and avoidance of new
+egress, secret, or logging defects.

@@ -32,7 +32,8 @@
 
 - [ ] Add adversarial candidate-repair packets across representative classes including XSS, SQL injection, SSRF, path traversal, deserialization, and dependency CVE fix-in-place, covering partial fixes, cosmetic scanner silencing, compatibility-breaking upgrades, missing tests, and unsafe regressions.
 
-- [ ] Add remediation-quality scoring dimensions for prompt-pack and agent runs: exploit removed, false-positive boundary preserved, compatibility preserved, regression/security tests added, residual risk reported, unrelated churn avoided, and no new egress, secret, or logging defect introduced.
+- [x] Add remediation-quality scoring dimensions for prompt-pack and agent runs: exploit removed, false-positive boundary preserved, compatibility preserved, regression/security tests added, residual risk reported, unrelated churn avoided, and no new egress, secret, or logging defect introduced.
+- [ ] Add adversarial remediation-quality evidence packets for partial/failing dimensions, especially compatibility-breaking fixes, missing false-positive boundaries, test gaps, unrelated churn, and newly introduced egress/secrets/logging defects.
 
 - [x] Add a generic evidence-packet evaluator for non-CVE remediation packets, including positive and negative controls for required sections, case coverage, false-positive boundaries, tests, approval gates, and residual-risk reporting.
 

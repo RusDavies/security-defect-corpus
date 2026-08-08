@@ -12,6 +12,7 @@ When adding or changing cases:
 - update `ground_truth/cases.json`
 - add expected remediation guidance under `expected-remediations/<CASE-ID>.md`
 - include evidence expectations and false-positive boundaries
+- include remediation-quality scoring evidence when an evidence packet is meant to grade prompt-pack or agent-run output
 - avoid real secrets, real account IDs, real customer data, production hostnames, private network names, or internal paths
 - use reserved/example domains such as `.example`, `.test`, and `.invalid`
 - do not add tests that make real outbound network connections

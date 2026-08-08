@@ -17,6 +17,7 @@ Committed packet examples:
 
 - `curated-candidate-repair-smoke/` — known-good candidate repair smoke packet for patch-diff scoring.
 - `high-risk-non-cve-remediation-smoke/` — known-good remediation evidence packet for representative high-risk source defects.
+- `adversarial-non-cve-quality-*` — negative controls for remediation-quality scoring failures.
 - `cve-list-*` — positive and negative controls for scanner-listed CVE handling.
 
 For prompt-pack and agent-run grading, include per-case `quality_scores` entries

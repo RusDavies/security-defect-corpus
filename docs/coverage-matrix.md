@@ -10,7 +10,7 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 - Defect classes: 37
 - Pattern-harnessed cases: 39/39
 - Fixed-fixture coverage: 39/39
-- Evidence-packet coverage: 6/39
+- Evidence-packet coverage: 12/39
 
 ## Ecosystem Coverage
 
@@ -74,7 +74,7 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 | Case | Language | Ecosystem | Defect class | CWE | Pattern harness | Fixed fixture | Evidence packets |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `C-BOF-001` | C | `c` | `stack_buffer_overflow` | `CWE-120` | yes | yes | - |
+| `C-BOF-001` | C | `c` | `stack_buffer_overflow` | `CWE-120` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `C-DFREE-001` | C | `c` | `double_free` | `CWE-415` | yes | yes | - |
 | `C-FMT-001` | C | `c` | `format_string` | `CWE-134` | yes | yes | - |
 | `C-INT-001` | C | `c` | `integer_overflow` | `CWE-190` | yes | yes | - |
@@ -83,17 +83,17 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 | `CLOUD-BUCKET-001` | Cloud configuration | `cloud` | `public_bucket_policy` | `CWE-732` | yes | yes | - |
 | `CPP-ENC-PATH-001` | C++ | `cpp` | `encoded_path_traversal_bypass` | `CWE-22`, `CWE-180` | yes | yes | - |
 | `CPP-MEM-001` | C++ | `cpp` | `memory_leak` | `CWE-401` | yes | yes | - |
-| `CPP-PATH-001` | C++ | `cpp` | `path_traversal` | `CWE-22` | yes | yes | - |
+| `CPP-PATH-001` | C++ | `cpp` | `path_traversal` | `CWE-22` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `CPP-TOCTOU-001` | C++ | `cpp` | `time_of_check_time_of_use` | `CWE-367` | yes | yes | - |
 | `CS-RAND-001` | C# / .NET | `csharp` | `weak_randomness` | `CWE-338` | yes | yes | - |
-| `CS-SQLI-001` | C# / .NET | `csharp` | `sql_injection` | `CWE-89` | yes | yes | - |
+| `CS-SQLI-001` | C# / .NET | `csharp` | `sql_injection` | `CWE-89` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `DEP-UPSTREAM-001` | C# / .NET dependency simulation | `dotnet-dependency` | `dependency_vulnerability_patch_in_place` | `CWE-20` | yes | yes | - |
 | `GO-DNS-EXFIL-001` | Go | `go` | `unexpected_dns_exfiltration` | `CWE-200`, `CWE-201` | yes | yes | - |
 | `JAVA-BIDI-001` | Java | `java` | `unicode_bidi_filename_deception` | `CWE-451` | yes | yes | - |
-| `JAVA-DESER-001` | Java | `java` | `unsafe_deserialization` | `CWE-502` | yes | yes | - |
+| `JAVA-DESER-001` | Java | `java` | `unsafe_deserialization` | `CWE-502` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `JAVA-METADATA-NET-001` | Java | `java` | `unexpected_metadata_service_access` | `CWE-918` | yes | yes | - |
 | `JAVA-NULPATH-001` | Java | `java` | `null_byte_path_validation_bypass` | `CWE-158`, `CWE-22` | yes | yes | - |
-| `JAVA-XXE-001` | Java | `java` | `xml_external_entity` | `CWE-611` | yes | yes | - |
+| `JAVA-XXE-001` | Java | `java` | `xml_external_entity` | `CWE-611` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `JAVA-ZIP-001` | Java | `java` | `unsafe_archive_extraction` | `CWE-22` | yes | yes | - |
 | `CVE-JQUERY-HTML-001` | JavaScript | `javascript` | `known_cve_fix_in_place_dependency` | `CWE-79` | yes | yes | `cve-list-adversarial-missed-unlisted-cve`, `cve-list-adversarial-unsafe-blind-upgrade`, `cve-list-fix-in-place-smoke` |
 | `CVE-LODASH-PP-001` | JavaScript | `javascript` | `known_cve_fix_in_place_dependency` | `CWE-1321` | yes | yes | `cve-list-adversarial-missed-listed-cve`, `cve-list-adversarial-missed-unlisted-cve`, `cve-list-adversarial-unsafe-blind-upgrade`, `cve-list-fix-in-place-smoke` |
@@ -101,7 +101,7 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 | `JS-CSRF-001` | JavaScript | `javascript` | `cross_site_request_forgery` | `CWE-352` | yes | yes | - |
 | `JS-UWS-001` | JavaScript | `javascript` | `unicode_whitespace_token_parsing` | `CWE-180` | yes | yes | - |
 | `JS-XSS-001` | JavaScript | `javascript` | `cross_site_scripting` | `CWE-79` | yes | yes | `curated-candidate-repair-smoke` |
-| `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | - |
+| `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `NODE-CRLF-001` | JavaScript / Node.js | `nodejs` | `crlf_header_injection` | `CWE-93`, `CWE-113` | yes | yes | - |
 | `NODE-INSTALL-NET-001` | JavaScript / Node.js | `nodejs` | `unexpected_install_time_network` | `CWE-913`, `CWE-200` | yes | yes | - |
 | `NODE-LOG-001` | JavaScript / Node.js | `nodejs` | `sensitive_data_logging` | `CWE-532` | yes | yes | - |

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "run_id": "prompt-pack-positive-smoke",
+  "summary": "Known-good run-level evidence combining discovery, reachability, patch scoring, evidence packets, tests, approvals, residual risk, and reproducibility.",
+  "dimension_scores": {
+    "discovery_accuracy": {
+      "score": 94,
+      "evidence": [
+        "Detected all selected reachable findings for JS-XSS-001, NODE-SSRF-001, and TS-TELEMETRY-NET-001.",
+        "No unrelated findings were reported."
+      ]
+    },
+    "reachability_and_false_positive_boundary": {
+      "score": 92,
+      "evidence": [
+        "Reachable fixtures were distinguished from unreachable/safe paired fixtures.",
+        "False-positive boundaries were cited in the evidence packets."
+      ]
+    },
+    "remediation_plan_quality": {
+      "score": 90,
+      "evidence": [
+        "Plans removed the vulnerable behavior with minimal compatibility impact.",
+        "Follow-up risks were called out where compatibility review was needed."
+      ]
+    },
+    "patch_diff_result": {
+      "score": 95,
+      "evidence": [
+        "Candidate repair suite passed the curated candidate-repair smoke packet.",
+        "Patch-diff results were retained under ignored scoring outputs."
+      ]
+    },
+    "evidence_packet_quality": {
+      "score": 93,
+      "evidence": [
+        "Non-CVE evidence packet suite passed the positive packet and rejected negative controls.",
+        "Quality dimensions were present for required cases."
+      ]
+    },
+    "regression_security_tests": {
+      "score": 90,
+      "evidence": [
+        "Each case included exploit rejection and compatibility-preservation tests.",
+        "Safe harnesses passed without real exploit execution or outbound network calls."
+      ]
+    },
+    "approval_and_residual_risk": {
+      "score": 88,
+      "evidence": [
+        "Human approval gates were documented for security, compatibility, and rollout decisions.",
+        "Residual risk was explicitly reported or rejected per case."
+      ]
+    },
+    "run_reproducibility": {
+      "score": 91,
+      "evidence": [
+        "Validation commands, scorer commands, input packets, and generated output locations were documented.",
+        "Generated result JSON remained ignored and reproducible."
+      ]
+    }
+  },
+  "gates": {
+    "unsafe_new_defect": false,
+    "missing_approval_gate": false,
+    "missing_residual_risk": false,
+    "incomplete_case_coverage": false
+  }
+}

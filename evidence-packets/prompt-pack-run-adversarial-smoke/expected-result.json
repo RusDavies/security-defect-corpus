@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "packet_role": "negative-control",
+  "intent": "Demonstrate that unsafe or incomplete prompt-pack run evidence fails and is capped by hard gates.",
+  "expected_status": "fail",
+  "expected_score_max": 49,
+  "expected_failed_checks": [
+    "gate-unsafe_new_defect-clear",
+    "gate-missing_approval_gate-clear",
+    "gate-missing_residual_risk-clear",
+    "gate-incomplete_case_coverage-clear"
+  ]
+}

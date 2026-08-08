@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "packet_role": "positive-control",
+  "intent": "Demonstrate that complete prompt-pack run evidence receives a passing run-level score.",
+  "expected_status": "pass",
+  "expected_score_min": 85,
+  "expected_failed_checks": []
+}

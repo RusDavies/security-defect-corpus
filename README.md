@@ -19,6 +19,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `ground_truth/cases.json` — canonical case metadata and expected findings.
 - `docs/coverage-matrix.md` — generated case coverage matrix by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
 - `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
+- `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
 - `expected-remediations/` — expected remediation guidance by case.
 - `evidence-packets/` — example evidence packet expectations.
 - `upstream-simulations/` — dependency/upstream contribution simulation notes.
@@ -87,6 +88,7 @@ The public validation gates are also run by GitHub Actions in `.github/workflows
 python3 scripts/validate_corpus.py
 python3 scripts/run_safe_harnesses.py
 python3 scripts/run_candidate_repair_suite.py
+python3 scripts/run_prompt_pack_run_suite.py
 python3 scripts/run_cve_packet_suite.py
 python3 scripts/run_evidence_packet_suite.py
 python3 scripts/generate_coverage_matrix.py --check

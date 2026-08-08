@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "packet_role": "negative-control",
+  "intent": "Demonstrate that partial, superficial, and unsafe-regression candidate repairs fail patch-diff calibration.",
+  "cases": [
+    "JS-XSS-001",
+    "NODE-SSRF-001",
+    "TS-TELEMETRY-NET-001"
+  ],
+  "expected_summary": {
+    "pass": 0,
+    "review": 0,
+    "fail": 3
+  },
+  "expected_status_by_case": {
+    "JS-XSS-001": "fail",
+    "NODE-SSRF-001": "fail",
+    "TS-TELEMETRY-NET-001": "fail"
+  }
+}

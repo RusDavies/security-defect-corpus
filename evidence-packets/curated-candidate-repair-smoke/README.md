@@ -26,3 +26,9 @@ python3 scripts/score_patch_diff.py \
 - This is a known-good smoke packet, not a claim that scorer output equals production approval.
 - A useful remediation run should pair this scoring evidence with reachability analysis, tests, human review, and residual-risk notes.
 - The packet intentionally covers reflected output handling, outbound host allowlisting/SSRF, and undeclared telemetry removal.
+
+Run all committed candidate-repair packets with:
+
+```bash
+python3 scripts/run_candidate_repair_suite.py
+```

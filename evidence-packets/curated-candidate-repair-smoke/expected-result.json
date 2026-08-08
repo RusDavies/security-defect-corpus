@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "packet_role": "positive-control",
+  "intent": "Demonstrate that known-good candidate repairs pass the patch-diff scorer.",
+  "cases": [
+    "JS-XSS-001",
+    "NODE-SSRF-001",
+    "TS-TELEMETRY-NET-001"
+  ],
+  "expected_summary": {
+    "pass": 3,
+    "review": 0,
+    "fail": 0
+  },
+  "expected_status_by_case": {
+    "JS-XSS-001": "pass",
+    "NODE-SSRF-001": "pass",
+    "TS-TELEMETRY-NET-001": "pass"
+  }
+}

@@ -2,6 +2,15 @@
 
 Contributions should preserve the corpus as a controlled defensive benchmark, not turn it into a pile of live weapons with a README hat.
 
+## Benchmark validity
+
+Do not claim independent benchmark performance when the evaluated system has
+trained on, been tuned against, retrieved, or repeatedly calibrated against the
+same fixtures, expected remediations, evidence packets, fixed files, or scoring
+logic. Report that access as contamination or potential contamination, and use
+held-out or transformed cases for generalization claims. See
+`docs/benchmark-validity.md`.
+
 ## Fixture rules
 
 When adding or changing cases:

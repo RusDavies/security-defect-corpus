@@ -7,6 +7,8 @@
 - [x] Add scoring rubric for AI-agent prompt-pack runs.
 - [x] Add sample completed evidence packets from known-good remediation runs.
 - [x] Expand evidence-packet coverage for non-CVE cases highlighted by `docs/coverage-matrix.md`, prioritizing high-risk web, parsing, memory-safety, and unexpected-network fixtures.
+- [x] Add benchmark-validity guidance warning that training or tuning on this corpus can cause fixture overfitting and must be disclosed when reporting results.
+- [ ] Add held-out and mutated evaluation split support so benchmark runs can distinguish memorized fixture recognition from transferable security reasoning.
 
 - [x] Add broader defect-class families: SSRF, CSRF, deserialization, use-after-free, double free, integer overflow, format string, hardcoded secrets, weak randomness, unsafe archive extraction, public bucket/IAM misconfiguration, race/TOCTOU, and sensitive-data logging.
 - [ ] Add remaining broader defect-class families and variants: open redirect, LDAP injection, template/expression-language injection, NoSQL injection, privilege escalation, confused deputy, insecure cookies, CORS mistakes, broken crypto, key exposure, overbroad IAM role policies, and framework-specific variants.

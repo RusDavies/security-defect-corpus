@@ -18,6 +18,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `cases/<language-or-ecosystem>/src/` — source fixtures.
 - `ground_truth/cases.json` — canonical case metadata and expected findings.
 - `docs/coverage-matrix.md` — generated case coverage matrix by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
+- `docs/benchmark-validity.md` — guidance on benchmark contamination, fixture overfitting, held-out evaluation, and result reporting.
 - `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
 - `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
 - `docs/surplus-capability-taxonomy.md` — taxonomy and metadata shape for backdoors, call-home behavior, covert control, and other unauthorized surplus capability cases.
@@ -33,6 +34,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - Do not copy vulnerable patterns into production.
 - Treat exploitability notes as defensive test metadata only.
 - Use the fixtures only for authorized security testing, prompt evaluation, training, and remediation workflow validation.
+- Do not present results as independent general-security performance when the evaluated model, agent, prompt, or scanner has trained on or been tuned against this corpus; see `docs/benchmark-validity.md`.
 - Do not add real secrets, customer data, production hostnames, private paths, internal account IDs, or live infrastructure details.
 - Do not add tests or fixtures that make real outbound network calls.
 - See `SECURITY.md` for responsible-use boundaries and `CONTRIBUTING.md` for fixture contribution rules.

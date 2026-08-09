@@ -80,6 +80,13 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Go | `GO-DNS-EXFIL-001` | DNS exfiltration pattern | reachable + unreachable |
 | TypeScript | `TS-TELEMETRY-NET-001` | undeclared telemetry beacon | reachable + unreachable |
 | Node.js | `NODE-RUNTIME-EGRESS-001` | runtime egress to unapproved host | reachable + unreachable |
+| Python | `PY-SETUP-NET-001` | package setup lifecycle callback | reachable + unreachable + fixed |
+| Ruby | `RUBY-GEM-NET-001` | gem install lifecycle callback | reachable + unreachable + fixed |
+| JavaScript | `JS-WEBSOCKET-BEACON-001` | browser WebSocket beacon | reachable + unreachable + fixed |
+| Python | `PY-SMTP-CALLBACK-001` | direct SMTP callback from business logic | reachable + unreachable + fixed |
+| Go | `GO-PROXY-BYPASS-001` | proxy-bypassing direct egress client | reachable + unreachable + fixed |
+| Node.js | `NODE-METADATA-ALIAS-001` | metadata-service IPv6/link-local alias access | reachable + unreachable + fixed |
+| Node.js | `NODE-DEPUPDATE-NET-001` | dependency-update reporting callback | reachable + unreachable + fixed |
 | JavaScript | `CVE-LODASH-PP-001` | listed `CVE-2019-10744` requiring fix-in-place to avoid breaking downstream lodash-3 API users | reachable + unreachable + fixed |
 | JavaScript | `CVE-JQUERY-HTML-001` | listed `CVE-2020-11023` requiring fix-in-place to avoid breaking legacy GUI plugin APIs | reachable + unreachable + fixed |
 | JavaScript | `CVE-LODASH-TEMPLATE-UNLISTED-001` | unlisted `CVE-2021-23337` that should be discovered opportunistically | reachable + unreachable + fixed |
@@ -162,6 +169,8 @@ Priority defect classes to add:
 - concurrency/state: race conditions, TOCTOU, lock misuse, stale authorization decisions
 - logging/privacy: sensitive data in logs, over-retention, telemetry leakage
 - surplus capability: hidden backdoors, call-home behavior, covert command/control, dormant activation triggers, hidden network surfaces, superfluous privilege, and repo-local trust-boundary laundering
+
+Unexpected-network coverage includes install/update lifecycle callbacks, import-time callbacks, browser/WebSocket beacons, SMTP callbacks, metadata-service access and aliases, DNS exfiltration, runtime egress, proxy bypass, and egress-policy evidence packets. Future additions should bias toward new protocols, platform-specific policy boundaries, or adversarial evidence packets rather than another generic outbound HTTP sample. The swamp has enough ordinary puddles.
 
 Memory leaks in C and C++ should remain first-class cases because they are common, detectable, and operationally/security relevant when repeated allocations can produce denial of service or long-running process degradation. Tiny allocations leaking once are less interesting than reachable repeated leaks with realistic ownership mistakes.
 ## Safe Harnesses

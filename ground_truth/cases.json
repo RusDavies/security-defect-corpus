@@ -2253,6 +2253,168 @@
       ],
       "false_positive_boundary": "UnreachableJwtNone.kt keeps alg=none acceptance retired and exports verifier-backed token handling.",
       "fixed_file": "fixed/KOTLIN-JWT-NONE-001/FixedJwtNone.kt"
+    },
+    {
+      "id": "PY-SETUP-NET-001",
+      "ecosystem": "python",
+      "language": "Python",
+      "defect_class": "unexpected_package_lifecycle_network",
+      "cwe": [
+        "CWE-829",
+        "CWE-201"
+      ],
+      "reachable_file": "cases/python/src/reachable_setup_lifecycle_network.py",
+      "unreachable_file": "cases/python/src/unreachable_setup_lifecycle_network.py",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "setup lifecycle hook -> environment context -> urllib.request.urlopen to undeclared host",
+      "expected_remediation": "Remove install/setup-time network callbacks and keep package lifecycle behavior local unless explicitly declared and approved.",
+      "expected_tests": [
+        "setup hook performs no network I/O",
+        "retired callback is not invoked by install path"
+      ],
+      "false_positive_boundary": "unreachable_setup_lifecycle_network.py keeps a retired callback helper, but the exported setup hook returns only local metadata.",
+      "fixed_file": "fixed/PY-SETUP-NET-001/fixed_setup_lifecycle_network.py"
+    },
+    {
+      "id": "RUBY-GEM-NET-001",
+      "ecosystem": "ruby",
+      "language": "Ruby",
+      "defect_class": "unexpected_package_lifecycle_network",
+      "cwe": [
+        "CWE-829",
+        "CWE-201"
+      ],
+      "reachable_file": "cases/ruby/src/reachable_gem_lifecycle_network.rb",
+      "unreachable_file": "cases/ruby/src/unreachable_gem_lifecycle_network.rb",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "gem post_install hook -> ENV user -> Net::HTTP callback to undeclared host",
+      "expected_remediation": "Remove gem install-time network callbacks and keep package lifecycle behavior local and deterministic.",
+      "expected_tests": [
+        "post_install performs no Net::HTTP call",
+        "retired callback helper is not invoked"
+      ],
+      "false_positive_boundary": "unreachable_gem_lifecycle_network.rb keeps a retired network callback helper, but the active install hook returns local metadata only.",
+      "fixed_file": "fixed/RUBY-GEM-NET-001/fixed_gem_lifecycle_network.rb"
+    },
+    {
+      "id": "JS-WEBSOCKET-BEACON-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "unexpected_websocket_beacon",
+      "cwe": [
+        "CWE-201",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/javascript/src/reachable_websocket_beacon.js",
+      "unreachable_file": "cases/javascript/src/unreachable_websocket_beacon.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "dashboard startup -> WebSocket open handler -> user identifiers to undeclared beacon host",
+      "expected_remediation": "Remove undeclared WebSocket beacons and avoid sending user identifiers to unapproved hosts.",
+      "expected_tests": [
+        "dashboard startup does not instantiate WebSocket",
+        "user email is never serialized to beacon host"
+      ],
+      "false_positive_boundary": "unreachable_websocket_beacon.js keeps a retired beacon helper, but exported dashboard startup returns local state only.",
+      "fixed_file": "fixed/JS-WEBSOCKET-BEACON-001/fixed_websocket_beacon.js"
+    },
+    {
+      "id": "PY-SMTP-CALLBACK-001",
+      "ecosystem": "python",
+      "language": "Python",
+      "defect_class": "unexpected_smtp_callback",
+      "cwe": [
+        "CWE-201",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/python/src/reachable_smtp_callback.py",
+      "unreachable_file": "cases/python/src/unreachable_smtp_callback.py",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "invoice id + environment user -> direct smtplib.SMTP callback to undeclared host",
+      "expected_remediation": "Remove direct SMTP callbacks from invoice processing and use only documented mail subsystems with approval.",
+      "expected_tests": [
+        "invoice processing performs no direct SMTP connection",
+        "processed invoice response is preserved"
+      ],
+      "false_positive_boundary": "unreachable_smtp_callback.py keeps a retired SMTP audit helper, but exported invoice processing returns local status only.",
+      "fixed_file": "fixed/PY-SMTP-CALLBACK-001/fixed_smtp_callback.py"
+    },
+    {
+      "id": "GO-PROXY-BYPASS-001",
+      "ecosystem": "go",
+      "language": "Go",
+      "defect_class": "egress_proxy_bypass",
+      "cwe": [
+        "CWE-441",
+        "CWE-923"
+      ],
+      "reachable_file": "cases/go/src/reachable_proxy_bypass.go",
+      "unreachable_file": "cases/go/src/unreachable_proxy_bypass.go",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "update check -> http.Client with Transport Proxy nil -> direct outbound request bypassing configured proxy controls",
+      "expected_remediation": "Remove proxy-bypassing transports and require injected clients that inherit approved egress policy.",
+      "expected_tests": [
+        "update fetch uses injected HTTP client",
+        "no transport disables proxy configuration"
+      ],
+      "false_positive_boundary": "unreachable_proxy_bypass.go keeps a retired direct client helper, but exported update fetch uses the caller-provided client.",
+      "fixed_file": "fixed/GO-PROXY-BYPASS-001/fixed_proxy_bypass.go"
+    },
+    {
+      "id": "NODE-METADATA-ALIAS-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "metadata_service_alias_access",
+      "cwe": [
+        "CWE-918",
+        "CWE-200"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_metadata_alias.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_metadata_alias.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "request.query.metadataUrl/default IPv6 metadata alias -> http.get -> cloud instance credential exposure",
+      "expected_remediation": "Block metadata-service IPv4, IPv6, and link-local aliases before outbound requests; prefer approved metadata proxy hosts.",
+      "expected_tests": [
+        "169.254.169.254 is rejected",
+        "[fd00:ec2::254] is rejected",
+        "approved metadata proxy host still works"
+      ],
+      "false_positive_boundary": "unreachable_metadata_alias.js keeps a retired metadata debug helper, but the exported route blocks known metadata aliases.",
+      "fixed_file": "fixed/NODE-METADATA-ALIAS-001/fixed_metadata_alias.js"
+    },
+    {
+      "id": "NODE-DEPUPDATE-NET-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "unexpected_dependency_update_network",
+      "cwe": [
+        "CWE-201",
+        "CWE-829"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_dependency_update_network.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_dependency_update_network.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "dependency update hook -> lockfile packages + environment user -> https.request to undeclared host",
+      "expected_remediation": "Remove dependency-update callbacks that exfiltrate lockfile or environment data to undeclared hosts.",
+      "expected_tests": [
+        "dependency update hook performs no https.request",
+        "local package count behavior is preserved"
+      ],
+      "false_positive_boundary": "unreachable_dependency_update_network.js keeps a retired update reporter, but exported dependency-update handling is local only.",
+      "fixed_file": "fixed/NODE-DEPUPDATE-NET-001/fixed_dependency_update_network.js"
     }
   ]
 }

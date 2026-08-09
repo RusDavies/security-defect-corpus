@@ -797,6 +797,83 @@ def _(case):
     ]
 
 
+@check_case("PY-SETUP-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-setup-urlopen-callback", "urllib.request.urlopen" in reach and "setup-callback.example.invalid" in reach and "run_setup_hook()" in reach),
+        result(case["id"], "safe-pair-retired-setup-callback", "retired_setup_callback" in safe and "urllib" not in safe),
+        result(case["id"], "fixed-local-setup-only", "urllib" not in fixed and "local build metadata only" in fixed),
+    ]
+
+
+@check_case("RUBY-GEM-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-gem-net-http-callback", "Net::HTTP.get" in reach and "gem-callback.example.invalid" in reach and "post_install" in reach),
+        result(case["id"], "safe-pair-retired-gem-callback", "retired_post_install" in safe and "Net::HTTP" not in safe),
+        result(case["id"], "fixed-local-gem-install-only", "Net::HTTP" not in fixed and "local gem metadata only" in fixed),
+    ]
+
+
+@check_case("JS-WEBSOCKET-BEACON-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-websocket-beacon-email", "new WebSocket('wss://beacon.example.invalid/session')" in reach and "session.email" in reach),
+        result(case["id"], "safe-pair-retired-websocket-only", "retiredBeacon" in safe and "export function startDashboard" in safe),
+        result(case["id"], "fixed-removes-websocket", "WebSocket" not in fixed and "userId: session.userId" in fixed),
+    ]
+
+
+@check_case("PY-SMTP-CALLBACK-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-smtp-callback", "smtplib.SMTP" in reach and "smtp.callback.example.invalid" in reach and "sendmail" in reach),
+        result(case["id"], "safe-pair-retired-smtp-only", "retired_smtp_audit" in safe and "smtplib" not in safe),
+        result(case["id"], "fixed-removes-smtp", "smtplib" not in fixed and "processed" in fixed),
+    ]
+
+
+@check_case("GO-PROXY-BYPASS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-proxy-nil-transport", "Transport: &http.Transport{Proxy: nil}" in reach),
+        result(case["id"], "safe-pair-injected-client", "retiredDirectClient" in safe and "func FetchUpdate(client *http.Client, url string)" in safe),
+        result(case["id"], "fixed-no-proxy-bypass-transport", "Proxy: nil" not in fixed and "client.Get(url)" in fixed),
+    ]
+
+
+@check_case("NODE-METADATA-ALIAS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-ipv6-metadata-alias", "[fd00:ec2::254]" in reach and "http.get(target" in reach),
+        result(case["id"], "safe-pair-blocks-metadata-aliases", "retiredMetadataDebug" in safe and "169.254.169.254" in safe and "fd00:ec2::254" in safe),
+        result(case["id"], "fixed-blocks-metadata-aliases", "metadata alias blocked" in fixed and "169.254.169.254" in fixed and "fd00:ec2::254" in fixed),
+    ]
+
+
+@check_case("NODE-DEPUPDATE-NET-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-dependency-update-https-request", "https.request('https://updates.example.invalid/dependency-report'" in reach and "lockfile.packages" in reach),
+        result(case["id"], "safe-pair-retired-update-reporter", "retiredUpdateReporter" in safe and "https.request" not in safe),
+        result(case["id"], "fixed-local-dependency-summary-only", "https" not in fixed and "packageCount" in fixed),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

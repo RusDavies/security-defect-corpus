@@ -4,13 +4,13 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 ## Summary
 
-- Cases: 47
+- Cases: 52
 - Ecosystems: 11
 - Languages: 12
-- Defect classes: 45
-- Pattern-harnessed cases: 47/47
-- Fixed-fixture coverage: 47/47
-- Evidence-packet coverage: 11/47
+- Defect classes: 49
+- Pattern-harnessed cases: 52/52
+- Fixed-fixture coverage: 52/52
+- Evidence-packet coverage: 11/52
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -26,7 +26,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `go` | 1 |
 | `java` | 7 |
 | `javascript` | 8 |
-| `nodejs` | 10 |
+| `nodejs` | 15 |
 | `python` | 2 |
 | `typescript` | 4 |
 
@@ -63,6 +63,10 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `server_side_request_forgery` | 1 |
 | `sql_injection` | 1 |
 | `stack_buffer_overflow` | 1 |
+| `surplus_capability_dormant_activation_trigger` | 1 |
+| `surplus_capability_hardcoded_operator_key` | 1 |
+| `surplus_capability_hidden_backdoor` | 2 |
+| `surplus_capability_hidden_network_surface` | 1 |
 | `template_expression_injection` | 1 |
 | `time_of_check_time_of_use` | 1 |
 | `undeclared_telemetry_beacon` | 1 |
@@ -115,6 +119,11 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `JS-TEMPLATE-001` | JavaScript | `javascript` | `template_expression_injection` | `CWE-94`, `CWE-1336` | yes | yes | - |
 | `JS-UWS-001` | JavaScript | `javascript` | `unicode_whitespace_token_parsing` | `CWE-180` | yes | yes | - |
 | `JS-XSS-001` | JavaScript | `javascript` | `cross_site_scripting` | `CWE-79` | yes | yes | `adversarial-non-cve-quality-boundary-break` |
+| `NODE-BACKDOOR-ADMIN-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_network_surface` | `CWE-489`, `CWE-912` | yes | yes | - |
+| `NODE-BACKDOOR-AUTHBYPASS-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_backdoor` | `CWE-306`, `CWE-912` | yes | yes | - |
+| `NODE-BACKDOOR-DORMANT-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_dormant_activation_trigger` | `CWE-912`, `CWE-863` | yes | yes | - |
+| `NODE-BACKDOOR-MAGIC-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_backdoor` | `CWE-912`, `CWE-798` | yes | yes | - |
+| `NODE-BACKDOOR-OPKEY-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hardcoded_operator_key` | `CWE-798`, `CWE-912` | yes | yes | - |
 | `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `adversarial-non-cve-missing-case-boundary`, `adversarial-non-cve-missing-sections`, `high-risk-non-cve-remediation-smoke` |
 | `NODE-COOKIE-001` | JavaScript / Node.js | `nodejs` | `insecure_cookie` | `CWE-614`, `CWE-1004`, `CWE-1275` | yes | yes | - |
 | `NODE-CORS-001` | JavaScript / Node.js | `nodejs` | `cors_misconfiguration` | `CWE-942`, `CWE-346` | yes | yes | - |

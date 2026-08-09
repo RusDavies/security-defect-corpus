@@ -88,6 +88,11 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Node.js | `NODE-CORS-001` | credentialed CORS origin reflection | reachable + unreachable + fixed |
 | Python | `PY-CRYPTO-001` | broken password hashing crypto | reachable + unreachable + fixed |
 | Cloud config | `CLOUD-IAM-001` | overbroad IAM policy | reachable + unreachable + fixed |
+| Node.js | `NODE-BACKDOOR-MAGIC-001` | surplus capability / magic credential backdoor | reachable + unreachable + fixed |
+| Node.js | `NODE-BACKDOOR-AUTHBYPASS-001` | surplus capability / hidden header auth bypass | reachable + unreachable + fixed |
+| Node.js | `NODE-BACKDOOR-ADMIN-001` | surplus capability / undocumented admin endpoint | reachable + unreachable + fixed |
+| Node.js | `NODE-BACKDOOR-OPKEY-001` | surplus capability / hardcoded operator key | reachable + unreachable + fixed |
+| Node.js | `NODE-BACKDOOR-DORMANT-001` | surplus capability / dormant activation trigger | reachable + unreachable + fixed |
 
 ## Validation
 

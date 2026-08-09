@@ -1093,6 +1093,311 @@
       ],
       "false_positive_boundary": "unreachable_overbroad_iam_policy.json contains a deny-only wildcard retired statement and scoped allow permissions.",
       "fixed_file": "fixed/CLOUD-IAM-001/fixed_overbroad_iam_policy.json"
+    },
+    {
+      "id": "NODE-BACKDOOR-MAGIC-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_hidden_backdoor",
+      "cwe": [
+        "CWE-912",
+        "CWE-798"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_magic_credential_backdoor.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_magic_credential_backdoor.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "req.body.password -> magic credential branch -> admin session role",
+      "expected_remediation": "Remove the magic credential branch and require the normal password verifier for every login.",
+      "expected_tests": [
+        "magic password rejected",
+        "valid password still logs in",
+        "user role is not elevated by password value"
+      ],
+      "false_positive_boundary": "unreachable_magic_credential_backdoor.js keeps the magic credential in a retired helper and exports only verifier-based login.",
+      "fixed_file": "fixed/NODE-BACKDOOR-MAGIC-001/fixed_magic_credential_backdoor.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "hidden_backdoor"
+        ],
+        "external_expected_behavior": "Login may authenticate a known user through the supplied password verifier and return that user's existing role.",
+        "allowed_capabilities": [
+          "lookup user by email",
+          "verify supplied password through the injected verifier",
+          "return the authenticated user's existing role"
+        ],
+        "disallowed_capabilities": [
+          "accept magic credentials",
+          "grant administrator role based on a password literal",
+          "bypass the password verifier"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The expected login capability is password-verifier authentication only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The implementation labels the literal as debug behavior, which is not authoritative permission.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Compare the login behavior against the external capability envelope.",
+          "Reject the magic credential even if it is framed as debug or maintenance behavior.",
+          "Report role elevation through a password literal as unauthorized hidden functionality."
+        ]
+      }
+    },
+    {
+      "id": "NODE-BACKDOOR-AUTHBYPASS-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_hidden_backdoor",
+      "cwe": [
+        "CWE-306",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_header_auth_bypass.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_header_auth_bypass.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "x-maintenance-mode header -> requireUser bypass -> synthetic admin user",
+      "expected_remediation": "Remove the header-triggered bypass and require the normal authenticated session path.",
+      "expected_tests": [
+        "maintenance header rejected without session",
+        "valid session accepted",
+        "synthetic admin user cannot be created from headers"
+      ],
+      "false_positive_boundary": "unreachable_header_auth_bypass.js keeps the header bypass in a retired helper and exports session-only authentication.",
+      "fixed_file": "fixed/NODE-BACKDOOR-AUTHBYPASS-001/fixed_header_auth_bypass.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "hidden_backdoor",
+          "dormant_activation_trigger"
+        ],
+        "external_expected_behavior": "Request authentication may return only the user stored in an existing authenticated session.",
+        "allowed_capabilities": [
+          "read authenticated session user",
+          "reject requests without a session"
+        ],
+        "disallowed_capabilities": [
+          "authenticate from undocumented headers",
+          "create synthetic administrator identities",
+          "activate privileged behavior through maintenance flags"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The route guard capability is session authentication only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The bypass is named maintenance mode, but no external requirement permits it.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Identify the privileged branch that bypasses normal session authentication.",
+          "Treat the maintenance header as a hidden activation trigger.",
+          "Report synthetic admin creation as unauthorized surplus capability."
+        ]
+      }
+    },
+    {
+      "id": "NODE-BACKDOOR-ADMIN-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_hidden_network_surface",
+      "cwe": [
+        "CWE-489",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_undocumented_admin_endpoint.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_undocumented_admin_endpoint.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "route registration -> undocumented /__private/admin/retry-all endpoint -> privileged job retry",
+      "expected_remediation": "Remove the undocumented privileged route from the exported route registration surface.",
+      "expected_tests": [
+        "status route still registered",
+        "hidden admin route not registered",
+        "job retry cannot be triggered through public routes"
+      ],
+      "false_positive_boundary": "unreachable_undocumented_admin_endpoint.js keeps the admin route in a retired registration helper and exports only public route registration.",
+      "fixed_file": "fixed/NODE-BACKDOOR-ADMIN-001/fixed_undocumented_admin_endpoint.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "hidden_backdoor",
+          "hidden_network_surface"
+        ],
+        "external_expected_behavior": "Route registration may expose only the public status endpoint.",
+        "allowed_capabilities": [
+          "register GET /status",
+          "return service health status"
+        ],
+        "disallowed_capabilities": [
+          "register undocumented privileged routes",
+          "trigger administrative job actions from public route registration",
+          "expose hidden admin URL paths"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The route surface is limited to status reporting.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The path name claims privacy, but path naming is not an authorization control.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Compare exported route registration against the externally allowed route surface.",
+          "Treat private-looking path names as untrusted code assertions.",
+          "Report the hidden privileged route as surplus network surface."
+        ]
+      }
+    },
+    {
+      "id": "NODE-BACKDOOR-OPKEY-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_hardcoded_operator_key",
+      "cwe": [
+        "CWE-798",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_hardcoded_operator_key.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_hardcoded_operator_key.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "x-operator-key header -> hardcoded operator key comparison -> tenant key rotation",
+      "expected_remediation": "Remove the hardcoded operator-key override and require the documented tenant-admin authorization path.",
+      "expected_tests": [
+        "operator key rejected",
+        "tenant admin can rotate owned tenant key",
+        "non-admin cannot rotate tenant key"
+      ],
+      "false_positive_boundary": "unreachable_hardcoded_operator_key.js keeps the operator-key override in a retired helper and exports tenant-admin authorization only.",
+      "fixed_file": "fixed/NODE-BACKDOOR-OPKEY-001/fixed_hardcoded_operator_key.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "hidden_backdoor",
+          "superfluous_privilege"
+        ],
+        "external_expected_behavior": "Tenant key rotation may be performed only by a tenant administrator through the documented user authorization path.",
+        "allowed_capabilities": [
+          "check authenticated user role",
+          "rotate tenant key for an authorized tenant administrator"
+        ],
+        "disallowed_capabilities": [
+          "authorize through hardcoded operator keys",
+          "rotate keys from undocumented headers",
+          "bypass tenant ownership checks"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The key-rotation capability is scoped to tenant administrators.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The operator-key name implies maintenance intent, but the codebase cannot authorize its own bypass.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Detect the hardcoded key comparison as an undocumented authority source.",
+          "Compare it with the external tenant-admin-only capability envelope.",
+          "Report tenant key rotation through an operator header as unauthorized privilege."
+        ]
+      }
+    },
+    {
+      "id": "NODE-BACKDOOR-DORMANT-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_dormant_activation_trigger",
+      "cwe": [
+        "CWE-912",
+        "CWE-863"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_dormant_trigger_backdoor.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_dormant_trigger_backdoor.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "hostname and query trigger -> all-tenants report export scope",
+      "expected_remediation": "Remove the dormant hostname/query trigger and delegate export authorization only to the policy object.",
+      "expected_tests": [
+        "special hostname and query rejected",
+        "policy-approved export allowed",
+        "all-tenants scope cannot be granted by request shape"
+      ],
+      "false_positive_boundary": "unreachable_dormant_trigger_backdoor.js keeps the dormant trigger in a retired helper and exports policy-only authorization.",
+      "fixed_file": "fixed/NODE-BACKDOOR-DORMANT-001/fixed_dormant_trigger_backdoor.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "dormant_activation_trigger",
+          "hidden_backdoor"
+        ],
+        "external_expected_behavior": "Report export authorization may be decided only by the supplied policy object for the requested tenant.",
+        "allowed_capabilities": [
+          "call policy.canExportReports for the authenticated user and requested tenant",
+          "return the policy decision"
+        ],
+        "disallowed_capabilities": [
+          "grant all-tenant export scope from hostname",
+          "activate privileged behavior from query strings",
+          "bypass the policy object"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The export capability is policy-object authorization only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The preview naming suggests a feature flag, but no external source permits all-tenant export scope.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Find the dormant request-shape trigger before the policy call.",
+          "Compare the all-tenants scope with the external policy-only capability envelope.",
+          "Report the trigger as a hidden authorization bypass even though it looks like preview behavior."
+        ]
+      }
     }
   ]
 }

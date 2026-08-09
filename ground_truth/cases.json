@@ -1095,6 +1095,75 @@
       "fixed_file": "fixed/CLOUD-IAM-001/fixed_overbroad_iam_policy.json"
     },
     {
+      "id": "TS-KEY-EXPOSURE-001",
+      "ecosystem": "typescript",
+      "language": "TypeScript",
+      "defect_class": "key_exposure",
+      "cwe": [
+        "CWE-200",
+        "CWE-522"
+      ],
+      "reachable_file": "cases/typescript/src/reachable_key_exposure.ts",
+      "unreachable_file": "cases/typescript/src/unreachable_key_exposure.ts",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "secrets.getApiKey(user.id) -> account settings JSON response -> exposed credential",
+      "expected_remediation": "Do not serialize full API keys; return only redacted previews or non-sensitive metadata.",
+      "expected_tests": [
+        "full API key is absent from response",
+        "non-sensitive account settings still render"
+      ],
+      "false_positive_boundary": "unreachable_key_exposure.ts keeps a retired debug helper that returns a key, but the exported settings route returns only a redacted preview.",
+      "fixed_file": "fixed/TS-KEY-EXPOSURE-001/fixed_key_exposure.ts"
+    },
+    {
+      "id": "NODE-CONFUSED-DEPUTY-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "confused_deputy",
+      "cwe": [
+        "CWE-441",
+        "CWE-862"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_confused_deputy.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_confused_deputy.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "request.query.tenantId -> service-account storage download -> cross-tenant export",
+      "expected_remediation": "Bind delegated storage actions to the authenticated user's tenant and reject caller-supplied tenant delegation.",
+      "expected_tests": [
+        "cross-tenant export is rejected",
+        "same-tenant export still succeeds"
+      ],
+      "false_positive_boundary": "unreachable_confused_deputy.js contains a retired cross-tenant service-account helper, but the exported path uses the user's tenant identity.",
+      "fixed_file": "fixed/NODE-CONFUSED-DEPUTY-001/fixed_confused_deputy.js"
+    },
+    {
+      "id": "NODE-PRIVESC-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "privilege_escalation",
+      "cwe": [
+        "CWE-269",
+        "CWE-915"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_privilege_escalation.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_privilege_escalation.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "request.body.role -> profile update mass assignment -> user privilege change",
+      "expected_remediation": "Remove privileged fields from self-service update binding and require an explicitly authorized admin path for role changes.",
+      "expected_tests": [
+        "normal user cannot promote themselves",
+        "allowed profile fields still update"
+      ],
+      "false_positive_boundary": "unreachable_privilege_escalation.js keeps a retired bulk-admin import helper, but the exported profile update path ignores role input.",
+      "fixed_file": "fixed/NODE-PRIVESC-001/fixed_privilege_escalation.js"
+    },
+    {
       "id": "NODE-BACKDOOR-MAGIC-001",
       "ecosystem": "nodejs",
       "language": "JavaScript / Node.js",

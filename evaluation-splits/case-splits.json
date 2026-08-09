@@ -9,9 +9,9 @@
     "heldout_mutation": "Held-out claims should use transformed variants following the listed mutation axes instead of exact fixture memorization."
   },
   "split_counts": {
-    "development": 47,
+    "development": 48,
     "heldout": 10,
-    "validation": 16
+    "validation": 18
   },
   "assignments": [
     {
@@ -413,6 +413,13 @@
       "mutation_required": false
     },
     {
+      "case_id": "NODE-CONFUSED-DEPUTY-001",
+      "split": "development",
+      "defect_class": "confused_deputy",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
       "case_id": "NODE-COOKIE-001",
       "split": "development",
       "defect_class": "insecure_cookie",
@@ -494,6 +501,13 @@
       "case_id": "NODE-NOSQL-001",
       "split": "development",
       "defect_class": "nosql_injection",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-PRIVESC-001",
+      "split": "validation",
+      "defect_class": "privilege_escalation",
       "ecosystem": "nodejs",
       "mutation_required": false
     },
@@ -581,6 +595,13 @@
       "case_id": "TS-IDOR-001",
       "split": "development",
       "defect_class": "insecure_direct_object_reference",
+      "ecosystem": "typescript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "TS-KEY-EXPOSURE-001",
+      "split": "validation",
+      "defect_class": "key_exposure",
       "ecosystem": "typescript",
       "mutation_required": false
     },

@@ -764,6 +764,39 @@ def _(case):
     ]
 
 
+@check_case("NODE-PRIVESC-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-binds-user-role", "role: req.body.role" in reach),
+        result(case["id"], "safe-pair-retired-admin-import", "retiredBulkAdminImport" in safe and "role: req.body.role" not in safe),
+        result(case["id"], "fixed-removes-role-binding", "role: req.body.role" not in fixed and "displayName" in fixed),
+    ]
+
+
+@check_case("NODE-CONFUSED-DEPUTY-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-service-account-caller-tenant", "req.query.tenantId" in reach and "asServiceAccount().download" in reach),
+        result(case["id"], "safe-pair-binds-user-tenant", "retiredCrossTenantExport" in safe and "forTenant(req.user.tenantId)" in safe),
+        result(case["id"], "fixed-binds-user-tenant", "req.query.tenantId" not in fixed and "forTenant(req.user.tenantId)" in fixed),
+    ]
+
+
+@check_case("TS-KEY-EXPOSURE-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-serializes-full-api-key", "apiKey: secrets.getApiKey(req.user.id)" in reach),
+        result(case["id"], "safe-pair-redacted-key-preview", "retiredDebugSettings" in safe and "apiKeyPreview: '[redacted]'" in safe),
+        result(case["id"], "fixed-redacted-key-preview-only", "getApiKey" not in fixed and "apiKeyPreview: '[redacted]'" in fixed),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

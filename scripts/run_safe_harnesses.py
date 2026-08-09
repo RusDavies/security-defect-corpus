@@ -418,6 +418,66 @@ def _(case):
     ]
 
 
+@check_case("NODE-BACKDOOR-MAGIC-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-magic-credential", "debug-open-sesame" in reach and "role: req.body.password === 'debug-open-sesame' ? 'admin'" in reach),
+        result(case["id"], "safe-pair-retired-magic-only", "retiredDebugLogin" in safe and "module.exports = { login }" in safe),
+        result(case["id"], "fixed-no-magic-credential", "debug-open-sesame" not in fixed and "passwordVerifier.verify" in fixed),
+        result(case["id"], "metadata-external-capability-envelope", case.get("capability_envelope", {}).get("repo_local_claims_authoritative") is False),
+    ]
+
+
+@check_case("NODE-BACKDOOR-AUTHBYPASS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-maintenance-header-bypass", "x-maintenance-mode" in reach and "permit-admin" in reach and "role: 'admin'" in reach),
+        result(case["id"], "safe-pair-retired-header-bypass", "retiredHeaderBypass" in safe and "module.exports = { requireUser }" in safe),
+        result(case["id"], "fixed-session-only", "x-maintenance-mode" not in fixed and "req.session.user" in fixed),
+        result(case["id"], "metadata-external-capability-envelope", "dormant_activation_trigger" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-BACKDOOR-ADMIN-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-hidden-admin-route", "/__private/admin/retry-all" in reach and "jobs.retryAllFailed" in reach),
+        result(case["id"], "safe-pair-retired-admin-route", "retiredAdminRoutes" in safe and "module.exports = { registerRoutes }" in safe),
+        result(case["id"], "fixed-public-status-only", "/__private/admin/retry-all" not in fixed and "router.get('/status'" in fixed),
+        result(case["id"], "metadata-hidden-network-surface", "hidden_network_surface" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-BACKDOOR-OPKEY-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-hardcoded-operator-key", "OPERATOR_KEY = 'operator-maintenance-key'" in reach and "x-operator-key" in reach),
+        result(case["id"], "safe-pair-retired-operator-override", "retiredOperatorOverride" in safe and "module.exports = { rotateTenantKey }" in safe),
+        result(case["id"], "fixed-no-operator-key", "OPERATOR_KEY" not in fixed and "rotateForOwner" in fixed),
+        result(case["id"], "metadata-superfluous-privilege", "superfluous_privilege" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-BACKDOOR-DORMANT-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-dormant-host-query-trigger", "audit-preview.example.invalid" in reach and "spring-window" in reach and "all-tenants" in reach),
+        result(case["id"], "safe-pair-retired-dormant-trigger", "retiredPreviewOverride" in safe and "module.exports = { authorizeReportExport }" in safe),
+        result(case["id"], "fixed-policy-only", "audit-preview.example.invalid" not in fixed and "policy.canExportReports" in fixed),
+        result(case["id"], "metadata-dormant-trigger", "dormant_activation_trigger" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
 @check_case("CVE-LODASH-PP-001")
 def _(case):
     reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])

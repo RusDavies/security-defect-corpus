@@ -2,7 +2,7 @@
 
 - [x] Add language-specific executable test harnesses for baseline fixtures where safe and useful.
 - [x] Add Java fixture family after the major proof targets are stable.
-- [ ] Add Python, Go, PHP, Ruby, Rust, and Kotlin fixture families after the major proof targets are stable.
+- [x] Add Python, Go, PHP, Ruby, Rust, and Kotlin fixture families after the major proof targets are stable.
 - [x] Add intentionally fixed versions beside each vulnerable fixture for patch-diff evaluation.
 - [x] Add scoring rubric for AI-agent prompt-pack runs.
 - [x] Add sample completed evidence packets from known-good remediation runs.

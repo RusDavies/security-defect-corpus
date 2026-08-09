@@ -621,6 +621,72 @@ def _(case):
     ]
 
 
+@check_case("PY-PICKLE-DESER-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-python-pickle-loads", "pickle.loads(raw)" in reach),
+        result(case["id"], "safe-pair-python-json-loader", "retired_load_profile" in safe and "json.loads" in safe and "pickle.loads(raw)" in safe),
+        result(case["id"], "fixed-python-removes-pickle", "pickle" not in fixed and "json.loads" in fixed and "profile must be an object" in fixed),
+    ]
+
+
+@check_case("GO-TEMPLATE-XSS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-go-text-template-concat", '"text/template"' in reach and 'Parse("<p>" + author + "</p>")' in reach),
+        result(case["id"], "safe-pair-go-html-template", "retiredRenderComment" in safe and '"html/template"' in safe and "{{.Author}}" in safe),
+        result(case["id"], "fixed-go-html-template-data-binding", '"html/template"' in fixed and '"text/template"' not in fixed and "{{.Author}}" in fixed),
+    ]
+
+
+@check_case("PHP-LOOSE-AUTH-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-php-loose-token-compare", "$providedToken == $expectedToken" in reach),
+        result(case["id"], "safe-pair-php-hash-equals", "retiredIsAuthorized" in safe and "hash_equals" in safe and "is_string" in safe),
+        result(case["id"], "fixed-php-strict-token-compare", "hash_equals($expectedToken, $providedToken)" in fixed and "==" not in fixed),
+    ]
+
+
+@check_case("RUBY-YAML-DESER-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-ruby-yaml-load", "YAML.load(payload)" in reach),
+        result(case["id"], "safe-pair-ruby-yaml-safe-load", "retired_load_job" in safe and "YAML.safe_load" in safe and "aliases: false" in safe),
+        result(case["id"], "fixed-ruby-yaml-safe-load", "YAML.safe_load" in fixed and "YAML.load" not in fixed and "permitted_classes: []" in fixed),
+    ]
+
+
+@check_case("RUST-PATH-TRAVERSAL-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-rust-raw-path-join", 'PathBuf::from("./reports").join(requested)' in reach),
+        result(case["id"], "safe-pair-rust-component-validation", "retired_resolve_report_path" in safe and "Component::ParentDir" in safe and "Component::RootDir" in safe),
+        result(case["id"], "fixed-rust-rejects-dangerous-components", "Component::ParentDir" in fixed and "Component::RootDir" in fixed and "Component::Prefix" in fixed),
+    ]
+
+
+@check_case("KOTLIN-JWT-NONE-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-kotlin-accepts-alg-none", 'header.alg == "none"' in reach and "return payload" in reach),
+        result(case["id"], "safe-pair-kotlin-verifier-backed", "retiredVerifyJwt" in safe and "unsigned jwt rejected" in safe and "verifier(header, payload, signature)" in safe),
+        result(case["id"], "fixed-kotlin-rejects-none-and-verifies", "unsigned jwt rejected" in fixed and "invalid signature" in fixed and "verifier(header, payload, signature)" in fixed),
+    ]
+
+
 @check_case("APP-EXPRESS-SSRF-001")
 def _(case):
     reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])

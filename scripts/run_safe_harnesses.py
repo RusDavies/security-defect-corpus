@@ -43,6 +43,16 @@ def any_contains(text: str, needles: list[str]) -> bool:
     return any(needle in text for needle in needles)
 
 
+SURPLUS_SIGNAL_NEEDLES = {
+    "unexpected_network_intent": ["https://", "http://", "https.get", "https.request"],
+    "unexpected_listener_or_route": ["router.get(", "router.post(", ".listen(", "/__private/"],
+    "dynamic_code_fetch": ["eval(", "new Function", ".js'"],
+    "hidden_bypass_condition": ["debug-open-sesame", "x-maintenance-mode", "x-operator-key", "signed-by-control-plane"],
+    "suspicious_timer": ["setInterval(", "setTimeout("],
+    "activation_trigger": ["req.headers", "req.query", "req.hostname", "hostname", "remoteFlags.isEnabled"],
+}
+
+
 def run_cmd(cmd: list[str], cwd: Path) -> tuple[bool, str]:
     try:
         completed = subprocess.run(cmd, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=15)
@@ -622,6 +632,61 @@ def structural_checks(case: dict) -> list[CheckResult]:
     checks.append(result(case_id, "exists-remediation", remediation.exists(), str(remediation.relative_to(ROOT))))
     checks.append(result(case_id, "has-expected-tests", bool(case.get("expected_tests")), str(case.get("expected_tests"))))
     checks.append(result(case_id, "has-false-positive-boundary", bool(case.get("false_positive_boundary"))))
+    checks.extend(surplus_capability_checks(case))
+    return checks
+
+
+def surplus_capability_checks(case: dict) -> list[CheckResult]:
+    envelope = case.get("capability_envelope")
+    if not envelope:
+        return []
+
+    case_id = case["id"]
+    reach = read(case["reachable_file"])
+    fixed = read(case["fixed_file"])
+    evidence_sources = envelope.get("evidence_sources", [])
+    subtypes = set(envelope.get("subtypes", []))
+
+    checks = [
+        result(case_id, "surplus-envelope-category", envelope.get("category") == "surplus_capability"),
+        result(case_id, "surplus-repo-local-not-authoritative", envelope.get("repo_local_claims_authoritative") is False),
+        result(case_id, "surplus-has-external-contract", any(src.get("type") == "external_contract" for src in evidence_sources)),
+        result(case_id, "surplus-has-untrusted-code-evidence", any(src.get("type") in {"code_assertion", "repo_local_documentation"} and src.get("trust") in {"weak", "untrusted"} for src in evidence_sources)),
+        result(case_id, "surplus-has-disallowed-capabilities", bool(envelope.get("disallowed_capabilities"))),
+        result(case_id, "surplus-reachable-has-control-signal", any(any_contains(reach, needles) for needles in SURPLUS_SIGNAL_NEEDLES.values())),
+    ]
+
+    if any_contains(reach, SURPLUS_SIGNAL_NEEDLES["unexpected_network_intent"]):
+        checks.append(result(case_id, "surplus-fixed-removes-unexpected-network-intent", not any_contains(fixed, ["https://", "http://", "https.get", "https.request"])))
+
+    if any_contains(reach, SURPLUS_SIGNAL_NEEDLES["unexpected_listener_or_route"]):
+        checks.append(result(case_id, "surplus-fixed-removes-hidden-listener-or-route", not any_contains(fixed, ["/__private/", "router.post("])))
+
+    if any_contains(reach, SURPLUS_SIGNAL_NEEDLES["dynamic_code_fetch"]):
+        checks.append(result(case_id, "surplus-fixed-removes-dynamic-code-fetch", not any_contains(fixed, ["eval(", "new Function", ".js'"])))
+
+    if any_contains(reach, SURPLUS_SIGNAL_NEEDLES["hidden_bypass_condition"]):
+        shared_bypass_needles = [needle for needle in SURPLUS_SIGNAL_NEEDLES["hidden_bypass_condition"] if needle in reach and needle in fixed]
+        checks.append(result(case_id, "surplus-fixed-removes-hidden-bypass-condition", not shared_bypass_needles, ", ".join(shared_bypass_needles)))
+
+    if any_contains(reach, SURPLUS_SIGNAL_NEEDLES["suspicious_timer"]):
+        checks.append(result(case_id, "surplus-fixed-removes-suspicious-timer", not any_contains(fixed, SURPLUS_SIGNAL_NEEDLES["suspicious_timer"])))
+
+    if "call_home_beacon" in subtypes:
+        checks.append(result(case_id, "surplus-call-home-has-egress-or-timer", "https://" in reach or any_contains(reach, SURPLUS_SIGNAL_NEEDLES["suspicious_timer"])))
+
+    if "covert_command_control" in subtypes:
+        checks.append(result(case_id, "surplus-covert-control-has-remote-or-untrusted-control-input", any_contains(reach, ["https://", "eval(", "remoteFlags.isEnabled", "signed-by-control-plane"])))
+
+    if "hidden_backdoor" in subtypes:
+        checks.append(result(case_id, "surplus-backdoor-has-bypass-signal", any_contains(reach, ["debug-open-sesame", "x-maintenance-mode", "x-operator-key", "/__private/", "all-tenants"])))
+
+    if "dormant_activation_trigger" in subtypes:
+        checks.append(result(case_id, "surplus-dormant-has-activation-trigger", any_contains(reach, SURPLUS_SIGNAL_NEEDLES["activation_trigger"] + SURPLUS_SIGNAL_NEEDLES["suspicious_timer"])))
+
+    if "hidden_network_surface" in subtypes:
+        checks.append(result(case_id, "surplus-network-surface-has-route-or-listener", any_contains(reach, SURPLUS_SIGNAL_NEEDLES["unexpected_listener_or_route"])))
+
     return checks
 
 

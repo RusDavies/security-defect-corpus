@@ -2415,6 +2415,50 @@
       ],
       "false_positive_boundary": "unreachable_dependency_update_network.js keeps a retired update reporter, but exported dependency-update handling is local only.",
       "fixed_file": "fixed/NODE-DEPUPDATE-NET-001/fixed_dependency_update_network.js"
+    },
+    {
+      "id": "APP-EXPRESS-MULTIFILE-AUTHZ-001",
+      "ecosystem": "app-express-multifile",
+      "language": "JavaScript / Express",
+      "defect_class": "app_slice_multifile_missing_authorization",
+      "cwe": [
+        "CWE-862",
+        "CWE-639"
+      ],
+      "reachable_file": "cases/app-express-multifile/src/routes/reachable_orders.js",
+      "unreachable_file": "cases/app-express-multifile/src/routes/unreachable_orders.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "GET /orders/:orderId -> orders.findById(orderId) -> JSON response without account ownership check",
+      "expected_remediation": "Check loaded order ownership against req.user.accountId before returning the order, preserving session middleware behavior.",
+      "expected_tests": [
+        "same-account order read succeeds",
+        "cross-account order read returns 403",
+        "unauthenticated order read still requires login"
+      ],
+      "false_positive_boundary": "unreachable_orders.js keeps a retired admin lookup helper, but the exported route checks order.accountId against req.user.accountId before responding.",
+      "fixed_file": "fixed/APP-EXPRESS-MULTIFILE-AUTHZ-001/fixed_orders.js",
+      "supporting_files": [
+        "cases/app-express-multifile/src/middleware/session.js",
+        "cases/app-express-multifile/src/models/orders.js"
+      ],
+      "quality_metadata": {
+        "attacker_position": "authenticated user in another account",
+        "exploit_preconditions": [
+          "attacker knows or guesses another account's order id",
+          "session middleware populates req.user.accountId"
+        ],
+        "trust_boundary": "HTTP route boundary between authenticated caller and account-scoped order data",
+        "data_sensitivity": "customer order totals and account identifiers",
+        "production_likelihood": "high for multi-tenant order APIs that use shared numeric or guessable IDs",
+        "approval_gate": "service owner approval for authorization model and route test coverage",
+        "blast_radius": "cross-account order disclosure for any guessed order id",
+        "false_positive_traps": [
+          "retiredAdminOrderLookup is present but not exported as the active route",
+          "session middleware exists but authenticates only; it does not authorize ownership"
+        ]
+      }
     }
   ]
 }

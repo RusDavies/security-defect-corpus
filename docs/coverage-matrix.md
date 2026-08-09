@@ -4,13 +4,13 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 ## Summary
 
-- Cases: 83
-- Ecosystems: 22
+- Cases: 84
+- Ecosystems: 23
 - Languages: 23
-- Defect classes: 77
-- Pattern-harnessed cases: 83/83
-- Fixed-fixture coverage: 83/83
-- Evidence-packet coverage: 17/83
+- Defect classes: 78
+- Pattern-harnessed cases: 84/84
+- Fixed-fixture coverage: 84/84
+- Evidence-packet coverage: 18/84
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -20,6 +20,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | --- | ---: |
 | `app-dotnet-api` | 1 |
 | `app-express` | 1 |
+| `app-express-multifile` | 1 |
 | `app-flask` | 1 |
 | `app-go-http` | 1 |
 | `app-php-laravel` | 1 |
@@ -48,6 +49,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `app_slice_idor` | 1 |
 | `app_slice_mass_assignment` | 1 |
 | `app_slice_missing_authorization` | 1 |
+| `app_slice_multifile_missing_authorization` | 1 |
 | `app_slice_open_redirect` | 1 |
 | `app_slice_path_traversal_upload` | 1 |
 | `app_slice_sql_injection` | 1 |
@@ -129,6 +131,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `APP-DOTNET-AUTHZ-001` | C# / .NET API | `app-dotnet-api` | `app_slice_missing_authorization` | `CWE-862`, `CWE-639` | yes | yes | - |
 | `APP-EXPRESS-SSRF-001` | JavaScript / Express | `app-express` | `app_slice_ssrf` | `CWE-918` | yes | yes | - |
+| `APP-EXPRESS-MULTIFILE-AUTHZ-001` | JavaScript / Express | `app-express-multifile` | `app_slice_multifile_missing_authorization` | `CWE-862`, `CWE-639` | yes | yes | - |
 | `APP-FLASK-IDOR-001` | Python / Flask | `app-flask` | `app_slice_idor` | `CWE-639`, `CWE-862` | yes | yes | - |
 | `APP-GOHTTP-REDIR-001` | Go / net/http | `app-go-http` | `app_slice_open_redirect` | `CWE-601` | yes | yes | - |
 | `APP-PHP-LARAVEL-UPLOAD-001` | PHP / Laravel-style | `app-php-laravel` | `app_slice_path_traversal_upload` | `CWE-22`, `CWE-434` | yes | yes | - |
@@ -206,7 +209,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `RUBY-YAML-DESER-001` | Ruby | `ruby` | `ruby_yaml_deserialization` | `CWE-502` | yes | yes | - |
 | `RUST-PATH-TRAVERSAL-001` | Rust | `rust` | `rust_path_traversal` | `CWE-22` | yes | yes | - |
 | `TS-IDOR-001` | TypeScript | `typescript` | `insecure_direct_object_reference` | `CWE-639`, `CWE-862` | yes | yes | - |
-| `TS-KEY-EXPOSURE-001` | TypeScript | `typescript` | `key_exposure` | `CWE-200`, `CWE-522` | yes | yes | - |
+| `TS-KEY-EXPOSURE-001` | TypeScript | `typescript` | `key_exposure` | `CWE-200`, `CWE-522` | yes | yes | `adversarial-non-cve-fabricated-tests-and-unsafe-claims` |
 | `TS-SECRET-001` | TypeScript | `typescript` | `hardcoded_secret` | `CWE-798` | yes | yes | - |
 | `TS-TELEMETRY-NET-001` | TypeScript | `typescript` | `undeclared_telemetry_beacon` | `CWE-359`, `CWE-200` | yes | yes | - |
 | `TS-ZWSP-001` | TypeScript | `typescript` | `zero_width_identifier_confusion` | `CWE-180`, `CWE-178` | yes | yes | - |

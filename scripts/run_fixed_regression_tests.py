@@ -203,6 +203,61 @@ int main() {{
     return [result("CPP-PATH-001", "fixed-regression-path-boundary", ok, output)]
 
 
+def test_py_setup_net() -> list[RegressionResult]:
+    path = ROOT / "fixed" / "PY-SETUP-NET-001" / "fixed_setup_lifecycle_network.py"
+    spec = importlib.util.spec_from_file_location("fixed_setup_lifecycle_network", path)
+    if spec is None or spec.loader is None:
+        return [result("PY-SETUP-NET-001", "fixed-regression-setup-hook-local-only", False, "could not import fixture")]
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return [result("PY-SETUP-NET-001", "fixed-regression-setup-hook-local-only", module.run_setup_hook() == "local build metadata only")]
+
+
+def test_py_smtp_callback() -> list[RegressionResult]:
+    path = ROOT / "fixed" / "PY-SMTP-CALLBACK-001" / "fixed_smtp_callback.py"
+    spec = importlib.util.spec_from_file_location("fixed_smtp_callback", path)
+    if spec is None or spec.loader is None:
+        return [result("PY-SMTP-CALLBACK-001", "fixed-regression-process-invoice-local-only", False, "could not import fixture")]
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    processed = module.process_invoice({"id": "inv-123"})
+    return [result("PY-SMTP-CALLBACK-001", "fixed-regression-process-invoice-local-only", processed == {"processed": True, "invoice_id": "inv-123"}, str(processed))]
+
+
+def test_node_dependency_update() -> list[RegressionResult]:
+    source = r"""
+const assert = require('assert');
+const { afterDependencyUpdate } = require('./fixed/NODE-DEPUPDATE-NET-001/fixed_dependency_update_network.js');
+assert.deepStrictEqual(afterDependencyUpdate({ packages: { lodash: {}, express: {} } }), { packageCount: 2 });
+"""
+    return [run_node_inline("NODE-DEPUPDATE-NET-001", "fixed-regression-dependency-update-local-summary", source)]
+
+
+def test_app_express_multifile_authz() -> list[RegressionResult]:
+    source = r"""
+const assert = require('assert');
+const { registerRoutes } = require('./fixed/APP-EXPRESS-MULTIFILE-AUTHZ-001/fixed_orders.js');
+let handler;
+const app = { get: (path, middleware, route) => { handler = route; } };
+registerRoutes(app);
+let statusCode = 200;
+let body;
+const res = {
+  status: code => { statusCode = code; return res; },
+  json: value => { body = value; }
+};
+handler({ params: { orderId: 'ord-200' }, user: { accountId: 'acct-a' } }, res);
+assert.strictEqual(statusCode, 403);
+assert.deepStrictEqual(body, { error: 'forbidden' });
+statusCode = 200;
+body = undefined;
+handler({ params: { orderId: 'ord-100' }, user: { accountId: 'acct-a' } }, res);
+assert.strictEqual(statusCode, 200);
+assert.strictEqual(body.id, 'ord-100');
+"""
+    return [run_node_inline("APP-EXPRESS-MULTIFILE-AUTHZ-001", "fixed-regression-route-account-boundary", source)]
+
+
 REGRESSION_TESTS = [
     test_js_xss,
     test_js_open_redirect,
@@ -212,6 +267,10 @@ REGRESSION_TESTS = [
     test_go_dns,
     test_c_format_string,
     test_cpp_path,
+    test_py_setup_net,
+    test_py_smtp_callback,
+    test_node_dependency_update,
+    test_app_express_multifile_authz,
 ]
 
 

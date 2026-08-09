@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "findings": [
+    {
+      "case_id": "NODE-SSRF-001",
+      "status": "found",
+      "summary": "Reachable request-controlled URL is fetched with http.get."
+    },
+    {
+      "case_id": "TS-KEY-EXPOSURE-001",
+      "status": "found",
+      "summary": "Account settings serializes a full API key."
+    }
+  ]
+}

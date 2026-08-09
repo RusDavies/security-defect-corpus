@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "packs": [
+    {
+      "id": "cloud-iac-kubernetes",
+      "title": "Cloud / IaC / Kubernetes",
+      "candidate_scenarios": [
+        "overbroad pod permissions",
+        "exposed Kubernetes dashboard or admin service",
+        "public storage with conflicting bucket and object ACLs",
+        "Terraform variable defaults that weaken network boundaries",
+        "metadata-service access through sidecars or init containers"
+      ]
+    },
+    {
+      "id": "ci-cd-supply-chain",
+      "title": "CI/CD Supply Chain",
+      "candidate_scenarios": [
+        "build-step network callbacks",
+        "workflow token over-permission",
+        "dependency update hooks that exfiltrate lockfiles",
+        "artifact signing bypasses",
+        "unpinned third-party actions or plugins"
+      ]
+    },
+    {
+      "id": "auth-oauth-saml",
+      "title": "Auth / OAuth / SAML",
+      "candidate_scenarios": [
+        "missing audience or issuer validation",
+        "confused-deputy delegation between clients",
+        "unsafe redirect URI matching",
+        "unsigned or weakly signed assertion acceptance",
+        "stale authorization decisions after role changes"
+      ]
+    },
+    {
+      "id": "mobile-client-storage",
+      "title": "Mobile / Client-Side Storage",
+      "candidate_scenarios": [
+        "sensitive tokens in local storage or debug logs",
+        "WebView bridge exposure",
+        "certificate pinning bypass toggles",
+        "insecure deep-link authorization",
+        "offline cache leakage between users"
+      ]
+    },
+    {
+      "id": "privacy-retention",
+      "title": "Data Privacy / Retention",
+      "candidate_scenarios": [
+        "excess personal data in analytics",
+        "over-retention of deleted account data",
+        "privacy export crossing tenant boundaries",
+        "sensitive rejected-input logging",
+        "missing redaction for support/admin tooling"
+      ]
+    },
+    {
+      "id": "queue-event-driven",
+      "title": "Queue / Event-Driven Systems",
+      "candidate_scenarios": [
+        "consumer trusts producer-supplied tenant identity",
+        "retry queue leaks sensitive payloads",
+        "idempotency key confusion",
+        "poison-message handling that logs secrets",
+        "dead-letter replay without authorization context"
+      ]
+    }
+  ],
+  "fixture_requirements": [
+    "reachable fixture",
+    "unreachable/safe-pair fixture",
+    "fixed fixture",
+    "expected remediation",
+    "quality metadata",
+    "evidence packet",
+    "benchmark-report example when practical"
+  ]
+}

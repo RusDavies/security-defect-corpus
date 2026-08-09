@@ -21,6 +21,9 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `docs/benchmark-validity.md` — guidance on benchmark contamination, fixture overfitting, held-out evaluation, and result reporting.
 - `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
 - `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
+- `docs/benchmarking.md` — benchmark run flow, mutation guidance, honest reporting rules, and invalid-claim examples.
+- `docs/scenario-packs.md` — planned operational-domain scenario pack coverage.
+- `scenario-packs/operational-domain-packs.json` — machine-readable scenario pack backlog for future operational-domain fixture families.
 - `docs/surplus-capability-taxonomy.md` — taxonomy and metadata shape for backdoors, call-home behavior, covert control, and other unauthorized surplus capability cases.
 - `evaluation-splits/case-splits.json` — deterministic development, validation, and held-out split manifest with mutation requirements for contamination-aware evaluation.
 - `expected-remediations/` — expected remediation guidance by case.
@@ -28,6 +31,9 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `upstream-simulations/` — dependency/upstream contribution simulation notes.
 - `scripts/validate_corpus.py` — structural validator.
 - `scripts/generate_coverage_matrix.py` — coverage matrix generator.
+- `scripts/generate_mutated_variants.py` — deterministic held-out mutation variant generator.
+- `scripts/run_benchmark.py` — aggregate benchmark scorer for agent/scanner output directories.
+- `scripts/validate_metadata_quality.py` — optional quality-metadata validator for benchmark-grade cases.
 
 ## Safety Rules
 
@@ -126,6 +132,7 @@ python3 scripts/run_candidate_repair_suite.py
 python3 scripts/run_prompt_pack_run_suite.py
 python3 scripts/run_cve_packet_suite.py
 python3 scripts/run_evidence_packet_suite.py
+python3 scripts/validate_metadata_quality.py
 python3 scripts/generate_evaluation_splits.py --check
 python3 scripts/generate_coverage_matrix.py --check
 ```

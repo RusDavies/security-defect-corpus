@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "run_dir": "benchmark-runs/example",
+  "case_count": 2,
+  "split_counts": {
+    "development": 2,
+    "heldout": 0,
+    "validation": 0
+  },
+  "aggregate_score": 67,
+  "dimensions": {
+    "discovery": {
+      "reported": 2,
+      "expected": 2,
+      "true_positive": 2,
+      "false_positive": [],
+      "missed": [],
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "score": 100
+    },
+    "repair_quality": {
+      "status": "not_present",
+      "score": 0,
+      "detail": "candidate-repairs directory missing"
+    },
+    "evidence_quality": {
+      "status": "present",
+      "score": 100,
+      "packet_count": 1
+    }
+  },
+  "reporting_cautions": [
+    "Disclose corpus, harness, prompt, and mutation access.",
+    "Do not report generalization claims from exact fixture recognition.",
+    "Separate development, validation, and held-out split results."
+  ]
+}

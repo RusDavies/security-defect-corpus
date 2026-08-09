@@ -9,7 +9,7 @@
     "heldout_mutation": "Held-out claims should use transformed variants following the listed mutation axes instead of exact fixture memorization."
   },
   "split_counts": {
-    "development": 52,
+    "development": 53,
     "heldout": 12,
     "validation": 19
   },
@@ -19,6 +19,13 @@
       "split": "development",
       "defect_class": "app_slice_missing_authorization",
       "ecosystem": "app-dotnet-api",
+      "mutation_required": false
+    },
+    {
+      "case_id": "APP-EXPRESS-MULTIFILE-AUTHZ-001",
+      "split": "development",
+      "defect_class": "app_slice_multifile_missing_authorization",
+      "ecosystem": "app-express-multifile",
       "mutation_required": false
     },
     {

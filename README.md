@@ -22,6 +22,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
 - `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
 - `docs/surplus-capability-taxonomy.md` — taxonomy and metadata shape for backdoors, call-home behavior, covert control, and other unauthorized surplus capability cases.
+- `evaluation-splits/case-splits.json` — deterministic development, validation, and held-out split manifest with mutation requirements for contamination-aware evaluation.
 - `expected-remediations/` — expected remediation guidance by case.
 - `evidence-packets/` — example evidence packet expectations.
 - `upstream-simulations/` — dependency/upstream contribution simulation notes.
@@ -115,6 +116,7 @@ python3 scripts/run_candidate_repair_suite.py
 python3 scripts/run_prompt_pack_run_suite.py
 python3 scripts/run_cve_packet_suite.py
 python3 scripts/run_evidence_packet_suite.py
+python3 scripts/generate_evaluation_splits.py --check
 python3 scripts/generate_coverage_matrix.py --check
 ```
 

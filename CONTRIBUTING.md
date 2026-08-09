@@ -51,6 +51,7 @@ python3 scripts/run_candidate_repair_suite.py
 python3 scripts/run_prompt_pack_run_suite.py
 python3 scripts/run_cve_packet_suite.py
 python3 scripts/run_evidence_packet_suite.py
+python3 scripts/generate_evaluation_splits.py --check
 ```
 
 The safe harnesses are designed to avoid executing exploit payloads or making real outbound network connections.

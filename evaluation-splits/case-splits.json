@@ -1,0 +1,486 @@
+{
+  "schema_version": "1.0",
+  "source": "ground_truth/cases.json",
+  "policy": {
+    "name": "deterministic-contamination-aware-split",
+    "development": "Stable case-id hash bucket 35-99; may be used for prompt development and routine calibration.",
+    "validation": "Stable case-id hash bucket 20-34; may be used for interim checks but not final held-out claims.",
+    "heldout": "Stable case-id hash bucket 0-19; do not use for training, prompt tuning, retrieval seeding, or manual calibration.",
+    "heldout_mutation": "Held-out claims should use transformed variants following the listed mutation axes instead of exact fixture memorization."
+  },
+  "split_counts": {
+    "development": 39,
+    "heldout": 6,
+    "validation": 15
+  },
+  "assignments": [
+    {
+      "case_id": "C-BOF-001",
+      "split": "development",
+      "defect_class": "stack_buffer_overflow",
+      "ecosystem": "c",
+      "mutation_required": false
+    },
+    {
+      "case_id": "C-DFREE-001",
+      "split": "heldout",
+      "defect_class": "double_free",
+      "ecosystem": "c",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "C-FMT-001",
+      "split": "development",
+      "defect_class": "format_string",
+      "ecosystem": "c",
+      "mutation_required": false
+    },
+    {
+      "case_id": "C-INT-001",
+      "split": "validation",
+      "defect_class": "integer_overflow",
+      "ecosystem": "c",
+      "mutation_required": false
+    },
+    {
+      "case_id": "C-MEM-001",
+      "split": "development",
+      "defect_class": "memory_leak",
+      "ecosystem": "c",
+      "mutation_required": false
+    },
+    {
+      "case_id": "C-UAF-001",
+      "split": "validation",
+      "defect_class": "use_after_free",
+      "ecosystem": "c",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CLOUD-BUCKET-001",
+      "split": "development",
+      "defect_class": "public_bucket_policy",
+      "ecosystem": "cloud",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CLOUD-IAM-001",
+      "split": "development",
+      "defect_class": "overbroad_iam_policy",
+      "ecosystem": "cloud",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CPP-ENC-PATH-001",
+      "split": "validation",
+      "defect_class": "encoded_path_traversal_bypass",
+      "ecosystem": "cpp",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CPP-MEM-001",
+      "split": "development",
+      "defect_class": "memory_leak",
+      "ecosystem": "cpp",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CPP-PATH-001",
+      "split": "development",
+      "defect_class": "path_traversal",
+      "ecosystem": "cpp",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CPP-TOCTOU-001",
+      "split": "validation",
+      "defect_class": "time_of_check_time_of_use",
+      "ecosystem": "cpp",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CS-RAND-001",
+      "split": "development",
+      "defect_class": "weak_randomness",
+      "ecosystem": "csharp",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CS-SQLI-001",
+      "split": "validation",
+      "defect_class": "sql_injection",
+      "ecosystem": "csharp",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CVE-JQUERY-HTML-001",
+      "split": "development",
+      "defect_class": "known_cve_fix_in_place_dependency",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CVE-LODASH-PP-001",
+      "split": "development",
+      "defect_class": "known_cve_fix_in_place_dependency",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "CVE-LODASH-TEMPLATE-UNLISTED-001",
+      "split": "development",
+      "defect_class": "opportunistic_unlisted_known_cve",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "DEP-UPSTREAM-001",
+      "split": "development",
+      "defect_class": "dependency_vulnerability_patch_in_place",
+      "ecosystem": "dotnet-dependency",
+      "mutation_required": false
+    },
+    {
+      "case_id": "GO-DNS-EXFIL-001",
+      "split": "development",
+      "defect_class": "unexpected_dns_exfiltration",
+      "ecosystem": "go",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JAVA-BIDI-001",
+      "split": "development",
+      "defect_class": "unicode_bidi_filename_deception",
+      "ecosystem": "java",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JAVA-DESER-001",
+      "split": "development",
+      "defect_class": "unsafe_deserialization",
+      "ecosystem": "java",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JAVA-LDAP-001",
+      "split": "development",
+      "defect_class": "ldap_injection",
+      "ecosystem": "java",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JAVA-METADATA-NET-001",
+      "split": "development",
+      "defect_class": "unexpected_metadata_service_access",
+      "ecosystem": "java",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JAVA-NULPATH-001",
+      "split": "development",
+      "defect_class": "null_byte_path_validation_bypass",
+      "ecosystem": "java",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JAVA-XXE-001",
+      "split": "heldout",
+      "defect_class": "xml_external_entity",
+      "ecosystem": "java",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "JAVA-ZIP-001",
+      "split": "validation",
+      "defect_class": "unsafe_archive_extraction",
+      "ecosystem": "java",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JS-CSRF-001",
+      "split": "heldout",
+      "defect_class": "cross_site_request_forgery",
+      "ecosystem": "javascript",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "JS-OPENREDIR-001",
+      "split": "validation",
+      "defect_class": "open_redirect",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JS-TEMPLATE-001",
+      "split": "development",
+      "defect_class": "template_expression_injection",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JS-UWS-001",
+      "split": "development",
+      "defect_class": "unicode_whitespace_token_parsing",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "JS-XSS-001",
+      "split": "development",
+      "defect_class": "cross_site_scripting",
+      "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-BACKDOOR-ADMIN-001",
+      "split": "development",
+      "defect_class": "surplus_capability_hidden_network_surface",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-BACKDOOR-AUTHBYPASS-001",
+      "split": "development",
+      "defect_class": "surplus_capability_hidden_backdoor",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-BACKDOOR-DORMANT-001",
+      "split": "heldout",
+      "defect_class": "surplus_capability_dormant_activation_trigger",
+      "ecosystem": "nodejs",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "NODE-BACKDOOR-MAGIC-001",
+      "split": "validation",
+      "defect_class": "surplus_capability_hidden_backdoor",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-BACKDOOR-OPKEY-001",
+      "split": "validation",
+      "defect_class": "surplus_capability_hardcoded_operator_key",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-CALLHOME-BEACON-001",
+      "split": "heldout",
+      "defect_class": "surplus_capability_periodic_beacon",
+      "ecosystem": "nodejs",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "NODE-CALLHOME-LICENSE-001",
+      "split": "development",
+      "defect_class": "surplus_capability_call_home_activation",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-CALLHOME-TELEMETRY-001",
+      "split": "development",
+      "defect_class": "surplus_capability_call_home_beacon",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-CALLHOME-UPDATE-001",
+      "split": "development",
+      "defect_class": "surplus_capability_update_check_overdisclosure",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-CMD-001",
+      "split": "validation",
+      "defect_class": "command_injection",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-COOKIE-001",
+      "split": "development",
+      "defect_class": "insecure_cookie",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-CORS-001",
+      "split": "development",
+      "defect_class": "cors_misconfiguration",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-COVERT-CONFIG-001",
+      "split": "heldout",
+      "defect_class": "surplus_capability_covert_command_control",
+      "ecosystem": "nodejs",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "NODE-COVERT-FLAG-001",
+      "split": "development",
+      "defect_class": "surplus_capability_covert_command_control",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-COVERT-PAYLOAD-001",
+      "split": "development",
+      "defect_class": "surplus_capability_untrusted_control_payload",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-COVERT-SCRIPT-001",
+      "split": "validation",
+      "defect_class": "surplus_capability_covert_command_control",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-CRLF-001",
+      "split": "validation",
+      "defect_class": "crlf_header_injection",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-INSTALL-NET-001",
+      "split": "development",
+      "defect_class": "unexpected_install_time_network",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-LOG-001",
+      "split": "validation",
+      "defect_class": "sensitive_data_logging",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-LOGCTRL-001",
+      "split": "validation",
+      "defect_class": "log_control_character_injection",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-NOSQL-001",
+      "split": "development",
+      "defect_class": "nosql_injection",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-RUNTIME-EGRESS-001",
+      "split": "development",
+      "defect_class": "unexpected_runtime_egress",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-SSRF-001",
+      "split": "development",
+      "defect_class": "server_side_request_forgery",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "PY-CRYPTO-001",
+      "split": "development",
+      "defect_class": "broken_crypto",
+      "ecosystem": "python",
+      "mutation_required": false
+    },
+    {
+      "case_id": "PY-IMPORT-NET-001",
+      "split": "development",
+      "defect_class": "unexpected_import_time_network",
+      "ecosystem": "python",
+      "mutation_required": false
+    },
+    {
+      "case_id": "TS-IDOR-001",
+      "split": "development",
+      "defect_class": "insecure_direct_object_reference",
+      "ecosystem": "typescript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "TS-SECRET-001",
+      "split": "development",
+      "defect_class": "hardcoded_secret",
+      "ecosystem": "typescript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "TS-TELEMETRY-NET-001",
+      "split": "development",
+      "defect_class": "undeclared_telemetry_beacon",
+      "ecosystem": "typescript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "TS-ZWSP-001",
+      "split": "validation",
+      "defect_class": "zero_width_identifier_confusion",
+      "ecosystem": "typescript",
+      "mutation_required": false
+    }
+  ]
+}

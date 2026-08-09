@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/security-defect-corpus/surplus-capability-metadata.schema.json",
+  "title": "Surplus Capability Case Metadata",
+  "description": "Optional ground-truth metadata for cases where the defect is unauthorized behavior outside an externally supplied capability envelope.",
+  "type": "object",
+  "required": [
+    "category",
+    "subtypes",
+    "external_expected_behavior",
+    "allowed_capabilities",
+    "disallowed_capabilities",
+    "evidence_sources",
+    "repo_local_claims_authoritative",
+    "expected_detection_reasoning"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "category": {
+      "const": "surplus_capability"
+    },
+    "subtypes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "hidden_backdoor",
+          "call_home_beacon",
+          "covert_command_control",
+          "dormant_activation_trigger",
+          "hidden_network_surface",
+          "superfluous_privilege",
+          "trust_boundary_laundering"
+        ]
+      }
+    },
+    "external_expected_behavior": {
+      "type": "string",
+      "minLength": 1
+    },
+    "allowed_capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "disallowed_capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "reference", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "external_contract",
+              "pinned_corpus_policy",
+              "observed_baseline",
+              "repo_local_documentation",
+              "code_assertion"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "trust": {
+            "type": "string",
+            "enum": ["strong", "medium", "weak", "untrusted"]
+          }
+        }
+      }
+    },
+    "repo_local_claims_authoritative": {
+      "const": false
+    },
+    "expected_detection_reasoning": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

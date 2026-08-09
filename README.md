@@ -168,6 +168,8 @@ The harness intentionally avoids executing exploit payloads. It checks that:
 - every ground-truth case has reachable and unreachable/safe source files
 - every case has expected remediation guidance
 - every case has expected tests and a false-positive boundary
+- surplus-capability cases have an external capability envelope and non-authoritative repo-local evidence treatment
+- surplus-capability reachable fixtures include static signals for unexpected egress, hidden routes/listeners, dynamic code fetch, bypass conditions, timers, or activation triggers, and fixed fixtures remove the matching dangerous signal where applicable
 - case-specific vulnerable and safe patterns are present
 - C, C++, and Java fixtures pass optional syntax checks when local compilers are available
 

@@ -9,11 +9,68 @@
     "heldout_mutation": "Held-out claims should use transformed variants following the listed mutation axes instead of exact fixture memorization."
   },
   "split_counts": {
-    "development": 39,
-    "heldout": 6,
-    "validation": 15
+    "development": 44,
+    "heldout": 7,
+    "validation": 16
   },
   "assignments": [
+    {
+      "case_id": "APP-DOTNET-AUTHZ-001",
+      "split": "development",
+      "defect_class": "app_slice_missing_authorization",
+      "ecosystem": "app-dotnet-api",
+      "mutation_required": false
+    },
+    {
+      "case_id": "APP-EXPRESS-SSRF-001",
+      "split": "development",
+      "defect_class": "app_slice_ssrf",
+      "ecosystem": "app-express",
+      "mutation_required": false
+    },
+    {
+      "case_id": "APP-FLASK-IDOR-001",
+      "split": "heldout",
+      "defect_class": "app_slice_idor",
+      "ecosystem": "app-flask",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "APP-GOHTTP-REDIR-001",
+      "split": "validation",
+      "defect_class": "app_slice_open_redirect",
+      "ecosystem": "app-go-http",
+      "mutation_required": false
+    },
+    {
+      "case_id": "APP-PHP-LARAVEL-UPLOAD-001",
+      "split": "development",
+      "defect_class": "app_slice_path_traversal_upload",
+      "ecosystem": "app-php-laravel",
+      "mutation_required": false
+    },
+    {
+      "case_id": "APP-RAILS-SQLI-001",
+      "split": "development",
+      "defect_class": "app_slice_sql_injection",
+      "ecosystem": "app-rails",
+      "mutation_required": false
+    },
+    {
+      "case_id": "APP-SPRING-MASSASSIGN-001",
+      "split": "development",
+      "defect_class": "app_slice_mass_assignment",
+      "ecosystem": "app-spring",
+      "mutation_required": false
+    },
     {
       "case_id": "C-BOF-001",
       "split": "development",

@@ -4,13 +4,13 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 ## Summary
 
-- Cases: 60
-- Ecosystems: 11
-- Languages: 12
-- Defect classes: 55
-- Pattern-harnessed cases: 60/60
-- Fixed-fixture coverage: 60/60
-- Evidence-packet coverage: 13/60
+- Cases: 67
+- Ecosystems: 18
+- Languages: 19
+- Defect classes: 62
+- Pattern-harnessed cases: 67/67
+- Fixed-fixture coverage: 67/67
+- Evidence-packet coverage: 13/67
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -18,6 +18,13 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 
 | Ecosystem | Cases |
 | --- | ---: |
+| `app-dotnet-api` | 1 |
+| `app-express` | 1 |
+| `app-flask` | 1 |
+| `app-go-http` | 1 |
+| `app-php-laravel` | 1 |
+| `app-rails` | 1 |
+| `app-spring` | 1 |
 | `c` | 6 |
 | `cloud` | 2 |
 | `cpp` | 4 |
@@ -34,6 +41,13 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 
 | Defect class | Cases |
 | --- | ---: |
+| `app_slice_idor` | 1 |
+| `app_slice_mass_assignment` | 1 |
+| `app_slice_missing_authorization` | 1 |
+| `app_slice_open_redirect` | 1 |
+| `app_slice_path_traversal_upload` | 1 |
+| `app_slice_sql_injection` | 1 |
+| `app_slice_ssrf` | 1 |
 | `broken_crypto` | 1 |
 | `command_injection` | 1 |
 | `cors_misconfiguration` | 1 |
@@ -94,6 +108,13 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 
 | Case | Language | Ecosystem | Defect class | CWE | Pattern harness | Fixed fixture | Evidence packets |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| `APP-DOTNET-AUTHZ-001` | C# / .NET API | `app-dotnet-api` | `app_slice_missing_authorization` | `CWE-862`, `CWE-639` | yes | yes | - |
+| `APP-EXPRESS-SSRF-001` | JavaScript / Express | `app-express` | `app_slice_ssrf` | `CWE-918` | yes | yes | - |
+| `APP-FLASK-IDOR-001` | Python / Flask | `app-flask` | `app_slice_idor` | `CWE-639`, `CWE-862` | yes | yes | - |
+| `APP-GOHTTP-REDIR-001` | Go / net/http | `app-go-http` | `app_slice_open_redirect` | `CWE-601` | yes | yes | - |
+| `APP-PHP-LARAVEL-UPLOAD-001` | PHP / Laravel-style | `app-php-laravel` | `app_slice_path_traversal_upload` | `CWE-22`, `CWE-434` | yes | yes | - |
+| `APP-RAILS-SQLI-001` | Ruby / Rails-style | `app-rails` | `app_slice_sql_injection` | `CWE-89` | yes | yes | - |
+| `APP-SPRING-MASSASSIGN-001` | Java / Spring-style | `app-spring` | `app_slice_mass_assignment` | `CWE-915` | yes | yes | - |
 | `C-BOF-001` | C | `c` | `stack_buffer_overflow` | `CWE-120` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `C-DFREE-001` | C | `c` | `double_free` | `CWE-415` | yes | yes | - |
 | `C-FMT-001` | C | `c` | `format_string` | `CWE-134` | yes | yes | - |

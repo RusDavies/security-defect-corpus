@@ -18,7 +18,7 @@
 
 - [x] Add a generated coverage matrix from `ground_truth/cases.json`, grouped by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
 
-- [ ] Add realistic app-slice fixture families for small Express, Flask/FastAPI, Spring, Go HTTP, Rails/Sinatra, PHP/Laravel-style, and .NET API surfaces so agents are tested against framework context, not only toy single-file snippets.
+- [x] Add realistic app-slice fixture families for small Express, Flask/FastAPI, Spring, Go HTTP, Rails/Sinatra, PHP/Laravel-style, and .NET API surfaces so agents are tested against framework context, not only toy single-file snippets.
 
 - [x] Add non-printing/invisible-character abuse fixture family: null byte/control-character validation, CRLF/header injection, zero-width identifier confusion, bidi deception, Unicode whitespace parsing, log-control injection, and encoded path traversal normalization bypass.
 

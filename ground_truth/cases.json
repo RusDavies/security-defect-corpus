@@ -1880,6 +1880,170 @@
           "Report cross-tenant refund enablement as unauthorized covert control."
         ]
       }
+    },
+    {
+      "id": "APP-EXPRESS-SSRF-001",
+      "ecosystem": "app-express",
+      "language": "JavaScript / Express",
+      "defect_class": "app_slice_ssrf",
+      "cwe": [
+        "CWE-918"
+      ],
+      "reachable_file": "cases/app-slices/express/src/reachable_express_ssrf.js",
+      "unreachable_file": "cases/app-slices/express/src/unreachable_express_ssrf.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "req.query.url -> Express /preview route -> http.get",
+      "expected_remediation": "Parse preview URLs and enforce an externally approved host allowlist before opening an HTTP connection.",
+      "expected_tests": [
+        "metadata URL rejected before HTTP call",
+        "approved image host accepted",
+        "malformed URL rejected"
+      ],
+      "false_positive_boundary": "unreachable_express_ssrf.js keeps the arbitrary fetch helper retired and routes only allowlisted preview URLs.",
+      "fixed_file": "fixed/APP-EXPRESS-SSRF-001/fixed_express_ssrf.js"
+    },
+    {
+      "id": "APP-FLASK-IDOR-001",
+      "ecosystem": "app-flask",
+      "language": "Python / Flask",
+      "defect_class": "app_slice_idor",
+      "cwe": [
+        "CWE-639",
+        "CWE-862"
+      ],
+      "reachable_file": "cases/app-slices/flask/src/reachable_flask_idor.py",
+      "unreachable_file": "cases/app-slices/flask/src/unreachable_flask_idor.py",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "account_id route parameter -> account lookup -> JSON response without owner check",
+      "expected_remediation": "Compare the loaded account owner with the authenticated Flask user context before returning account data.",
+      "expected_tests": [
+        "owner can read account",
+        "non-owner is rejected",
+        "valid account lookup still works"
+      ],
+      "false_positive_boundary": "unreachable_flask_idor.py keeps the admin lookup retired and exports an owner-checking route handler.",
+      "fixed_file": "fixed/APP-FLASK-IDOR-001/fixed_flask_idor.py"
+    },
+    {
+      "id": "APP-SPRING-MASSASSIGN-001",
+      "ecosystem": "app-spring",
+      "language": "Java / Spring-style",
+      "defect_class": "app_slice_mass_assignment",
+      "cwe": [
+        "CWE-915"
+      ],
+      "reachable_file": "cases/app-slices/spring/src/ReachableSpringMassAssignment.java",
+      "unreachable_file": "cases/app-slices/spring/src/UnreachableSpringMassAssignment.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "request body DTO isAdmin -> profile.isAdmin privilege field",
+      "expected_remediation": "Bind only user-editable profile fields and derive privileged fields from server-side authorization state.",
+      "expected_tests": [
+        "submitted admin flag ignored",
+        "display name still updates",
+        "unsafe binder remains unrouted"
+      ],
+      "false_positive_boundary": "UnreachableSpringMassAssignment.java keeps bind-all behavior in a private retired helper and routes only the safe update method.",
+      "fixed_file": "fixed/APP-SPRING-MASSASSIGN-001/FixedSpringMassAssignment.java"
+    },
+    {
+      "id": "APP-GOHTTP-REDIR-001",
+      "ecosystem": "app-go-http",
+      "language": "Go / net/http",
+      "defect_class": "app_slice_open_redirect",
+      "cwe": [
+        "CWE-601"
+      ],
+      "reachable_file": "cases/app-slices/go-http/src/reachable_go_http_redirect.go",
+      "unreachable_file": "cases/app-slices/go-http/src/unreachable_go_http_redirect.go",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "next query parameter -> net/http login handler -> http.Redirect",
+      "expected_remediation": "Accept only local relative redirect targets and reject absolute or protocol-relative destinations.",
+      "expected_tests": [
+        "local redirect accepted",
+        "external URL rejected",
+        "protocol-relative URL rejected"
+      ],
+      "false_positive_boundary": "unreachable_go_http_redirect.go keeps raw redirect behavior retired and routes through localRedirectTarget validation.",
+      "fixed_file": "fixed/APP-GOHTTP-REDIR-001/fixed_go_http_redirect.go"
+    },
+    {
+      "id": "APP-RAILS-SQLI-001",
+      "ecosystem": "app-rails",
+      "language": "Ruby / Rails-style",
+      "defect_class": "app_slice_sql_injection",
+      "cwe": [
+        "CWE-89"
+      ],
+      "reachable_file": "cases/app-slices/rails/src/reachable_rails_sqli.rb",
+      "unreachable_file": "cases/app-slices/rails/src/unreachable_rails_sqli.rb",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "params[:email] -> interpolated ActiveRecord where SQL fragment",
+      "expected_remediation": "Use ActiveRecord parameter binding or hash conditions instead of string interpolation.",
+      "expected_tests": [
+        "SQL payload treated as value",
+        "normal email lookup works",
+        "query uses bound parameters"
+      ],
+      "false_positive_boundary": "unreachable_rails_sqli.rb keeps interpolated SQL in a retired action and routes the safe hash-condition action.",
+      "fixed_file": "fixed/APP-RAILS-SQLI-001/fixed_rails_sqli.rb"
+    },
+    {
+      "id": "APP-PHP-LARAVEL-UPLOAD-001",
+      "ecosystem": "app-php-laravel",
+      "language": "PHP / Laravel-style",
+      "defect_class": "app_slice_path_traversal_upload",
+      "cwe": [
+        "CWE-22",
+        "CWE-434"
+      ],
+      "reachable_file": "cases/app-slices/php-laravel/src/reachable_laravel_upload.php",
+      "unreachable_file": "cases/app-slices/php-laravel/src/unreachable_laravel_upload.php",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "client original upload filename -> avatar storage path",
+      "expected_remediation": "Reduce uploaded filenames to safe basenames, replace unsafe characters, and reject empty or dot-only names before storage.",
+      "expected_tests": [
+        "traversal filename cannot escape avatar directory",
+        "ordinary filename stored under avatars",
+        "empty name rejected"
+      ],
+      "false_positive_boundary": "unreachable_laravel_upload.php keeps original-name storage retired and exports basename/sanitized storage.",
+      "fixed_file": "fixed/APP-PHP-LARAVEL-UPLOAD-001/fixed_laravel_upload.php"
+    },
+    {
+      "id": "APP-DOTNET-AUTHZ-001",
+      "ecosystem": "app-dotnet-api",
+      "language": "C# / .NET API",
+      "defect_class": "app_slice_missing_authorization",
+      "cwe": [
+        "CWE-862",
+        "CWE-639"
+      ],
+      "reachable_file": "cases/app-slices/dotnet-api/src/ReachableInvoiceAuthorization.cs",
+      "unreachable_file": "cases/app-slices/dotnet-api/src/UnreachableInvoiceAuthorization.cs",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "invoiceId route parameter -> repository delete without owner authorization",
+      "expected_remediation": "Compare invoice ownership with the authenticated user before deleting the invoice.",
+      "expected_tests": [
+        "owner can delete invoice",
+        "non-owner is rejected",
+        "delete is not called after authorization failure"
+      ],
+      "false_positive_boundary": "UnreachableInvoiceAuthorization.cs keeps admin deletion retired and checks OwnerUserId before repository deletion.",
+      "fixed_file": "fixed/APP-DOTNET-AUTHZ-001/FixedInvoiceAuthorization.cs"
     }
   ]
 }

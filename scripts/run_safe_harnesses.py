@@ -621,6 +621,83 @@ def _(case):
     ]
 
 
+@check_case("APP-EXPRESS-SSRF-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-express-route-fetches-query-url", "app.get('/preview'" in reach and "http.get(target" in reach and "req.query.url" in reach),
+        result(case["id"], "safe-pair-retired-any-url-route", "retiredPreviewAnyUrl" in safe and "ALLOWED_HOSTS.has(target.hostname)" in safe),
+        result(case["id"], "fixed-express-allowlist-before-http-get", "ALLOWED_HOSTS.has(target.hostname)" in fixed and fixed.find("ALLOWED_HOSTS.has") < fixed.find("http.get")),
+    ]
+
+
+@check_case("APP-FLASK-IDOR-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-flask-account-without-owner-check", "def account_detail" in reach and "return ACCOUNTS[account_id]" in reach and "owner_user_id" not in reach.split("def account_detail", 1)[1]),
+        result(case["id"], "safe-pair-flask-owner-check", "retired_admin_lookup" in safe and 'account["owner_user_id"] != g.user_id' in safe),
+        result(case["id"], "fixed-flask-rejects-non-owner", 'account["owner_user_id"] != g.user_id' in fixed and "PermissionError" in fixed),
+    ]
+
+
+@check_case("APP-SPRING-MASSASSIGN-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-spring-binds-admin-field", "profile.isAdmin = request.isAdmin" in reach),
+        result(case["id"], "safe-pair-spring-retired-bind-all", "retiredBindAllFields" in safe and "profile.isAdmin = false" in safe),
+        result(case["id"], "fixed-spring-ignores-request-admin", "profile.isAdmin = false" in fixed and "profile.isAdmin = request.isAdmin" not in fixed),
+    ]
+
+
+@check_case("APP-GOHTTP-REDIR-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-go-http-redirects-query-next", 'r.URL.Query().Get("next")' in reach and "http.Redirect(w, r, next" in reach),
+        result(case["id"], "safe-pair-go-local-redirect-target", "retiredRedirect" in safe and "localRedirectTarget" in safe and 'strings.HasPrefix(next, "//")' in safe),
+        result(case["id"], "fixed-go-rejects-external-redirect", "localRedirectTarget" in fixed and 'http.Error(w, "invalid redirect"' in fixed),
+    ]
+
+
+@check_case("APP-RAILS-SQLI-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-rails-interpolated-where", "User.where(\"email = '#{params[:email]}'\")" in reach),
+        result(case["id"], "safe-pair-rails-hash-where", "retired_index" in safe and "User.where(email: params[:email].to_s)" in safe),
+        result(case["id"], "fixed-rails-parameterized-where", "User.where(email: params[:email].to_s)" in fixed and "#{params[:email]}" not in fixed),
+    ]
+
+
+@check_case("APP-PHP-LARAVEL-UPLOAD-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-laravel-original-filename-path", "getClientOriginalName()" in reach and "'avatars/' . $name" in reach and "basename" not in reach),
+        result(case["id"], "safe-pair-laravel-basename-sanitizer", "retiredStoreAvatar" in safe and "basename" in safe and "preg_replace" in safe),
+        result(case["id"], "fixed-laravel-rejects-dot-names", "basename" in fixed and "preg_replace" in fixed and "$name === '..'" in fixed),
+    ]
+
+
+@check_case("APP-DOTNET-AUTHZ-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-dotnet-delete-without-owner-check", "_repository.Delete(invoice)" in reach and "OwnerUserId != currentUserId" not in reach),
+        result(case["id"], "safe-pair-dotnet-owner-check", "RetiredAdminDelete" in safe and "invoice.OwnerUserId != currentUserId" in safe),
+        result(case["id"], "fixed-dotnet-authorizes-before-delete", "invoice.OwnerUserId != currentUserId" in fixed and fixed.find("OwnerUserId") < fixed.find("_repository.Delete")),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

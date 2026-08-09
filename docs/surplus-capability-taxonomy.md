@@ -122,3 +122,21 @@ Useful checks include:
 - timers, lifecycle hooks, import-time behavior, and package install hooks
 - cloud or OS permissions beyond the capability envelope
 - repo-local documentation that conflicts with external requirements
+
+## Current Fixture Coverage
+
+The initial surplus-capability epic is complete when these coverage families are
+present with `capability_envelope` metadata, fixed fixtures, safe harness checks,
+and evidence that rejects repo-local trust-boundary laundering:
+
+- hidden backdoors: magic credentials, hidden auth bypass, undocumented admin
+  endpoint, hardcoded operator key, and dormant trigger path
+- call-home behavior: undeclared telemetry, license activation callback,
+  periodic beacon, and over-disclosing update check
+- covert control: remote policy config, fetched script, remote feature flag,
+  and untrusted signed-looking payload
+- trust-boundary evidence: external capability envelopes, weak repo-local
+  claims, untrusted code assertions, and adversarial evidence packets
+
+Further surplus-capability work should add genuinely new subtypes, protocols, or
+evaluation controls rather than duplicate the baseline families above.

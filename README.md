@@ -91,6 +91,9 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Node.js | `NODE-CORS-001` | credentialed CORS origin reflection | reachable + unreachable + fixed |
 | Python | `PY-CRYPTO-001` | broken password hashing crypto | reachable + unreachable + fixed |
 | Cloud config | `CLOUD-IAM-001` | overbroad IAM policy | reachable + unreachable + fixed |
+| Node.js | `NODE-PRIVESC-001` | self-service privilege escalation through role binding | reachable + unreachable + fixed |
+| Node.js | `NODE-CONFUSED-DEPUTY-001` | confused deputy through service-account tenant export | reachable + unreachable + fixed |
+| TypeScript | `TS-KEY-EXPOSURE-001` | full API key exposure in account settings response | reachable + unreachable + fixed |
 | Node.js | `NODE-BACKDOOR-MAGIC-001` | surplus capability / magic credential backdoor | reachable + unreachable + fixed |
 | Node.js | `NODE-BACKDOOR-AUTHBYPASS-001` | surplus capability / hidden header auth bypass | reachable + unreachable + fixed |
 | Node.js | `NODE-BACKDOOR-ADMIN-001` | surplus capability / undocumented admin endpoint | reachable + unreachable + fixed |
@@ -140,7 +143,7 @@ This corpus supports the security-defect remediation prompt pack in `docs-manage
 
 ## Defect Class Expansion Roadmap
 
-The baseline corpus now includes a broader first pass across language families and defect classes, but should continue expanding toward deeper variants and framework-specific cases.
+The baseline corpus now includes a broader first pass across language families and defect classes, including the formerly stale broader-class variants such as privilege escalation, confused deputy, key exposure, and framework-specific app slices. Future expansion should focus on deeper variants and additional evidence packets rather than re-adding already-covered labels.
 
 Standalone language-family coverage now includes Python, Go, PHP, Ruby, Rust, and Kotlin fixtures in addition to the earlier JavaScript, TypeScript, Node.js, C, C++, C#, Java, cloud, and dependency-simulation cases. These language-family fixtures focus on idiomatic risky APIs such as unsafe deserialization, template escaping, loose comparison, path joining, and unsigned-token acceptance.
 

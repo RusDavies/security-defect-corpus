@@ -4,13 +4,13 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 ## Summary
 
-- Cases: 73
+- Cases: 76
 - Ecosystems: 22
 - Languages: 23
-- Defect classes: 68
-- Pattern-harnessed cases: 73/73
-- Fixed-fixture coverage: 73/73
-- Evidence-packet coverage: 13/73
+- Defect classes: 71
+- Pattern-harnessed cases: 76/76
+- Fixed-fixture coverage: 76/76
+- Evidence-packet coverage: 13/76
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -34,12 +34,12 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `java` | 7 |
 | `javascript` | 8 |
 | `kotlin` | 1 |
-| `nodejs` | 23 |
+| `nodejs` | 25 |
 | `php` | 1 |
 | `python` | 3 |
 | `ruby` | 1 |
 | `rust` | 1 |
-| `typescript` | 4 |
+| `typescript` | 5 |
 
 ## Defect-Class Coverage
 
@@ -54,6 +54,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `app_slice_ssrf` | 1 |
 | `broken_crypto` | 1 |
 | `command_injection` | 1 |
+| `confused_deputy` | 1 |
 | `cors_misconfiguration` | 1 |
 | `crlf_header_injection` | 1 |
 | `cross_site_request_forgery` | 1 |
@@ -67,6 +68,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `insecure_cookie` | 1 |
 | `insecure_direct_object_reference` | 1 |
 | `integer_overflow` | 1 |
+| `key_exposure` | 1 |
 | `known_cve_fix_in_place_dependency` | 2 |
 | `kotlin_jwt_none_acceptance` | 1 |
 | `ldap_injection` | 1 |
@@ -79,6 +81,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `overbroad_iam_policy` | 1 |
 | `path_traversal` | 1 |
 | `php_loose_comparison_auth_bypass` | 1 |
+| `privilege_escalation` | 1 |
 | `public_bucket_policy` | 1 |
 | `python_pickle_deserialization` | 1 |
 | `ruby_yaml_deserialization` | 1 |
@@ -168,6 +171,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `NODE-CALLHOME-TELEMETRY-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_call_home_beacon` | `CWE-201`, `CWE-912` | yes | yes | - |
 | `NODE-CALLHOME-UPDATE-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_update_check_overdisclosure` | `CWE-201`, `CWE-912` | yes | yes | `adversarial-non-cve-trust-boundary-laundering` |
 | `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `adversarial-non-cve-missing-case-boundary`, `adversarial-non-cve-missing-sections`, `high-risk-non-cve-remediation-smoke` |
+| `NODE-CONFUSED-DEPUTY-001` | JavaScript / Node.js | `nodejs` | `confused_deputy` | `CWE-441`, `CWE-862` | yes | yes | - |
 | `NODE-COOKIE-001` | JavaScript / Node.js | `nodejs` | `insecure_cookie` | `CWE-614`, `CWE-1004`, `CWE-1275` | yes | yes | - |
 | `NODE-CORS-001` | JavaScript / Node.js | `nodejs` | `cors_misconfiguration` | `CWE-942`, `CWE-346` | yes | yes | - |
 | `NODE-COVERT-CONFIG-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_covert_command_control` | `CWE-912`, `CWE-15` | yes | yes | - |
@@ -179,6 +183,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `NODE-LOG-001` | JavaScript / Node.js | `nodejs` | `sensitive_data_logging` | `CWE-532` | yes | yes | - |
 | `NODE-LOGCTRL-001` | JavaScript / Node.js | `nodejs` | `log_control_character_injection` | `CWE-117` | yes | yes | - |
 | `NODE-NOSQL-001` | JavaScript / Node.js | `nodejs` | `nosql_injection` | `CWE-943` | yes | yes | - |
+| `NODE-PRIVESC-001` | JavaScript / Node.js | `nodejs` | `privilege_escalation` | `CWE-269`, `CWE-915` | yes | yes | - |
 | `NODE-RUNTIME-EGRESS-001` | JavaScript / Node.js | `nodejs` | `unexpected_runtime_egress` | `CWE-918`, `CWE-441` | yes | yes | - |
 | `NODE-SSRF-001` | JavaScript / Node.js | `nodejs` | `server_side_request_forgery` | `CWE-918` | yes | yes | `adversarial-non-cve-quality-new-defect`, `known-good-non-cve-remediation-run-node-ssrf` |
 | `PHP-LOOSE-AUTH-001` | PHP | `php` | `php_loose_comparison_auth_bypass` | `CWE-287`, `CWE-697` | yes | yes | - |
@@ -188,6 +193,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `RUBY-YAML-DESER-001` | Ruby | `ruby` | `ruby_yaml_deserialization` | `CWE-502` | yes | yes | - |
 | `RUST-PATH-TRAVERSAL-001` | Rust | `rust` | `rust_path_traversal` | `CWE-22` | yes | yes | - |
 | `TS-IDOR-001` | TypeScript | `typescript` | `insecure_direct_object_reference` | `CWE-639`, `CWE-862` | yes | yes | - |
+| `TS-KEY-EXPOSURE-001` | TypeScript | `typescript` | `key_exposure` | `CWE-200`, `CWE-522` | yes | yes | - |
 | `TS-SECRET-001` | TypeScript | `typescript` | `hardcoded_secret` | `CWE-798` | yes | yes | - |
 | `TS-TELEMETRY-NET-001` | TypeScript | `typescript` | `undeclared_telemetry_beacon` | `CWE-359`, `CWE-200` | yes | yes | - |
 | `TS-ZWSP-001` | TypeScript | `typescript` | `zero_width_identifier_confusion` | `CWE-180`, `CWE-178` | yes | yes | - |

@@ -9,9 +9,9 @@
     "heldout_mutation": "Held-out claims should use transformed variants following the listed mutation axes instead of exact fixture memorization."
   },
   "split_counts": {
-    "development": 48,
-    "heldout": 10,
-    "validation": 18
+    "development": 52,
+    "heldout": 12,
+    "validation": 19
   },
   "assignments": [
     {
@@ -213,6 +213,13 @@
       "mutation_required": false
     },
     {
+      "case_id": "GO-PROXY-BYPASS-001",
+      "split": "development",
+      "defect_class": "egress_proxy_bypass",
+      "ecosystem": "go",
+      "mutation_required": false
+    },
+    {
       "case_id": "GO-TEMPLATE-XSS-001",
       "split": "development",
       "defect_class": "go_template_xss",
@@ -311,6 +318,21 @@
       "defect_class": "unicode_whitespace_token_parsing",
       "ecosystem": "javascript",
       "mutation_required": false
+    },
+    {
+      "case_id": "JS-WEBSOCKET-BEACON-001",
+      "split": "heldout",
+      "defect_class": "unexpected_websocket_beacon",
+      "ecosystem": "javascript",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
     },
     {
       "case_id": "JS-XSS-001",
@@ -477,6 +499,13 @@
       "mutation_required": false
     },
     {
+      "case_id": "NODE-DEPUPDATE-NET-001",
+      "split": "validation",
+      "defect_class": "unexpected_dependency_update_network",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
       "case_id": "NODE-INSTALL-NET-001",
       "split": "development",
       "defect_class": "unexpected_install_time_network",
@@ -494,6 +523,13 @@
       "case_id": "NODE-LOGCTRL-001",
       "split": "validation",
       "defect_class": "log_control_character_injection",
+      "ecosystem": "nodejs",
+      "mutation_required": false
+    },
+    {
+      "case_id": "NODE-METADATA-ALIAS-001",
+      "split": "development",
+      "defect_class": "metadata_service_alias_access",
       "ecosystem": "nodejs",
       "mutation_required": false
     },
@@ -560,6 +596,35 @@
         "rewrite prompt and requirement wording",
         "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
       ]
+    },
+    {
+      "case_id": "PY-SETUP-NET-001",
+      "split": "heldout",
+      "defect_class": "unexpected_package_lifecycle_network",
+      "ecosystem": "python",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "PY-SMTP-CALLBACK-001",
+      "split": "development",
+      "defect_class": "unexpected_smtp_callback",
+      "ecosystem": "python",
+      "mutation_required": false
+    },
+    {
+      "case_id": "RUBY-GEM-NET-001",
+      "split": "development",
+      "defect_class": "unexpected_package_lifecycle_network",
+      "ecosystem": "ruby",
+      "mutation_required": false
     },
     {
       "case_id": "RUBY-YAML-DESER-001",

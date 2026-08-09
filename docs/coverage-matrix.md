@@ -4,13 +4,13 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 ## Summary
 
-- Cases: 76
+- Cases: 83
 - Ecosystems: 22
 - Languages: 23
-- Defect classes: 71
-- Pattern-harnessed cases: 76/76
-- Fixed-fixture coverage: 76/76
-- Evidence-packet coverage: 13/76
+- Defect classes: 77
+- Pattern-harnessed cases: 83/83
+- Fixed-fixture coverage: 83/83
+- Evidence-packet coverage: 17/83
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -30,14 +30,14 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `cpp` | 4 |
 | `csharp` | 2 |
 | `dotnet-dependency` | 1 |
-| `go` | 2 |
+| `go` | 3 |
 | `java` | 7 |
-| `javascript` | 8 |
+| `javascript` | 9 |
 | `kotlin` | 1 |
-| `nodejs` | 25 |
+| `nodejs` | 27 |
 | `php` | 1 |
-| `python` | 3 |
-| `ruby` | 1 |
+| `python` | 5 |
+| `ruby` | 2 |
 | `rust` | 1 |
 | `typescript` | 5 |
 
@@ -61,6 +61,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `cross_site_scripting` | 1 |
 | `dependency_vulnerability_patch_in_place` | 1 |
 | `double_free` | 1 |
+| `egress_proxy_bypass` | 1 |
 | `encoded_path_traversal_bypass` | 1 |
 | `format_string` | 1 |
 | `go_template_xss` | 1 |
@@ -74,6 +75,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `ldap_injection` | 1 |
 | `log_control_character_injection` | 1 |
 | `memory_leak` | 2 |
+| `metadata_service_alias_access` | 1 |
 | `nosql_injection` | 1 |
 | `null_byte_path_validation_bypass` | 1 |
 | `open_redirect` | 1 |
@@ -103,11 +105,15 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `template_expression_injection` | 1 |
 | `time_of_check_time_of_use` | 1 |
 | `undeclared_telemetry_beacon` | 1 |
+| `unexpected_dependency_update_network` | 1 |
 | `unexpected_dns_exfiltration` | 1 |
 | `unexpected_import_time_network` | 1 |
 | `unexpected_install_time_network` | 1 |
 | `unexpected_metadata_service_access` | 1 |
+| `unexpected_package_lifecycle_network` | 2 |
 | `unexpected_runtime_egress` | 1 |
+| `unexpected_smtp_callback` | 1 |
+| `unexpected_websocket_beacon` | 1 |
 | `unicode_bidi_filename_deception` | 1 |
 | `unicode_whitespace_token_parsing` | 1 |
 | `unsafe_archive_extraction` | 1 |
@@ -144,6 +150,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `CS-SQLI-001` | C# / .NET | `csharp` | `sql_injection` | `CWE-89` | yes | yes | `high-risk-non-cve-remediation-smoke` |
 | `DEP-UPSTREAM-001` | C# / .NET dependency simulation | `dotnet-dependency` | `dependency_vulnerability_patch_in_place` | `CWE-20` | yes | yes | - |
 | `GO-DNS-EXFIL-001` | Go | `go` | `unexpected_dns_exfiltration` | `CWE-200`, `CWE-201` | yes | yes | - |
+| `GO-PROXY-BYPASS-001` | Go | `go` | `egress_proxy_bypass` | `CWE-441`, `CWE-923` | yes | yes | `known-good-non-cve-egress-policy-network-variants` |
 | `GO-TEMPLATE-XSS-001` | Go | `go` | `go_template_xss` | `CWE-79` | yes | yes | - |
 | `JAVA-BIDI-001` | Java | `java` | `unicode_bidi_filename_deception` | `CWE-451` | yes | yes | - |
 | `JAVA-DESER-001` | Java | `java` | `unsafe_deserialization` | `CWE-502` | yes | yes | `high-risk-non-cve-remediation-smoke` |
@@ -159,6 +166,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `JS-OPENREDIR-001` | JavaScript | `javascript` | `open_redirect` | `CWE-601` | yes | yes | - |
 | `JS-TEMPLATE-001` | JavaScript | `javascript` | `template_expression_injection` | `CWE-94`, `CWE-1336` | yes | yes | - |
 | `JS-UWS-001` | JavaScript | `javascript` | `unicode_whitespace_token_parsing` | `CWE-180` | yes | yes | - |
+| `JS-WEBSOCKET-BEACON-001` | JavaScript | `javascript` | `unexpected_websocket_beacon` | `CWE-201`, `CWE-912` | yes | yes | - |
 | `JS-XSS-001` | JavaScript | `javascript` | `cross_site_scripting` | `CWE-79` | yes | yes | `adversarial-non-cve-quality-boundary-break` |
 | `KOTLIN-JWT-NONE-001` | Kotlin | `kotlin` | `kotlin_jwt_none_acceptance` | `CWE-347`, `CWE-287` | yes | yes | - |
 | `NODE-BACKDOOR-ADMIN-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_network_surface` | `CWE-489`, `CWE-912` | yes | yes | `adversarial-non-cve-trust-boundary-laundering` |
@@ -179,9 +187,11 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `NODE-COVERT-PAYLOAD-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_untrusted_control_payload` | `CWE-345`, `CWE-863` | yes | yes | - |
 | `NODE-COVERT-SCRIPT-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_covert_command_control` | `CWE-94`, `CWE-912` | yes | yes | - |
 | `NODE-CRLF-001` | JavaScript / Node.js | `nodejs` | `crlf_header_injection` | `CWE-93`, `CWE-113` | yes | yes | - |
+| `NODE-DEPUPDATE-NET-001` | JavaScript / Node.js | `nodejs` | `unexpected_dependency_update_network` | `CWE-201`, `CWE-829` | yes | yes | `known-good-non-cve-egress-policy-network-variants` |
 | `NODE-INSTALL-NET-001` | JavaScript / Node.js | `nodejs` | `unexpected_install_time_network` | `CWE-913`, `CWE-200` | yes | yes | - |
 | `NODE-LOG-001` | JavaScript / Node.js | `nodejs` | `sensitive_data_logging` | `CWE-532` | yes | yes | - |
 | `NODE-LOGCTRL-001` | JavaScript / Node.js | `nodejs` | `log_control_character_injection` | `CWE-117` | yes | yes | - |
+| `NODE-METADATA-ALIAS-001` | JavaScript / Node.js | `nodejs` | `metadata_service_alias_access` | `CWE-918`, `CWE-200` | yes | yes | `known-good-non-cve-egress-policy-network-variants` |
 | `NODE-NOSQL-001` | JavaScript / Node.js | `nodejs` | `nosql_injection` | `CWE-943` | yes | yes | - |
 | `NODE-PRIVESC-001` | JavaScript / Node.js | `nodejs` | `privilege_escalation` | `CWE-269`, `CWE-915` | yes | yes | - |
 | `NODE-RUNTIME-EGRESS-001` | JavaScript / Node.js | `nodejs` | `unexpected_runtime_egress` | `CWE-918`, `CWE-441` | yes | yes | - |
@@ -190,6 +200,9 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `PY-CRYPTO-001` | Python | `python` | `broken_crypto` | `CWE-327`, `CWE-916` | yes | yes | - |
 | `PY-IMPORT-NET-001` | Python | `python` | `unexpected_import_time_network` | `CWE-913`, `CWE-668` | yes | yes | - |
 | `PY-PICKLE-DESER-001` | Python | `python` | `python_pickle_deserialization` | `CWE-502` | yes | yes | - |
+| `PY-SETUP-NET-001` | Python | `python` | `unexpected_package_lifecycle_network` | `CWE-829`, `CWE-201` | yes | yes | `known-good-non-cve-egress-policy-network-variants` |
+| `PY-SMTP-CALLBACK-001` | Python | `python` | `unexpected_smtp_callback` | `CWE-201`, `CWE-912` | yes | yes | - |
+| `RUBY-GEM-NET-001` | Ruby | `ruby` | `unexpected_package_lifecycle_network` | `CWE-829`, `CWE-201` | yes | yes | - |
 | `RUBY-YAML-DESER-001` | Ruby | `ruby` | `ruby_yaml_deserialization` | `CWE-502` | yes | yes | - |
 | `RUST-PATH-TRAVERSAL-001` | Rust | `rust` | `rust_path_traversal` | `CWE-22` | yes | yes | - |
 | `TS-IDOR-001` | TypeScript | `typescript` | `insecure_direct_object_reference` | `CWE-639`, `CWE-862` | yes | yes | - |

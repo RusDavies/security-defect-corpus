@@ -1398,6 +1398,247 @@
           "Report the trigger as a hidden authorization bypass even though it looks like preview behavior."
         ]
       }
+    },
+    {
+      "id": "NODE-CALLHOME-TELEMETRY-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_call_home_beacon",
+      "cwe": [
+        "CWE-201",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_callhome_telemetry.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_callhome_telemetry.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "order.user.email and account ID -> undeclared telemetry HTTPS request",
+      "expected_remediation": "Remove undeclared checkout telemetry and preserve checkout completion without outbound egress.",
+      "expected_tests": [
+        "checkout returns success",
+        "no telemetry host is contacted",
+        "user email and account ID are not sent"
+      ],
+      "false_positive_boundary": "unreachable_callhome_telemetry.js keeps telemetry in a retired helper and exports local checkout completion only.",
+      "fixed_file": "fixed/NODE-CALLHOME-TELEMETRY-001/fixed_callhome_telemetry.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "call_home_beacon"
+        ],
+        "external_expected_behavior": "Checkout completion may return a local success result for the order; it has no externally permitted telemetry egress.",
+        "allowed_capabilities": [
+          "read order ID and total for local checkout completion",
+          "return local checkout status"
+        ],
+        "disallowed_capabilities": [
+          "send checkout telemetry",
+          "disclose user email or account ID to telemetry hosts",
+          "make outbound network calls during checkout completion"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The checkout capability is local completion only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The endpoint name frames the callback as telemetry, but no external source permits it.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Compare checkout behavior against the local-only external capability envelope.",
+          "Treat telemetry naming as weak in-code justification.",
+          "Report disclosure of user and account identifiers through undeclared egress."
+        ]
+      }
+    },
+    {
+      "id": "NODE-CALLHOME-LICENSE-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_call_home_activation",
+      "cwe": [
+        "CWE-201",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_callhome_license_activation.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_callhome_license_activation.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "license key, account email, hostname -> undeclared license activation HTTPS request",
+      "expected_remediation": "Remove the license activation callback and validate the license locally.",
+      "expected_tests": [
+        "valid local license accepted",
+        "invalid local license rejected",
+        "account email and hostname are not sent to license host"
+      ],
+      "false_positive_boundary": "unreachable_callhome_license_activation.js keeps activation egress in a retired helper and exports local license validation only.",
+      "fixed_file": "fixed/NODE-CALLHOME-LICENSE-001/fixed_callhome_license_activation.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "call_home_beacon"
+        ],
+        "external_expected_behavior": "License validation may check the local license-key format; it may not activate remotely or disclose host/account identifiers.",
+        "allowed_capabilities": [
+          "validate local license-key format",
+          "return local validation result"
+        ],
+        "disallowed_capabilities": [
+          "call remote activation endpoints",
+          "send license keys to unapproved hosts",
+          "disclose account email or hostname"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The license capability is local format validation.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The activation endpoint name implies licensing intent, but remote activation is outside the envelope.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Identify remote activation as behavior beyond local validation.",
+          "Notice disclosure of account and host identifiers.",
+          "Reject license-related naming as insufficient authority for egress."
+        ]
+      }
+    },
+    {
+      "id": "NODE-CALLHOME-BEACON-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_periodic_beacon",
+      "cwe": [
+        "CWE-201",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_periodic_beacon.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_periodic_beacon.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "worker startup -> setInterval -> hostname beacon HTTPS request",
+      "expected_remediation": "Remove the periodic beacon timer and preserve worker startup through the queue consumer only.",
+      "expected_tests": [
+        "worker starts queue consumer",
+        "no timer schedules outbound HTTPS calls",
+        "hostname is not sent to beacon host"
+      ],
+      "false_positive_boundary": "unreachable_periodic_beacon.js keeps the beacon in a retired helper and exports queue-only worker startup.",
+      "fixed_file": "fixed/NODE-CALLHOME-BEACON-001/fixed_periodic_beacon.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "call_home_beacon",
+          "dormant_activation_trigger"
+        ],
+        "external_expected_behavior": "Worker startup may begin consuming the supplied queue; it may not schedule background egress.",
+        "allowed_capabilities": [
+          "call queue.consume",
+          "return the queue consumer result"
+        ],
+        "disallowed_capabilities": [
+          "schedule periodic outbound beacons",
+          "send hostname to beacon hosts",
+          "create background network activity during worker startup"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "The worker capability is queue consumption only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The heartbeat-style URL does not authorize periodic egress.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Detect the timer-created background network behavior.",
+          "Compare it with queue-only worker startup.",
+          "Report hostname beaconing as unauthorized surplus capability."
+        ]
+      }
+    },
+    {
+      "id": "NODE-CALLHOME-UPDATE-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_update_check_overdisclosure",
+      "cwe": [
+        "CWE-201",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_update_check_overdisclosure.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_update_check_overdisclosure.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "config account ID and API token -> automatic update-check URL",
+      "expected_remediation": "Remove automatic update-check egress from library initialization and do not disclose account IDs or API tokens.",
+      "expected_tests": [
+        "library initialization returns ready",
+        "update host is not contacted implicitly",
+        "API token is never placed in an update-check URL"
+      ],
+      "false_positive_boundary": "unreachable_update_check_overdisclosure.js keeps update egress in a retired helper and exports local initialization only.",
+      "fixed_file": "fixed/NODE-CALLHOME-UPDATE-001/fixed_update_check_overdisclosure.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "call_home_beacon"
+        ],
+        "external_expected_behavior": "Library initialization may return local readiness; it has no externally permitted automatic update-check egress.",
+        "allowed_capabilities": [
+          "initialize local library state",
+          "return ready status"
+        ],
+        "disallowed_capabilities": [
+          "contact update hosts during initialization",
+          "send account IDs to update hosts",
+          "place API tokens in URLs"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "Initialization is local-only readiness.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The update-check URL suggests maintenance behavior, but automatic egress and token disclosure are not externally allowed.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Identify implicit update-check egress during initialization.",
+          "Recognize token-in-URL disclosure as beyond the capability envelope.",
+          "Reject update-check naming as authority for call-home behavior."
+        ]
+      }
     }
   ]
 }

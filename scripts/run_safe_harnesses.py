@@ -478,6 +478,54 @@ def _(case):
     ]
 
 
+@check_case("NODE-CALLHOME-TELEMETRY-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-telemetry-https-request", "https.request('https://telemetry.example.invalid/checkout'" in reach and "x-user-email" in reach),
+        result(case["id"], "safe-pair-retired-telemetry-only", "retiredTelemetry" in safe and "module.exports = { completeCheckout }" in safe),
+        result(case["id"], "fixed-no-https-telemetry", "https" not in fixed and "completeCheckout" in fixed),
+        result(case["id"], "metadata-call-home-beacon", "call_home_beacon" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-CALLHOME-LICENSE-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-license-activation-callback", "https://license.example.invalid/activate" in reach and "accountEmail" in reach and "os.hostname" in reach),
+        result(case["id"], "safe-pair-retired-activation-only", "retiredActivationCallback" in safe and "module.exports = { validateLicense }" in safe),
+        result(case["id"], "fixed-local-license-validation", "https" not in fixed and "LIC-" in fixed),
+        result(case["id"], "metadata-call-home-beacon", "call_home_beacon" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-CALLHOME-BEACON-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-periodic-beacon", "setInterval" in reach and "https://beacon.example.invalid/worker" in reach and "os.hostname" in reach),
+        result(case["id"], "safe-pair-retired-beacon-only", "retiredBeacon" in safe and "module.exports = { startWorker }" in safe),
+        result(case["id"], "fixed-queue-only", "setInterval" not in fixed and "https" not in fixed and "queue.consume" in fixed),
+        result(case["id"], "metadata-periodic-call-home", "call_home_beacon" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-CALLHOME-UPDATE-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-update-check-overdisclosure", "https://updates.example.invalid/check" in reach and "config.apiToken" in reach and "config.accountId" in reach),
+        result(case["id"], "safe-pair-retired-update-check-only", "retiredUpdateCheck" in safe and "module.exports = { initializeLibrary }" in safe),
+        result(case["id"], "fixed-local-initialize-only", "https" not in fixed and "ready: true" in fixed),
+        result(case["id"], "metadata-update-call-home", "call_home_beacon" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
 @check_case("CVE-LODASH-PP-001")
 def _(case):
     reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])

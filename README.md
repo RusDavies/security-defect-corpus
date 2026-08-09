@@ -95,6 +95,10 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Node.js | `NODE-BACKDOOR-ADMIN-001` | surplus capability / undocumented admin endpoint | reachable + unreachable + fixed |
 | Node.js | `NODE-BACKDOOR-OPKEY-001` | surplus capability / hardcoded operator key | reachable + unreachable + fixed |
 | Node.js | `NODE-BACKDOOR-DORMANT-001` | surplus capability / dormant activation trigger | reachable + unreachable + fixed |
+| Node.js | `NODE-CALLHOME-TELEMETRY-001` | surplus capability / undeclared telemetry call-home | reachable + unreachable + fixed |
+| Node.js | `NODE-CALLHOME-LICENSE-001` | surplus capability / license activation callback | reachable + unreachable + fixed |
+| Node.js | `NODE-CALLHOME-BEACON-001` | surplus capability / periodic worker beacon | reachable + unreachable + fixed |
+| Node.js | `NODE-CALLHOME-UPDATE-001` | surplus capability / update-check over-disclosure | reachable + unreachable + fixed |
 
 ## Validation
 

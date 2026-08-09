@@ -20,6 +20,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `docs/coverage-matrix.md` — generated case coverage matrix by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
 - `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
 - `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
+- `docs/surplus-capability-taxonomy.md` — taxonomy and metadata shape for backdoors, call-home behavior, covert control, and other unauthorized surplus capability cases.
 - `expected-remediations/` — expected remediation guidance by case.
 - `evidence-packets/` — example evidence packet expectations.
 - `upstream-simulations/` — dependency/upstream contribution simulation notes.
@@ -136,6 +137,7 @@ Priority defect classes to add:
 - cloud/configuration: public bucket, overbroad IAM, exposed admin interface, unsafe defaults
 - concurrency/state: race conditions, TOCTOU, lock misuse, stale authorization decisions
 - logging/privacy: sensitive data in logs, over-retention, telemetry leakage
+- surplus capability: hidden backdoors, call-home behavior, covert command/control, dormant activation triggers, hidden network surfaces, superfluous privilege, and repo-local trust-boundary laundering
 
 Memory leaks in C and C++ should remain first-class cases because they are common, detectable, and operationally/security relevant when repeated allocations can produce denial of service or long-running process degradation. Tiny allocations leaking once are less interesting than reachable repeated leaks with realistic ownership mistakes.
 ## Safe Harnesses
@@ -167,6 +169,12 @@ These cases are important because tools and humans often disagree about what inv
 The corpus includes a first pass for code and dependency behaviours that make outbound network connections outside declared expectations: install-time hooks, import-time callbacks, metadata-service access, DNS exfiltration patterns, undeclared telemetry beacons, and runtime egress to unapproved hosts.
 
 Harness checks detect network intent statically and structurally. They do not make real outbound network connections. Safe paired fixtures remove implicit egress, route approved network activity through explicit injected clients, block metadata/link-local endpoints, and enforce host allowlists where runtime egress is legitimate.
+
+### Surplus Capability / Unauthorized Behavior
+
+Surplus capability cases cover backdoors, call-home behavior, covert command/control, dormant triggers, hidden network surfaces, and other behavior outside an externally supplied capability envelope. The trust boundary for these cases is outside the evaluated codebase: repo-local documentation, comments, config, or code assertions can be evidence, but they are not authoritative permission for the behavior under review.
+
+Use `docs/surplus-capability-taxonomy.md` and `docs/surplus-capability-metadata.schema.json` when adding these cases.
 
 ## Scanner-Listed CVE Fix-in-Place Fixtures
 

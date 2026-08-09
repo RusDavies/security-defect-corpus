@@ -268,6 +268,21 @@ The scorer checks:
 
 Scoring output is written to `scoring-results/latest.json` by default and is ignored by git. A passing score is not a production approval; it is evidence for review.
 
+## Fixed Regression Tests
+
+Use `scripts/run_fixed_regression_tests.py` to execute behavior-level checks against a representative subset of fixed-version fixtures. These checks run only fixed code, use local stubs for request/network surfaces, and compile temporary probes for C/C++ fixtures where the compiler is available.
+
+Current fixed regression coverage includes:
+
+- JavaScript/Node.js: XSS output encoding, local-only redirect validation, secure cookie flags, and SSRF host allowlisting before `http.get`
+- Python: PBKDF2 digest determinism and salt separation
+- Go: local-only build metadata reporting without DNS lookup
+- C/C++: literal format-string output and path traversal rejection
+
+```bash
+python3 scripts/run_fixed_regression_tests.py
+```
+
 ## Generated Results
 
 Generated harness, scoring, and packet-suite outputs are intentionally ignored by git. Recreate them locally with the commands above instead of committing refreshed result JSON.

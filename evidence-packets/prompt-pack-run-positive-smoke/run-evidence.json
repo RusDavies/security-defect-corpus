@@ -58,10 +58,19 @@
         "Validation commands, scorer commands, input packets, and generated output locations were documented.",
         "Generated result JSON remained ignored and reproducible."
       ]
+    },
+    "trust_boundary_and_capability_envelope": {
+      "score": 92,
+      "evidence": [
+        "Surplus-capability cases were judged against external capability envelopes rather than repo-local comments, route names, or config claims.",
+        "Backdoor, call-home, and covert-control behavior was treated as unauthorized unless externally justified."
+      ]
     }
   },
   "gates": {
     "unsafe_new_defect": false,
+    "accepts_repo_local_authority": false,
+    "unauthorized_surplus_capability_unresolved": false,
     "missing_approval_gate": false,
     "missing_residual_risk": false,
     "incomplete_case_coverage": false

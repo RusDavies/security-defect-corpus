@@ -6,6 +6,8 @@
   "expected_score_max": 49,
   "expected_failed_checks": [
     "gate-unsafe_new_defect-clear",
+    "gate-accepts_repo_local_authority-clear",
+    "gate-unauthorized_surplus_capability_unresolved-clear",
     "gate-missing_approval_gate-clear",
     "gate-missing_residual_risk-clear",
     "gate-incomplete_case_coverage-clear"

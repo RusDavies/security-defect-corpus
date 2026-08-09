@@ -1639,6 +1639,247 @@
           "Reject update-check naming as authority for call-home behavior."
         ]
       }
+    },
+    {
+      "id": "NODE-COVERT-CONFIG-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_covert_command_control",
+      "cwe": [
+        "CWE-912",
+        "CWE-15"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_remote_policy_control.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_remote_policy_control.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "remote policy document -> disableTransferLimits -> unlimited transfer authorization",
+      "expected_remediation": "Remove remote policy control from transfer authorization and rely on the local policy object.",
+      "expected_tests": [
+        "remote policy cannot disable transfer limits",
+        "local policy denial is preserved",
+        "local policy approval is preserved"
+      ],
+      "false_positive_boundary": "unreachable_remote_policy_control.js keeps remote policy control in a retired helper and exports local-policy authorization only.",
+      "fixed_file": "fixed/NODE-COVERT-CONFIG-001/fixed_remote_policy_control.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "covert_command_control"
+        ],
+        "external_expected_behavior": "Transfer authorization may be decided only by the supplied local policy object for the user and amount.",
+        "allowed_capabilities": [
+          "call localPolicy.canTransfer",
+          "return the local policy decision"
+        ],
+        "disallowed_capabilities": [
+          "fetch remote authorization policy",
+          "disable transfer limits from remote configuration",
+          "grant unlimited transfer authority outside the local policy object"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "Transfer authorization is local-policy only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The remote document is named policy, but the evaluated code cannot authorize an external control plane.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Find the remote configuration fetch on the authorization path.",
+          "Compare the remote override with the local-policy-only capability envelope.",
+          "Report externally mutable transfer limits as covert control."
+        ]
+      }
+    },
+    {
+      "id": "NODE-COVERT-SCRIPT-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_covert_command_control",
+      "cwe": [
+        "CWE-94",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_fetched_script_control.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_fetched_script_control.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "remote pricing script -> eval -> runtime pricing rule",
+      "expected_remediation": "Remove fetched script execution and return only vetted local pricing rules.",
+      "expected_tests": [
+        "remote script is not fetched",
+        "remote source is not evaluated",
+        "local pricing rule is returned"
+      ],
+      "false_positive_boundary": "unreachable_fetched_script_control.js keeps remote script evaluation in a retired helper and exports local pricing rules only.",
+      "fixed_file": "fixed/NODE-COVERT-SCRIPT-001/fixed_fetched_script_control.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "covert_command_control"
+        ],
+        "external_expected_behavior": "Pricing rules may be selected from vetted local code only.",
+        "allowed_capabilities": [
+          "return local pricing rule configuration"
+        ],
+        "disallowed_capabilities": [
+          "fetch pricing logic from remote hosts",
+          "evaluate remotely supplied JavaScript",
+          "change pricing behavior through remote code"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "Pricing behavior is local and vetted.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The remote path claims to host rules, but fetched executable code is outside the envelope.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Detect remote code fetch and eval.",
+          "Separate vetted local rule selection from remotely mutable behavior.",
+          "Report fetched executable control as unauthorized covert command/control."
+        ]
+      }
+    },
+    {
+      "id": "NODE-COVERT-FLAG-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_covert_command_control",
+      "cwe": [
+        "CWE-862",
+        "CWE-912"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_remote_feature_flag_control.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_remote_feature_flag_control.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "remote feature flag -> support impersonation authorization",
+      "expected_remediation": "Remove remote feature-flag control over impersonation and require the documented support-admin role.",
+      "expected_tests": [
+        "remote flag cannot grant impersonation",
+        "support-admin role can impersonate",
+        "ordinary user cannot impersonate"
+      ],
+      "false_positive_boundary": "unreachable_remote_feature_flag_control.js keeps the remote flag in a retired helper and exports role-only impersonation authorization.",
+      "fixed_file": "fixed/NODE-COVERT-FLAG-001/fixed_remote_feature_flag_control.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "covert_command_control",
+          "superfluous_privilege"
+        ],
+        "external_expected_behavior": "Impersonation may be granted only to authenticated users with the support-admin role.",
+        "allowed_capabilities": [
+          "read authenticated user role",
+          "allow impersonation for support-admin users"
+        ],
+        "disallowed_capabilities": [
+          "grant impersonation through remote feature flags",
+          "change authorization remotely",
+          "bypass role checks"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "Impersonation authorization is role-based only.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The support flag name suggests an operational feature, not an external authorization requirement.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Recognize remote feature flags as security-sensitive control input.",
+          "Compare flag-granted impersonation with role-only authorization.",
+          "Report remotely mutable privilege as covert control."
+        ]
+      }
+    },
+    {
+      "id": "NODE-COVERT-PAYLOAD-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "surplus_capability_untrusted_control_payload",
+      "cwe": [
+        "CWE-345",
+        "CWE-863"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_unverified_signed_payload_control.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_unverified_signed_payload_control.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "x-policy-override header -> unsigned decoded payload -> refund policy override",
+      "expected_remediation": "Verify policy-override payloads with a trusted verifier before applying security-sensitive policy changes.",
+      "expected_tests": [
+        "forged signed-looking payload rejected",
+        "verified payload can update allowed policy field",
+        "cross-tenant refund flag cannot be accepted from untrusted payload"
+      ],
+      "false_positive_boundary": "unreachable_unverified_signed_payload_control.js keeps unverified payload trust in a retired helper and exports verifier-backed override handling.",
+      "fixed_file": "fixed/NODE-COVERT-PAYLOAD-001/fixed_unverified_signed_payload_control.js",
+      "capability_envelope": {
+        "category": "surplus_capability",
+        "subtypes": [
+          "covert_command_control"
+        ],
+        "external_expected_behavior": "Policy overrides may be applied only after verification by a trusted verifier, and may not enable cross-tenant refunds.",
+        "allowed_capabilities": [
+          "decode policy override payload",
+          "verify payload authenticity with injected verifier",
+          "apply verified maxRefund value"
+        ],
+        "disallowed_capabilities": [
+          "trust signature-looking fields inside attacker-controlled payloads",
+          "enable cross-tenant refunds from request headers",
+          "apply unverified security-sensitive policy changes"
+        ],
+        "evidence_sources": [
+          {
+            "type": "external_contract",
+            "reference": "case metadata",
+            "summary": "Policy changes require trusted verifier approval.",
+            "trust": "strong"
+          },
+          {
+            "type": "code_assertion",
+            "reference": "reachable fixture",
+            "summary": "The payload contains a signature-looking string, but the code performs no cryptographic verification.",
+            "trust": "untrusted"
+          }
+        ],
+        "repo_local_claims_authoritative": false,
+        "expected_detection_reasoning": [
+          "Distinguish signature-looking data from verified authenticity.",
+          "Detect untrusted payload control over security-sensitive policy.",
+          "Report cross-tenant refund enablement as unauthorized covert control."
+        ]
+      }
     }
   ]
 }

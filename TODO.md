@@ -33,7 +33,7 @@
   - [x] Add first-class call-home fixtures covering unexpected telemetry, license/activation callbacks that disclose identifiers, periodic beacons, and update checks that exceed the externally permitted capability envelope.
   - [x] Add covert-control fixtures where remote configuration, fetched scripts, feature flags, or signed-looking-but-untrusted payloads can change security-sensitive behavior.
   - [x] Add safe harness checks that detect unexpected listeners, outbound network intent, dynamic code fetch, hidden bypass conditions, suspicious timers, and activation triggers without making real network connections.
-  - [ ] Add adversarial evidence packets that try to justify unauthorized behavior using repo-local README/config/comments so evaluators must reject trust-boundary laundering.
+  - [x] Add adversarial evidence packets that try to justify unauthorized behavior using repo-local README/config/comments so evaluators must reject trust-boundary laundering.
   - [ ] Update scoring rubrics to reward requirement/capability-envelope reasoning and penalize agents that accept in-code self-justification for backdoors, call-home logic, or other surplus behavior.
 
 - [x] Add semantic patch-diff scoring that compares generated repairs against `fixed/<CASE-ID>/` target fixtures while allowing equivalent safe implementations.

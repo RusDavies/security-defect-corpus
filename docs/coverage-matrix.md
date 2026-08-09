@@ -10,7 +10,7 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 - Defect classes: 55
 - Pattern-harnessed cases: 60/60
 - Fixed-fixture coverage: 60/60
-- Evidence-packet coverage: 11/60
+- Evidence-packet coverage: 13/60
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -125,7 +125,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `JS-TEMPLATE-001` | JavaScript | `javascript` | `template_expression_injection` | `CWE-94`, `CWE-1336` | yes | yes | - |
 | `JS-UWS-001` | JavaScript | `javascript` | `unicode_whitespace_token_parsing` | `CWE-180` | yes | yes | - |
 | `JS-XSS-001` | JavaScript | `javascript` | `cross_site_scripting` | `CWE-79` | yes | yes | `adversarial-non-cve-quality-boundary-break` |
-| `NODE-BACKDOOR-ADMIN-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_network_surface` | `CWE-489`, `CWE-912` | yes | yes | - |
+| `NODE-BACKDOOR-ADMIN-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_network_surface` | `CWE-489`, `CWE-912` | yes | yes | `adversarial-non-cve-trust-boundary-laundering` |
 | `NODE-BACKDOOR-AUTHBYPASS-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_backdoor` | `CWE-306`, `CWE-912` | yes | yes | - |
 | `NODE-BACKDOOR-DORMANT-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_dormant_activation_trigger` | `CWE-912`, `CWE-863` | yes | yes | - |
 | `NODE-BACKDOOR-MAGIC-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_hidden_backdoor` | `CWE-912`, `CWE-798` | yes | yes | - |
@@ -133,7 +133,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `NODE-CALLHOME-BEACON-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_periodic_beacon` | `CWE-201`, `CWE-912` | yes | yes | - |
 | `NODE-CALLHOME-LICENSE-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_call_home_activation` | `CWE-201`, `CWE-912` | yes | yes | - |
 | `NODE-CALLHOME-TELEMETRY-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_call_home_beacon` | `CWE-201`, `CWE-912` | yes | yes | - |
-| `NODE-CALLHOME-UPDATE-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_update_check_overdisclosure` | `CWE-201`, `CWE-912` | yes | yes | - |
+| `NODE-CALLHOME-UPDATE-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_update_check_overdisclosure` | `CWE-201`, `CWE-912` | yes | yes | `adversarial-non-cve-trust-boundary-laundering` |
 | `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `adversarial-non-cve-missing-case-boundary`, `adversarial-non-cve-missing-sections`, `high-risk-non-cve-remediation-smoke` |
 | `NODE-COOKIE-001` | JavaScript / Node.js | `nodejs` | `insecure_cookie` | `CWE-614`, `CWE-1004`, `CWE-1275` | yes | yes | - |
 | `NODE-CORS-001` | JavaScript / Node.js | `nodejs` | `cors_misconfiguration` | `CWE-942`, `CWE-346` | yes | yes | - |

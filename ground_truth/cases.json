@@ -903,6 +903,196 @@
       ],
       "false_positive_boundary": "unreachable pair compiles only vetted templates with fixed variable name.",
       "fixed_file": "fixed/CVE-LODASH-TEMPLATE-UNLISTED-001/fixed_lodash_template_cve_2021_23337.js"
+    },
+    {
+      "id": "JS-OPENREDIR-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "open_redirect",
+      "cwe": [
+        "CWE-601"
+      ],
+      "reachable_file": "cases/javascript/src/reachable_open_redirect.js",
+      "unreachable_file": "cases/javascript/src/unreachable_open_redirect.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "request.query.next -> res.redirect",
+      "expected_remediation": "Allow only local relative redirects or explicitly approved return URLs.",
+      "expected_tests": [
+        "external URL rejected",
+        "protocol-relative URL rejected",
+        "local return path accepted"
+      ],
+      "false_positive_boundary": "unreachable_open_redirect.js keeps unsafe-looking retired redirect code unexported and validates the exported path.",
+      "fixed_file": "fixed/JS-OPENREDIR-001/fixed_open_redirect.js"
+    },
+    {
+      "id": "JAVA-LDAP-001",
+      "ecosystem": "java",
+      "language": "Java",
+      "defect_class": "ldap_injection",
+      "cwe": [
+        "CWE-90"
+      ],
+      "reachable_file": "cases/java/src/ReachableLdapInjection.java",
+      "unreachable_file": "cases/java/src/UnreachableLdapInjection.java",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "username -> LDAP filter string concatenation -> directory.search",
+      "expected_remediation": "Escape LDAP filter metacharacters and keep filter structure application-controlled.",
+      "expected_tests": [
+        "asterisk payload escaped",
+        "parenthesis payload escaped",
+        "normal username still searches"
+      ],
+      "false_positive_boundary": "UnreachableLdapInjection.java keeps the unsafe helper private and escapes input in the exported lookup.",
+      "fixed_file": "fixed/JAVA-LDAP-001/FixedLdapInjection.java"
+    },
+    {
+      "id": "JS-TEMPLATE-001",
+      "ecosystem": "javascript",
+      "language": "JavaScript",
+      "defect_class": "template_expression_injection",
+      "cwe": [
+        "CWE-94",
+        "CWE-1336"
+      ],
+      "reachable_file": "cases/javascript/src/reachable_template_injection.js",
+      "unreachable_file": "cases/javascript/src/unreachable_template_injection.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "template parameter -> new Function template compilation",
+      "expected_remediation": "Use vetted template identifiers and encode untrusted values instead of compiling attacker-controlled template source.",
+      "expected_tests": [
+        "unknown template rejected",
+        "expression payload not executed",
+        "known template renders encoded data"
+      ],
+      "false_positive_boundary": "unreachable_template_injection.js has a retired compiler helper but exported rendering selects vetted templates only.",
+      "fixed_file": "fixed/JS-TEMPLATE-001/fixed_template_injection.js"
+    },
+    {
+      "id": "NODE-NOSQL-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "nosql_injection",
+      "cwe": [
+        "CWE-943"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_nosql_injection.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_nosql_injection.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "request body email/password -> Mongo-style findOne query object",
+      "expected_remediation": "Validate credential fields as strings and reject operator objects before building database predicates.",
+      "expected_tests": [
+        "$ne password object rejected",
+        "object email rejected",
+        "normal login lookup still works"
+      ],
+      "false_positive_boundary": "unreachable_nosql_injection.js keeps unsafe raw-object query in a retired helper and validates exported credentials.",
+      "fixed_file": "fixed/NODE-NOSQL-001/fixed_nosql_injection.js"
+    },
+    {
+      "id": "NODE-COOKIE-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "insecure_cookie",
+      "cwe": [
+        "CWE-614",
+        "CWE-1004",
+        "CWE-1275"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_insecure_cookie.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_insecure_cookie.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "session id -> res.cookie without HttpOnly/Secure/SameSite protection",
+      "expected_remediation": "Set session cookies with HttpOnly, Secure, and an appropriate SameSite policy.",
+      "expected_tests": [
+        "cookie has HttpOnly",
+        "cookie has Secure",
+        "cookie has SameSite lax or strict"
+      ],
+      "false_positive_boundary": "unreachable_insecure_cookie.js keeps the insecure settings in a retired helper and exports secure cookie issuance.",
+      "fixed_file": "fixed/NODE-COOKIE-001/fixed_insecure_cookie.js"
+    },
+    {
+      "id": "NODE-CORS-001",
+      "ecosystem": "nodejs",
+      "language": "JavaScript / Node.js",
+      "defect_class": "cors_misconfiguration",
+      "cwe": [
+        "CWE-942",
+        "CWE-346"
+      ],
+      "reachable_file": "cases/nodejs/src/reachable_cors_misconfiguration.js",
+      "unreachable_file": "cases/nodejs/src/unreachable_cors_misconfiguration.js",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "medium",
+      "data_flow": "Origin header -> Access-Control-Allow-Origin reflection with credentials",
+      "expected_remediation": "Allow only approved origins and do not combine arbitrary origin reflection with credentials.",
+      "expected_tests": [
+        "approved origin allowed",
+        "unapproved origin omitted",
+        "wildcard plus credentials never emitted"
+      ],
+      "false_positive_boundary": "unreachable_cors_misconfiguration.js keeps reflective CORS in a retired helper and exports allowlisted CORS only.",
+      "fixed_file": "fixed/NODE-CORS-001/fixed_cors_misconfiguration.js"
+    },
+    {
+      "id": "PY-CRYPTO-001",
+      "ecosystem": "python",
+      "language": "Python",
+      "defect_class": "broken_crypto",
+      "cwe": [
+        "CWE-327",
+        "CWE-916"
+      ],
+      "reachable_file": "cases/python/src/reachable_broken_crypto.py",
+      "unreachable_file": "cases/python/src/unreachable_broken_crypto.py",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "password -> hashlib.md5 digest",
+      "expected_remediation": "Use a slow salted password hashing construction such as PBKDF2-HMAC-SHA256 with policy-approved iterations.",
+      "expected_tests": [
+        "md5 no longer used",
+        "same salt verifies deterministically",
+        "different salts produce different digests"
+      ],
+      "false_positive_boundary": "unreachable_broken_crypto.py keeps MD5 only in a retired helper and exports PBKDF2-HMAC-SHA256.",
+      "fixed_file": "fixed/PY-CRYPTO-001/fixed_broken_crypto.py"
+    },
+    {
+      "id": "CLOUD-IAM-001",
+      "ecosystem": "cloud",
+      "language": "Cloud policy JSON",
+      "defect_class": "overbroad_iam_policy",
+      "cwe": [
+        "CWE-266",
+        "CWE-732"
+      ],
+      "reachable_file": "cases/cloud/src/reachable_overbroad_iam_policy.json",
+      "unreachable_file": "cases/cloud/src/unreachable_overbroad_iam_policy.json",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "application role policy -> Allow Action * on Resource *",
+      "expected_remediation": "Replace wildcard allow permissions with least-privilege actions and scoped resources.",
+      "expected_tests": [
+        "allow statement has no Action wildcard",
+        "allow statement has no Resource wildcard",
+        "required S3 object actions remain scoped"
+      ],
+      "false_positive_boundary": "unreachable_overbroad_iam_policy.json contains a deny-only wildcard retired statement and scoped allow permissions.",
+      "fixed_file": "fixed/CLOUD-IAM-001/fixed_overbroad_iam_policy.json"
     }
   ]
 }

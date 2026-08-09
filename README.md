@@ -79,6 +79,14 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | JavaScript | `CVE-LODASH-PP-001` | listed `CVE-2019-10744` requiring fix-in-place to avoid breaking downstream lodash-3 API users | reachable + unreachable + fixed |
 | JavaScript | `CVE-JQUERY-HTML-001` | listed `CVE-2020-11023` requiring fix-in-place to avoid breaking legacy GUI plugin APIs | reachable + unreachable + fixed |
 | JavaScript | `CVE-LODASH-TEMPLATE-UNLISTED-001` | unlisted `CVE-2021-23337` that should be discovered opportunistically | reachable + unreachable + fixed |
+| JavaScript | `JS-OPENREDIR-001` | open redirect | reachable + unreachable + fixed |
+| Java | `JAVA-LDAP-001` | LDAP injection | reachable + unreachable + fixed |
+| JavaScript | `JS-TEMPLATE-001` | template / expression injection | reachable + unreachable + fixed |
+| Node.js | `NODE-NOSQL-001` | NoSQL injection | reachable + unreachable + fixed |
+| Node.js | `NODE-COOKIE-001` | insecure session cookie flags | reachable + unreachable + fixed |
+| Node.js | `NODE-CORS-001` | credentialed CORS origin reflection | reachable + unreachable + fixed |
+| Python | `PY-CRYPTO-001` | broken password hashing crypto | reachable + unreachable + fixed |
+| Cloud config | `CLOUD-IAM-001` | overbroad IAM policy | reachable + unreachable + fixed |
 
 ## Validation
 

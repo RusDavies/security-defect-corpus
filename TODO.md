@@ -10,7 +10,7 @@
 
 - [x] Add broader defect-class families: SSRF, CSRF, deserialization, use-after-free, double free, integer overflow, format string, hardcoded secrets, weak randomness, unsafe archive extraction, public bucket/IAM misconfiguration, race/TOCTOU, and sensitive-data logging.
 - [ ] Add remaining broader defect-class families and variants: open redirect, LDAP injection, template/expression-language injection, NoSQL injection, privilege escalation, confused deputy, insecure cookies, CORS mistakes, broken crypto, key exposure, overbroad IAM role policies, and framework-specific variants.
-- [ ] Add first-class cases for open redirect, LDAP injection, template/expression-language injection, NoSQL injection, insecure cookies, CORS misconfiguration, broken crypto, and overbroad IAM policy.
+- [x] Add first-class cases for open redirect, LDAP injection, template/expression-language injection, NoSQL injection, insecure cookies, CORS misconfiguration, broken crypto, and overbroad IAM policy.
 
 - [ ] Add deeper language-specific runnable regression tests for fixed-version fixtures once fixed versions exist.
 

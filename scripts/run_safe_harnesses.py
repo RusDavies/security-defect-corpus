@@ -346,6 +346,78 @@ def _(case):
     ]
 
 
+@check_case("JS-OPENREDIR-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-redirect-user-next", "res.redirect(next)" in reach and "req.query.next" in reach and "startsWith" not in reach),
+        result(case["id"], "safe-pair-local-redirect-only", "startsWith('/')" in safe and "startsWith('//')" in safe and "retiredRedirect" in safe),
+    ]
+
+
+@check_case("JAVA-LDAP-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-ldap-filter-concat", '(uid=" + username' in reach and "replace" not in reach),
+        result(case["id"], "safe-pair-escapes-ldap-filter", "\\\\2a" in safe and "\\\\28" in safe and "\\\\29" in safe),
+    ]
+
+
+@check_case("JS-TEMPLATE-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-new-function-template", "new Function" in reach and "template" in reach),
+        result(case["id"], "safe-pair-vetted-template-id", "templates[templateId]" in safe and "unknown template id" in safe and "module.exports = { renderMessage }" in safe),
+    ]
+
+
+@check_case("NODE-NOSQL-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-raw-body-query", "email: req.body.email" in reach and "password: req.body.password" in reach),
+        result(case["id"], "safe-pair-string-credential-validation", "typeof req.body.email !== 'string'" in safe and "passwordHash" in safe),
+    ]
+
+
+@check_case("NODE-COOKIE-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-insecure-cookie-flags", "httpOnly: false" in reach and "secure: false" in reach and "sameSite: 'none'" in reach),
+        result(case["id"], "safe-pair-secure-cookie-flags", "httpOnly: true" in safe and "secure: true" in safe and "sameSite: 'lax'" in safe),
+    ]
+
+
+@check_case("NODE-CORS-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-reflects-origin-with-credentials", "req.headers.origin || '*'" in reach and "Access-Control-Allow-Credentials" in reach),
+        result(case["id"], "safe-pair-origin-allowlist", "ALLOWED_ORIGINS" in safe and "ALLOWED_ORIGINS.has(origin)" in safe),
+    ]
+
+
+@check_case("PY-CRYPTO-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-md5-password-digest", "hashlib.md5" in reach),
+        result(case["id"], "safe-pair-pbkdf2-hmac", "pbkdf2_hmac" in safe and "sha256" in safe),
+    ]
+
+
+@check_case("CLOUD-IAM-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    return [
+        result(case["id"], "reachable-allow-star-star", '"Effect": "Allow"' in reach and '"Action": "*"' in reach and '"Resource": "*"' in reach),
+        result(case["id"], "safe-pair-scoped-allow", '"s3:GetObject"' in safe and '"s3:PutObject"' in safe and "arn:aws:s3:::example-app-bucket/*" in safe),
+    ]
+
+
 @check_case("CVE-LODASH-PP-001")
 def _(case):
     reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])

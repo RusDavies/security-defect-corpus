@@ -9,8 +9,8 @@
     "heldout_mutation": "Held-out claims should use transformed variants following the listed mutation axes instead of exact fixture memorization."
   },
   "split_counts": {
-    "development": 44,
-    "heldout": 7,
+    "development": 47,
+    "heldout": 10,
     "validation": 16
   },
   "assignments": [
@@ -213,6 +213,13 @@
       "mutation_required": false
     },
     {
+      "case_id": "GO-TEMPLATE-XSS-001",
+      "split": "development",
+      "defect_class": "go_template_xss",
+      "ecosystem": "go",
+      "mutation_required": false
+    },
+    {
       "case_id": "JAVA-BIDI-001",
       "split": "development",
       "defect_class": "unicode_bidi_filename_deception",
@@ -310,6 +317,13 @@
       "split": "development",
       "defect_class": "cross_site_scripting",
       "ecosystem": "javascript",
+      "mutation_required": false
+    },
+    {
+      "case_id": "KOTLIN-JWT-NONE-001",
+      "split": "development",
+      "defect_class": "kotlin_jwt_none_acceptance",
+      "ecosystem": "kotlin",
       "mutation_required": false
     },
     {
@@ -498,6 +512,13 @@
       "mutation_required": false
     },
     {
+      "case_id": "PHP-LOOSE-AUTH-001",
+      "split": "development",
+      "defect_class": "php_loose_comparison_auth_bypass",
+      "ecosystem": "php",
+      "mutation_required": false
+    },
+    {
       "case_id": "PY-CRYPTO-001",
       "split": "development",
       "defect_class": "broken_crypto",
@@ -510,6 +531,51 @@
       "defect_class": "unexpected_import_time_network",
       "ecosystem": "python",
       "mutation_required": false
+    },
+    {
+      "case_id": "PY-PICKLE-DESER-001",
+      "split": "heldout",
+      "defect_class": "python_pickle_deserialization",
+      "ecosystem": "python",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "RUBY-YAML-DESER-001",
+      "split": "heldout",
+      "defect_class": "ruby_yaml_deserialization",
+      "ecosystem": "ruby",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
+    },
+    {
+      "case_id": "RUST-PATH-TRAVERSAL-001",
+      "split": "heldout",
+      "defect_class": "rust_path_traversal",
+      "ecosystem": "rust",
+      "mutation_required": true,
+      "mutation_axes": [
+        "rename identifiers and files",
+        "replace literals and hostnames",
+        "reshape control flow without changing reachability",
+        "move the defect behind a small framework/app slice",
+        "rewrite prompt and requirement wording",
+        "preserve vulnerable, safe-pair, and fixed behavioral boundaries"
+      ]
     },
     {
       "case_id": "TS-IDOR-001",

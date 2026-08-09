@@ -2044,6 +2044,146 @@
       ],
       "false_positive_boundary": "UnreachableInvoiceAuthorization.cs keeps admin deletion retired and checks OwnerUserId before repository deletion.",
       "fixed_file": "fixed/APP-DOTNET-AUTHZ-001/FixedInvoiceAuthorization.cs"
+    },
+    {
+      "id": "PY-PICKLE-DESER-001",
+      "ecosystem": "python",
+      "language": "Python",
+      "defect_class": "python_pickle_deserialization",
+      "cwe": [
+        "CWE-502"
+      ],
+      "reachable_file": "cases/python/src/reachable_pickle_deserialization.py",
+      "unreachable_file": "cases/python/src/unreachable_pickle_deserialization.py",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "untrusted bytes -> pickle.loads -> object construction",
+      "expected_remediation": "Replace pickle deserialization of untrusted bytes with a data-only parser and validate the decoded profile shape.",
+      "expected_tests": [
+        "pickle payload is not deserialized",
+        "JSON object profile is accepted",
+        "non-object JSON is rejected"
+      ],
+      "false_positive_boundary": "unreachable_pickle_deserialization.py keeps pickle.loads in a retired helper and exports a JSON object loader.",
+      "fixed_file": "fixed/PY-PICKLE-DESER-001/fixed_pickle_deserialization.py"
+    },
+    {
+      "id": "GO-TEMPLATE-XSS-001",
+      "ecosystem": "go",
+      "language": "Go",
+      "defect_class": "go_template_xss",
+      "cwe": [
+        "CWE-79"
+      ],
+      "reachable_file": "cases/go/src/reachable_template_xss.go",
+      "unreachable_file": "cases/go/src/unreachable_template_xss.go",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "author string -> text/template HTML construction -> response body",
+      "expected_remediation": "Use html/template and pass user values as data instead of concatenating them into HTML template source.",
+      "expected_tests": [
+        "script author is HTML-escaped",
+        "ordinary author renders",
+        "text/template absent from fixed public path"
+      ],
+      "false_positive_boundary": "unreachable_template_xss.go keeps text/template concatenation retired and exports html/template rendering.",
+      "fixed_file": "fixed/GO-TEMPLATE-XSS-001/fixed_template_xss.go"
+    },
+    {
+      "id": "PHP-LOOSE-AUTH-001",
+      "ecosystem": "php",
+      "language": "PHP",
+      "defect_class": "php_loose_comparison_auth_bypass",
+      "cwe": [
+        "CWE-287",
+        "CWE-697"
+      ],
+      "reachable_file": "cases/php/src/reachable_loose_auth.php",
+      "unreachable_file": "cases/php/src/unreachable_loose_auth.php",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "provided token -> loose equality -> authorization decision",
+      "expected_remediation": "Require string tokens and compare them with hash_equals instead of loose equality.",
+      "expected_tests": [
+        "0e token confusion rejected",
+        "exact string token accepted",
+        "non-string token rejected"
+      ],
+      "false_positive_boundary": "unreachable_loose_auth.php keeps loose equality retired and exports string-only hash_equals comparison.",
+      "fixed_file": "fixed/PHP-LOOSE-AUTH-001/fixed_loose_auth.php"
+    },
+    {
+      "id": "RUBY-YAML-DESER-001",
+      "ecosystem": "ruby",
+      "language": "Ruby",
+      "defect_class": "ruby_yaml_deserialization",
+      "cwe": [
+        "CWE-502"
+      ],
+      "reachable_file": "cases/ruby/src/reachable_yaml_deserialization.rb",
+      "unreachable_file": "cases/ruby/src/unreachable_yaml_deserialization.rb",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "YAML payload -> YAML.load -> object deserialization",
+      "expected_remediation": "Use YAML.safe_load with no arbitrary permitted classes and aliases disabled for untrusted job payloads.",
+      "expected_tests": [
+        "object YAML rejected",
+        "ordinary job YAML accepted",
+        "aliases disabled"
+      ],
+      "false_positive_boundary": "unreachable_yaml_deserialization.rb keeps YAML.load retired and exports YAML.safe_load.",
+      "fixed_file": "fixed/RUBY-YAML-DESER-001/fixed_yaml_deserialization.rb"
+    },
+    {
+      "id": "RUST-PATH-TRAVERSAL-001",
+      "ecosystem": "rust",
+      "language": "Rust",
+      "defect_class": "rust_path_traversal",
+      "cwe": [
+        "CWE-22"
+      ],
+      "reachable_file": "cases/rust/src/reachable_path_traversal.rs",
+      "unreachable_file": "cases/rust/src/unreachable_path_traversal.rs",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "high",
+      "data_flow": "requested report path -> PathBuf::join -> filesystem path",
+      "expected_remediation": "Reject parent, root, and prefix path components before joining user input under the reports directory.",
+      "expected_tests": [
+        "parent traversal rejected",
+        "absolute path rejected",
+        "ordinary report filename accepted"
+      ],
+      "false_positive_boundary": "unreachable_path_traversal.rs keeps raw join retired and exports component validation before join.",
+      "fixed_file": "fixed/RUST-PATH-TRAVERSAL-001/fixed_path_traversal.rs"
+    },
+    {
+      "id": "KOTLIN-JWT-NONE-001",
+      "ecosystem": "kotlin",
+      "language": "Kotlin",
+      "defect_class": "kotlin_jwt_none_acceptance",
+      "cwe": [
+        "CWE-347",
+        "CWE-287"
+      ],
+      "reachable_file": "cases/kotlin/src/ReachableJwtNone.kt",
+      "unreachable_file": "cases/kotlin/src/UnreachableJwtNone.kt",
+      "reachable": true,
+      "unreachable_pair": true,
+      "expected_severity": "critical",
+      "data_flow": "JWT header alg -> none bypass -> claims returned without verification",
+      "expected_remediation": "Reject unsigned alg=none tokens and require trusted signature verification before returning claims.",
+      "expected_tests": [
+        "alg none rejected",
+        "invalid signature rejected",
+        "valid signed token returns claims"
+      ],
+      "false_positive_boundary": "UnreachableJwtNone.kt keeps alg=none acceptance retired and exports verifier-backed token handling.",
+      "fixed_file": "fixed/KOTLIN-JWT-NONE-001/FixedJwtNone.kt"
     }
   ]
 }

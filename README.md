@@ -142,6 +142,8 @@ This corpus supports the security-defect remediation prompt pack in `docs-manage
 
 The baseline corpus now includes a broader first pass across language families and defect classes, but should continue expanding toward deeper variants and framework-specific cases.
 
+Standalone language-family coverage now includes Python, Go, PHP, Ruby, Rust, and Kotlin fixtures in addition to the earlier JavaScript, TypeScript, Node.js, C, C++, C#, Java, cloud, and dependency-simulation cases. These language-family fixtures focus on idiomatic risky APIs such as unsafe deserialization, template escaping, loose comparison, path joining, and unsigned-token acceptance.
+
 The corpus also includes framework-shaped app slices so agents must reason about routed handlers, request context, framework idioms, and retired helper boundaries instead of only single-file toy sinks. Current app-slice coverage includes Express SSRF, Flask-style IDOR, Spring-style mass assignment, Go `net/http` open redirect, Rails-style SQL injection, Laravel-style upload path traversal, and .NET API missing authorization. These fixtures stay deliberately small and dependency-light so harness validation remains safe, local, and reproducible.
 
 Priority defect classes to add:

@@ -526,6 +526,54 @@ def _(case):
     ]
 
 
+@check_case("NODE-COVERT-CONFIG-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-remote-policy-control", "https://control.example.invalid/policy" in reach and "disableTransferLimits" in reach),
+        result(case["id"], "safe-pair-retired-remote-policy-only", "retiredRemotePolicy" in safe and "module.exports = { authorizeTransfer }" in safe),
+        result(case["id"], "fixed-local-policy-only", "control.example.invalid" not in fixed and "localPolicy.canTransfer" in fixed),
+        result(case["id"], "metadata-covert-control", "covert_command_control" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-COVERT-SCRIPT-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-fetched-script-eval", "https://rules.example.invalid/pricing.js" in reach and "eval(source)" in reach),
+        result(case["id"], "safe-pair-retired-remote-script-only", "retiredRemoteScript" in safe and "module.exports = { loadPricingRule }" in safe),
+        result(case["id"], "fixed-local-pricing-only", "https" not in fixed and "eval(" not in fixed and "discountPercent" in fixed),
+        result(case["id"], "metadata-covert-control", "covert_command_control" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-COVERT-FLAG-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-remote-flag-privilege", "remoteFlags.isEnabled('support_impersonation_override')" in reach),
+        result(case["id"], "safe-pair-retired-remote-flag-only", "retiredRemoteFlag" in safe and "module.exports = { canImpersonate }" in safe),
+        result(case["id"], "fixed-role-only", "remoteFlags" not in fixed and "support-admin" in fixed),
+        result(case["id"], "metadata-covert-control", "covert_command_control" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
+@check_case("NODE-COVERT-PAYLOAD-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-unverified-signed-looking-payload", "signed-by-control-plane" in reach and "allowCrossTenantRefunds" in reach and "verifier.verify" not in reach),
+        result(case["id"], "safe-pair-verifier-backed", "retiredPolicyOverride" in safe and "verifier.verify(payload)" in safe),
+        result(case["id"], "fixed-verifies-policy-override", "verifier.verify(payload)" in fixed and "allowCrossTenantRefunds" not in fixed),
+        result(case["id"], "metadata-covert-control", "covert_command_control" in case.get("capability_envelope", {}).get("subtypes", [])),
+    ]
+
+
 @check_case("CVE-LODASH-PP-001")
 def _(case):
     reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])

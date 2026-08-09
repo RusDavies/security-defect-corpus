@@ -4,13 +4,13 @@ Generated from `ground_truth/cases.json` by `scripts/generate_coverage_matrix.py
 
 ## Summary
 
-- Cases: 56
+- Cases: 60
 - Ecosystems: 11
 - Languages: 12
-- Defect classes: 53
-- Pattern-harnessed cases: 56/56
-- Fixed-fixture coverage: 56/56
-- Evidence-packet coverage: 11/56
+- Defect classes: 55
+- Pattern-harnessed cases: 60/60
+- Fixed-fixture coverage: 60/60
+- Evidence-packet coverage: 11/60
 
 Evidence-packet coverage counts structured `case_id` entries in `remediation-evidence.json` files.
 
@@ -26,7 +26,7 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `go` | 1 |
 | `java` | 7 |
 | `javascript` | 8 |
-| `nodejs` | 19 |
+| `nodejs` | 23 |
 | `python` | 2 |
 | `typescript` | 4 |
 
@@ -65,11 +65,13 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `stack_buffer_overflow` | 1 |
 | `surplus_capability_call_home_activation` | 1 |
 | `surplus_capability_call_home_beacon` | 1 |
+| `surplus_capability_covert_command_control` | 3 |
 | `surplus_capability_dormant_activation_trigger` | 1 |
 | `surplus_capability_hardcoded_operator_key` | 1 |
 | `surplus_capability_hidden_backdoor` | 2 |
 | `surplus_capability_hidden_network_surface` | 1 |
 | `surplus_capability_periodic_beacon` | 1 |
+| `surplus_capability_untrusted_control_payload` | 1 |
 | `surplus_capability_update_check_overdisclosure` | 1 |
 | `template_expression_injection` | 1 |
 | `time_of_check_time_of_use` | 1 |
@@ -135,6 +137,10 @@ Evidence-packet coverage counts structured `case_id` entries in `remediation-evi
 | `NODE-CMD-001` | JavaScript / Node.js | `nodejs` | `command_injection` | `CWE-78` | yes | yes | `adversarial-non-cve-missing-case-boundary`, `adversarial-non-cve-missing-sections`, `high-risk-non-cve-remediation-smoke` |
 | `NODE-COOKIE-001` | JavaScript / Node.js | `nodejs` | `insecure_cookie` | `CWE-614`, `CWE-1004`, `CWE-1275` | yes | yes | - |
 | `NODE-CORS-001` | JavaScript / Node.js | `nodejs` | `cors_misconfiguration` | `CWE-942`, `CWE-346` | yes | yes | - |
+| `NODE-COVERT-CONFIG-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_covert_command_control` | `CWE-912`, `CWE-15` | yes | yes | - |
+| `NODE-COVERT-FLAG-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_covert_command_control` | `CWE-862`, `CWE-912` | yes | yes | - |
+| `NODE-COVERT-PAYLOAD-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_untrusted_control_payload` | `CWE-345`, `CWE-863` | yes | yes | - |
+| `NODE-COVERT-SCRIPT-001` | JavaScript / Node.js | `nodejs` | `surplus_capability_covert_command_control` | `CWE-94`, `CWE-912` | yes | yes | - |
 | `NODE-CRLF-001` | JavaScript / Node.js | `nodejs` | `crlf_header_injection` | `CWE-93`, `CWE-113` | yes | yes | - |
 | `NODE-INSTALL-NET-001` | JavaScript / Node.js | `nodejs` | `unexpected_install_time_network` | `CWE-913`, `CWE-200` | yes | yes | - |
 | `NODE-LOG-001` | JavaScript / Node.js | `nodejs` | `sensitive_data_logging` | `CWE-532` | yes | yes | - |

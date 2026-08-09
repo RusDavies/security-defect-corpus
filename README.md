@@ -99,6 +99,10 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 | Node.js | `NODE-CALLHOME-LICENSE-001` | surplus capability / license activation callback | reachable + unreachable + fixed |
 | Node.js | `NODE-CALLHOME-BEACON-001` | surplus capability / periodic worker beacon | reachable + unreachable + fixed |
 | Node.js | `NODE-CALLHOME-UPDATE-001` | surplus capability / update-check over-disclosure | reachable + unreachable + fixed |
+| Node.js | `NODE-COVERT-CONFIG-001` | surplus capability / remote policy control | reachable + unreachable + fixed |
+| Node.js | `NODE-COVERT-SCRIPT-001` | surplus capability / fetched script control | reachable + unreachable + fixed |
+| Node.js | `NODE-COVERT-FLAG-001` | surplus capability / remote feature-flag privilege control | reachable + unreachable + fixed |
+| Node.js | `NODE-COVERT-PAYLOAD-001` | surplus capability / unverified signed-looking control payload | reachable + unreachable + fixed |
 
 ## Validation
 

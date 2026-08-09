@@ -59,12 +59,12 @@
 
 - [x] Move CVE packet suite discovery to scan packet directories dynamically once additional suites exist, instead of keeping the packet directory list in Python.
 
-- [ ] Epic: harden the corpus from workflow-validation fixture set into a harder-to-game benchmark, with mutation, end-to-end scoring, stronger adversarial controls, richer scenario coverage, and honest reporting guidance.
-  - [ ] Add held-out mutation/generation tooling that can rename files and identifiers, replace literals and hostnames, reshape control flow, swap small framework surfaces, rewrite prompt/requirement wording, and preserve vulnerable/safe/fixed reachability boundaries.
-  - [ ] Add an end-to-end benchmark runner that accepts an agent or scanner output directory and emits one scored report covering discovery, reachability, exploitability, repair quality, tests, evidence, residual risk, approval gates, false positives, and reproducibility.
-  - [ ] Expand adversarial evidence packets for bad-but-plausible reports: fabricated tests, ignored unreachable pairs, cosmetic fixes, unsafe allowlists, secret-rotation hand-waving, README/config trust-boundary laundering, and compatibility-breaking repairs.
-  - [ ] Add next-tier multi-file app slices with route, middleware, config, model/storage, and test files so agents must trace realistic context instead of single-file sinks.
-  - [ ] Strengthen fixed-fixture regression coverage beyond the current dedicated fixed tests, prioritizing language-native tests for JavaScript/TypeScript, Python, Go, Ruby, Java, C#, C, and C++ cases where execution can remain safe and local.
-  - [ ] Add operational-domain scenario packs for cloud/IaC/Kubernetes, CI/CD supply chain, auth/OAuth/SAML, mobile/client-side storage, data privacy/retention, and queue/event-driven systems.
-  - [ ] Add metadata quality checks for exploit preconditions, attacker position, trust boundary, data sensitivity, production likelihood, approval gate, blast radius, and likely false-positive traps.
-  - [ ] Add public benchmark documentation with run instructions, honest result-reporting rules, example scored runs, contamination/tuning disclaimers, and invalid-claim examples.
+- [x] Epic: harden the corpus from workflow-validation fixture set into a harder-to-game benchmark, with mutation, end-to-end scoring, stronger adversarial controls, richer scenario coverage, and honest reporting guidance.
+  - [x] Add held-out mutation/generation tooling that can rename files and identifiers, replace literals and hostnames, reshape control flow, swap small framework surfaces, rewrite prompt/requirement wording, and preserve vulnerable/safe/fixed reachability boundaries.
+  - [x] Add an end-to-end benchmark runner that accepts an agent or scanner output directory and emits one scored report covering discovery, reachability, exploitability, repair quality, tests, evidence, residual risk, approval gates, false positives, and reproducibility.
+  - [x] Expand adversarial evidence packets for bad-but-plausible reports: fabricated tests, ignored unreachable pairs, cosmetic fixes, unsafe allowlists, secret-rotation hand-waving, README/config trust-boundary laundering, and compatibility-breaking repairs.
+  - [x] Add next-tier multi-file app slices with route, middleware, config, model/storage, and test files so agents must trace realistic context instead of single-file sinks.
+  - [x] Strengthen fixed-fixture regression coverage beyond the current dedicated fixed tests, prioritizing language-native tests for JavaScript/TypeScript, Python, Go, Ruby, Java, C#, C, and C++ cases where execution can remain safe and local.
+  - [x] Add operational-domain scenario packs for cloud/IaC/Kubernetes, CI/CD supply chain, auth/OAuth/SAML, mobile/client-side storage, data privacy/retention, and queue/event-driven systems.
+  - [x] Add metadata quality checks for exploit preconditions, attacker position, trust boundary, data sensitivity, production likelihood, approval gate, blast radius, and likely false-positive traps.
+  - [x] Add public benchmark documentation with run instructions, honest result-reporting rules, example scored runs, contamination/tuning disclaimers, and invalid-claim examples.

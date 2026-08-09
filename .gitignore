@@ -9,6 +9,9 @@ scoring-results/*.json
 cve-evaluation-results/*.json
 evidence-evaluation-results/*.json
 evidence-packets/**/score-results.json
+benchmark-results/*.json
+benchmark-runs/
+mutation-variants/generated/
 
 # Local candidate repairs are scratch input unless deliberately promoted.
 candidate-repairs/*

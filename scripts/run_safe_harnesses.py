@@ -874,6 +874,18 @@ def _(case):
     ]
 
 
+@check_case("APP-EXPRESS-MULTIFILE-AUTHZ-001")
+def _(case):
+    reach, safe = read(case["reachable_file"]), read(case["unreachable_file"])
+    fixed = read(case["fixed_file"])
+    return [
+        result(case["id"], "reachable-route-returns-order-without-owner-check", "app.get('/orders/:orderId'" in reach and "res.json(order)" in reach and "accountId !== req.user.accountId" not in reach),
+        result(case["id"], "safe-pair-route-checks-owner", "retiredAdminOrderLookup" in safe and "order.accountId !== req.user.accountId" in safe),
+        result(case["id"], "fixed-route-checks-owner-before-json", "order.accountId !== req.user.accountId" in fixed and fixed.find("accountId") < fixed.find("res.json(order)")),
+        result(case["id"], "metadata-quality-present", bool(case.get("quality_metadata", {}).get("attacker_position"))),
+    ]
+
+
 def structural_checks(case: dict) -> list[CheckResult]:
     case_id = case["id"]
     checks = []

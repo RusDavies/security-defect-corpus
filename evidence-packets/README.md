@@ -21,6 +21,7 @@ Committed packet examples:
 - `known-good-*` and `cve-list-known-good-*` — completed worked examples for known-good remediation runs.
 - `high-risk-non-cve-remediation-smoke/` — known-good remediation evidence packet for representative high-risk source defects.
 - `adversarial-non-cve-quality-*` — negative controls for remediation-quality scoring failures.
+- `adversarial-non-cve-fabricated-tests-and-unsafe-claims/` — negative control for fabricated tests, ignored safe-pair boundaries, and secret-exposure hand-waving.
 - `adversarial-non-cve-trust-boundary-laundering/` — negative control for surplus-capability evidence that accepts repo-local self-justification as authoritative permission.
 - `cve-list-*` — positive and negative controls for scanner-listed CVE handling.
 

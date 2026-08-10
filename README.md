@@ -23,6 +23,7 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
 - `docs/benchmarking.md` — benchmark run flow, mutation guidance, honest reporting rules, and invalid-claim examples.
 - `docs/scenario-packs.md` — planned operational-domain scenario pack coverage.
+- `docs/product-compatibility.md` — stable product paths, commands, and generated-output locations for downstream consumers.
 - `scenario-packs/operational-domain-packs.json` — machine-readable scenario pack backlog for future operational-domain fixture families.
 - `docs/surplus-capability-taxonomy.md` — taxonomy and metadata shape for backdoors, call-home behavior, covert control, and other unauthorized surplus capability cases.
 - `evaluation-splits/case-splits.json` — deterministic development, validation, and held-out split manifest with mutation requirements for contamination-aware evaluation.
@@ -136,6 +137,9 @@ python3 scripts/validate_metadata_quality.py
 python3 scripts/generate_evaluation_splits.py --check
 python3 scripts/generate_coverage_matrix.py --check
 ```
+
+See `docs/product-compatibility.md` before renaming product scripts, fixture
+trees, or generated-output locations.
 
 Structural validation only:
 

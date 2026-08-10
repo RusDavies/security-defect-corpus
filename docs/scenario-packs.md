@@ -1,7 +1,7 @@
 # Scenario Packs
 
-Scenario packs group future fixtures by operational domain so benchmark coverage
-does not become a flat list of isolated sinks.
+Scenario packs group candidate fixture themes by operational domain so benchmark
+coverage does not become a flat list of isolated sinks.
 
 ## Cloud / IaC / Kubernetes
 
@@ -51,6 +51,7 @@ does not become a flat list of isolated sinks.
 - poison-message handling that logs secrets
 - dead-letter replay without authorization context
 
-Each pack should include reachable, unreachable/safe-pair, fixed, expected
+A complete pack shape includes reachable, unreachable/safe-pair, fixed, expected
 remediation, metadata-quality, evidence-packet, and benchmark-report examples
-where practical.
+where practical. Candidate scenarios are taxonomy metadata, not a delivery
+schedule.

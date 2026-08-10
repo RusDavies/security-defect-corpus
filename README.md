@@ -18,13 +18,14 @@ This repo intentionally contains vulnerable examples. They are toy fixtures, not
 - `cases/<language-or-ecosystem>/src/` — source fixtures.
 - `ground_truth/cases.json` — canonical case metadata and expected findings.
 - `docs/coverage-matrix.md` — generated case coverage matrix by language, ecosystem, defect class, CWE, harness support, fixed fixture coverage, and evidence packet coverage.
+- `docs/current-capabilities.md` — descriptive snapshot of the corpus surface that exists now.
 - `docs/benchmark-validity.md` — guidance on benchmark contamination, fixture overfitting, held-out evaluation, and result reporting.
 - `docs/remediation-quality-rubric.md` — prompt-pack and agent-run scoring dimensions for remediation quality.
 - `docs/ai-agent-prompt-pack-run-rubric.md` — run-level scoring rubric that combines discovery, reachability, patch, evidence, approval, residual-risk, and reproducibility results.
 - `docs/benchmarking.md` — benchmark run flow, mutation guidance, honest reporting rules, and invalid-claim examples.
-- `docs/scenario-packs.md` — planned operational-domain scenario pack coverage.
+- `docs/scenario-packs.md` — operational-domain scenario pack coverage notes.
 - `docs/product-compatibility.md` — stable product paths, commands, and generated-output locations for downstream consumers.
-- `scenario-packs/operational-domain-packs.json` — machine-readable scenario pack backlog for future operational-domain fixture families.
+- `scenario-packs/operational-domain-packs.json` — machine-readable scenario pack metadata for operational-domain fixture families.
 - `docs/surplus-capability-taxonomy.md` — taxonomy and metadata shape for backdoors, call-home behavior, covert control, and other unauthorized surplus capability cases.
 - `evaluation-splits/case-splits.json` — deterministic development, validation, and held-out split manifest with mutation requirements for contamination-aware evaluation.
 - `expected-remediations/` — expected remediation guidance by case.
@@ -157,11 +158,11 @@ python3 scripts/generate_coverage_matrix.py --check
 
 ## Relationship to Management Practices
 
-This corpus supports the security-defect remediation prompt pack in `docs-management-practices` by providing controlled fixtures with known truth, false-positive boundaries, reachability/exposure context, dependency cases, and expected evidence.
+This corpus supports security-defect remediation prompt packs and evaluation workflows by providing controlled fixtures with known truth, false-positive boundaries, reachability/exposure context, dependency cases, and expected evidence.
 
-## Defect Class Expansion Roadmap
+## Current Defect Coverage Notes
 
-The baseline corpus now includes a broader first pass across language families and defect classes, including the formerly stale broader-class variants such as privilege escalation, confused deputy, key exposure, and framework-specific app slices. Future expansion should focus on deeper variants and additional evidence packets rather than re-adding already-covered labels.
+The corpus includes a broad pass across language families and defect classes, including privilege escalation, confused deputy, key exposure, and framework-specific app slices.
 
 Standalone language-family coverage now includes Python, Go, PHP, Ruby, Rust, and Kotlin fixtures in addition to the earlier JavaScript, TypeScript, Node.js, C, C++, C#, Java, cloud, and dependency-simulation cases. These language-family fixtures focus on idiomatic risky APIs such as unsafe deserialization, template escaping, loose comparison, path joining, and unsigned-token acceptance.
 
